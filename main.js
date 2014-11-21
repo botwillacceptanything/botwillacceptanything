@@ -16,9 +16,9 @@ gh.authenticate(config.githubAuth);
 
 var voting = require('./voting.js')(config, gh);
 
-// if we merge something, `git pull` the changes and start the new version
+// if we merge something, `git sync` the changes and start the new version
 voting.on('merge', function(pr) {
-  pull(function(err) {
+  sync(function(err) {
     if(err) return console.error('error pulling from origin/master:', err);
 
     // start the new version
@@ -26,10 +26,10 @@ voting.on('merge', function(pr) {
   });
 });
 
-// `git pull`
-function pull(cb) {
+// `git sync`
+function sync(cb) {
   var repo = git(__dirname);
-  repo.remote_fetch('origin', cb);
+  repo.sync(cb);
 }
 
 // gets the hash of the HEAD commit
@@ -74,7 +74,7 @@ function main() {
     if(err) return console.error('error checking HEAD:', err);
 
     // make sure we are in sync with the remote repo
-    pull(function(err) {
+    sync(function(err) {
       if(err) return console.error('error pulling from origin/master:', err);
 
       head(function(err, current) {
