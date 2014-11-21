@@ -6,7 +6,7 @@
 
 Each pull request on this repo is voted on by the community. If the vote passes, the Nomic server will update itself to the new version. Any part of the code can be changed (including the voting system), as long as the community votes for it.
 
-### Getting Started
+## Getting Started
 
 * View the [open Pull Requests](./pulls) to see what changes have been proposed
 * :star: **Star the repo**, or else your votes won't get counted
@@ -14,7 +14,7 @@ Each pull request on this repo is voted on by the community. If the vote passes,
 
 If you want to propose a change, just submit a pull request like you would to any other repo!
 
-### What kinds of changes will be made?
+## What kinds of changes will be made?
 
 Some possible changes people might submit are:
 
@@ -28,11 +28,11 @@ This project is intended to be an experiment in the area of autonomous aoftware 
 
 Nomic is an example of **autonomous software**. No human is in direct control. Unlike normal human organizations and entities, Nomic is incorruptible and only operates on a formal set of rules (defined by the code).
 
-### Who created Nomic?
+## Who created Nomic?
 
 Nomic was created by [@mappum](https://github.com/mappum). View his fork of Nomic here: https://github.com/mappum/nomic
 
-### License
+## License
 
 **Autonomous Software License (ASL)**
 
