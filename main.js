@@ -4,6 +4,7 @@ var config = require('./config.js');
 var git = require('gift');
 var Github = require('github');
 var path = require('path');
+var spawn = require('child_process').spawn;
 
 var gh = new Github({
   version: '3.0.0',
@@ -17,13 +18,39 @@ var voting = require('./voting.js')(config, gh);
 
 // if we merge something, `git pull` the changes and start the new version
 voting.on('merge', function(pr) {
-  pull(restart);
+  pull(function(err) {
+    if(err) return console.error('error pulling from origin/master:', err);
+
+    // start the new version
+    restart();
+  });
 });
 
 // `git pull`
 function pull(cb) {
   var repo = git(__dirname);
   repo.remote_fetch('origin', cb);
+}
+
+// gets the hash of the HEAD commit
+function head(cb) {
+  var repo = git(__dirname);
+  repo.branch(function(err, head) {
+    if(err) return cb(err);
+    cb(null, head.commit.id);
+  });
+}
+
+// starts ourself up in a new process, and kills the current one
+function restart() {
+  var child = spawn('node', [__filename], {
+    detached: true,
+    stdio: 'inherit'
+  });
+  child.unref();
+
+  // TODO: ensure child is alive before terminating self
+  process.exit(0);
 }
 
 // gets and processes the currently open PRs
@@ -41,7 +68,29 @@ function checkPRs() {
   })
 }
 
-// check PRs every POLL_INTERVAL seconds
-// TODO: use github hooks instead of polling
-setInterval(checkPRs, POLL_INTERVAL * 1000);
-checkPRs();
+function main() {
+  // find the hash of the current HEAD
+  head(function(err, initial) {
+    if(err) return console.error('error checking HEAD:', err);
+
+    // make sure we are in sync with the remote repo
+    pull(function(err) {
+      if(err) return console.error('error pulling from origin/master:', err);
+
+      head(function(err, current) {
+        if(err) return console.error('error checking HEAD:', err);
+
+        // if we just got a new version, relaunch
+        if(initial !== current) return restart();
+
+        console.log('Nomic is initialized. HEAD:', current);
+
+        // check PRs every POLL_INTERVAL seconds
+        // TODO: use github hooks instead of polling
+        setInterval(checkPRs, POLL_INTERVAL * 1000);
+        checkPRs();
+      });
+    });
+  });
+}
+main();
