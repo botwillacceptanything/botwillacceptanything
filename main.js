@@ -1,6 +1,10 @@
-var config = require('./config.js');
+var POLL_INTERVAL = 15; // how often to check the open PRs (in seconds)
 
+var config = require('./config.js');
+var git = require('gift');
 var Github = require('github');
+var path = require('path');
+
 var gh = new Github({
   version: '3.0.0',
   headers: {
@@ -11,7 +15,16 @@ gh.authenticate(config.githubAuth);
 
 var voting = require('./voting.js')(config, gh);
 
-var POLL_INTERVAL = 15; // how often to check the open PRs (in seconds)
+// if we merge something, `git pull` the changes and start the new version
+voting.on('merge', function(pr) {
+  pull(restart);
+});
+
+// `git pull`
+function pull(cb) {
+  var repo = git(__dirname);
+  repo.remote_fetch('origin', cb);
+}
 
 // gets and processes the currently open PRs
 function checkPRs() {

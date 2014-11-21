@@ -1,3 +1,5 @@
+var EventEmitter = require('events').EventEmitter;
+
 // voting settings
 var PERIOD = 1; // time for the vote to be open, in minutes
 var MIN_VOTES = 1; // minimum number of votes for a decision to be made
@@ -43,6 +45,8 @@ function noop(err) {
 // Export this module as a function
 // (so we can pass it the config and Github client)
 module.exports = function(config, gh) {
+  // the value returned by this module
+  var voting = new EventEmitter();
 
   // an index of PRs we have posted a 'vote started' comment on
   var started = {};
@@ -188,8 +192,6 @@ module.exports = function(config, gh) {
 
         if(passes) {
           mergePR(pr, noop);
-          // TODO: update self
-
         } else {
           closePR(pr, noop);
         }
@@ -270,6 +272,7 @@ module.exports = function(config, gh) {
 
     }, function(err, res) {
       if(err) return cb(err);
+      voting.emit('close', pr);
       console.log('Closed PR #' + pr.number);
       return cb(null, res);
     });
@@ -294,11 +297,13 @@ module.exports = function(config, gh) {
         user: config.user,
         repo: config.repo,
         number: pr.number
-      }, cb);
+      }, function(err, res) {
+        if(!err) voting.emit('merge', pr);
+        cb(err, res);
+      });
     });
   }
 
-  return {
-    handlePR: handlePR
-  };
+  voting.handlePR = handlePR;
+  return voting;
 };
