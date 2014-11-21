@@ -8,7 +8,7 @@ Each pull request on this repo is voted on by the community. If the vote passes,
 
 ## Getting Started
 
-* View the [open Pull Requests](./pulls) to see what changes have been proposed
+* View the [open Pull Requests](https://github.com/nomic-io/nomic/pulls) to see what changes have been proposed
 * :star: **Star the repo**, or else your votes won't get counted
 * On a pull request thread, comment with `:+1:` (:+1:) to vote for the PR to pass, or `:-1:` (:-1:) to vote against the PR
 
