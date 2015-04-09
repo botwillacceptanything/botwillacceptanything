@@ -164,7 +164,9 @@ module.exports = function(config, gh) {
           if(user === config.user) continue; // ignore self
           if(!stargazers[user]) continue; // ignore people who didn't star the repo
 
-          if(body.indexOf(':-1:') !== -1) votes[user] = false;
+          // Skip people who vote both ways.
+          if(body.indexOf(':-1:') !== -1 && body.indexOf(':+1:') !== -1) continue;
+          else if(body.indexOf(':-1:') !== -1) votes[user] = false;
           else if(body.indexOf(':+1:') !== -1) votes[user] = true;
         }
 
