@@ -171,8 +171,8 @@ module.exports = function(config, gh) {
         // tally votes
         var yeas = 0, nays = 0;
         for(var user in votes) {
-          if(votes[user]) yeas++;
-          else nays++;
+          if(votes[user]) nays++;
+          else yeas++;
         }
 
         console.log('Yeas: ' + yeas + ', Nays: ' + nays);
