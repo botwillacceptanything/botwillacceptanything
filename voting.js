@@ -162,6 +162,7 @@ module.exports = function(config, gh) {
           var body = comments[i].body;
 
           if(user === config.user) continue; // ignore self
+          if(user === pr.user.login) continue; // ignore the requester
           if(!stargazers[user]) continue; // ignore people who didn't star the repo
 
           if(body.indexOf(':-1:') !== -1) votes[user] = false;
