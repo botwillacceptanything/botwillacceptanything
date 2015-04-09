@@ -1,4 +1,4 @@
-var POLL_INTERVAL = 15; // how often to check the open PRs (in seconds)
+var POLL_INTERVAL = 5; // how often to check the open PRs (in seconds)
 
 var config = require('./config.js');
 var git = require('gift');
