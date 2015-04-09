@@ -1,6 +1,6 @@
 {
-  "name": "nomic",
-  "version": "0.0.0",
+  "name": "botwillacceptanything",
+  "version": "0.0.1",
   "description": "An autotonomous program that accepts pull requests for itself",
   "main": "main.js",
   "dependencies": {
@@ -13,18 +13,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/mappum/nomic.git"
+    "url": "git://github.com/botwillacceptanything/botwillacceptanything.git"
   },
   "keywords": [
     "nomic",
     "autonomous",
     "sentient",
-    "skynet"
+    "skynet",
+    "botwillacceptanything"
   ],
-  "author": "Matt Bell <mappum@gmail.com>",
+  "author": "Bot W. Acceptantyhing <botwillacceptanything@gmail.com>",
   "license": "ASL",
   "bugs": {
-    "url": "https://github.com/mappum/nomic/issues"
+    "url": "https://github.com/botwillacceptanything/botwillacceptanything/issues"
   },
-  "homepage": "https://github.com/mappum/nomic"
+  "homepage": "https://github.com/botwillacceptanything/botwillacceptanything"
 }
