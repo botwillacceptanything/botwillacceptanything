@@ -53,6 +53,11 @@ module.exports = function(config, gh) {
 
   // handles an open PR
   function handlePR(pr) {
+    // Abort voting on unmergeable pull requests
+    if(!pr.mergeable) {
+      return closePR(couldntMergeWarning, pr, noop);
+    }
+
     // if there is no 'vote started' comment, post one
     if(!started[pr.number]) {
       postVoteStarted(pr);
