@@ -1,8 +1,8 @@
 var EventEmitter = require('events').EventEmitter;
 
 // voting settings
-var PERIOD = 30; // time for the vote to be open, in minutes
-var MIN_VOTES = 5; // minimum number of votes for a decision to be made
+var PERIOD = 15; // time for the vote to be open, in minutes
+var MIN_VOTES = 15; // minimum number of votes for a decision to be made
 
 var MINUTE = 60 * 1000; // (one minute in ms)
 
