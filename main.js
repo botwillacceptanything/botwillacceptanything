@@ -83,7 +83,7 @@ function main() {
         // if we just got a new version, relaunch
         if(initial !== current) return restart();
 
-        console.log('Nomic is initialized. HEAD:', current);
+        console.log('Bot is initialized. HEAD:', current);
 
         // check PRs every POLL_INTERVAL seconds
         // TODO: use github hooks instead of polling
