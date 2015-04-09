@@ -1,3 +1,4 @@
+
 var EventEmitter = require('events').EventEmitter;
 
 // voting settings
