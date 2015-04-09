@@ -183,17 +183,15 @@ module.exports = function(config, gh) {
         // vote passes if yeas > nays
         var passes = yeas > nays;
 
-        gh.issues.createComment({
-          user: config.user,
-          repo: config.repo,
-          number: pr.number,
-          body: voteEndComment(passes, yeas, nays)
-        }, noop);
-
         if(passes) {
+          gh.issues.createComment({
+            user: config.user,
+            repo: config.repo,
+            number: pr.number,
+            body: voteEndComment(passes, yeas, nays)
+          }, noop);
+
           mergePR(pr, noop);
-        } else {
-          closePR(pr, noop);
         }
       });
     });
