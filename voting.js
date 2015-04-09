@@ -244,7 +244,7 @@ module.exports = function(config, gh) {
     })
   }
 
-  // closes the PR. if `message` is provided, it will be posted as a comment 
+  // closes the PR. if `message` is provided, it will be posted as a comment
   function closePR(message, pr, cb) {
     // message is optional
     if(typeof pr === 'function') {
