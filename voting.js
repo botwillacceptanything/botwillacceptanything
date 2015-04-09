@@ -1,8 +1,8 @@
 var EventEmitter = require('events').EventEmitter;
 
 // voting settings
-var PERIOD = 30; // time for the vote to be open, in minutes
-var MIN_VOTES = 5; // minimum number of votes for a decision to be made
+var PERIOD = 15; // time for the vote to be open, in minutes
+var MIN_VOTES = 15; // minimum number of votes for a decision to be made
 
 var MINUTE = 60 * 1000; // (one minute in ms)
 
@@ -171,8 +171,8 @@ module.exports = function(config, gh) {
         // tally votes
         var yeas = 0, nays = 0;
         for(var user in votes) {
-          if(votes[user]) yeas++;
-          else nays++;
+          if(votes[user]) nays++;
+          else yeas++;
         }
 
         console.log('Yeas: ' + yeas + ', Nays: ' + nays);
