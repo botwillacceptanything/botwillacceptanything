@@ -156,7 +156,7 @@ module.exports = function(config, gh) {
   // encouraging small (incremental) mutations over larger mutations.
   function numVotesRequired(pr) {
     var netChanges = (pr.additions + pr.deletions) / MIN_VOTES_WEIGHT;
-    return Math.round(Math.log(Math.E + netChanges));
+    return Math.round(Math.log(Math.E + netChanges)) + 1;
   }
 
   // counts the votes in the PR. if the minimum number of votes has been reached,
