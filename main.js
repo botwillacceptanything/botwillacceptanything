@@ -1,4 +1,3 @@
-
 var POLL_INTERVAL = 60; // how often to check the open PRs (in seconds)
 
 var config = require('./config.js');
@@ -13,6 +12,7 @@ var gh = new Github({
     'User-Agent': config.user+'/'+config.repo
   }
 });
+
 gh.authenticate(config.githubAuth);
 
 var voting = require('./voting.js')(config, gh);
@@ -56,7 +56,7 @@ function restart() {
 }
 
 function considerExistence() {
-  return undefined;
+  return '42';
 }
 
 // gets and processes the currently open PRs
@@ -100,4 +100,5 @@ function main() {
     });
   });
 }
+
 main();

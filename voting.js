@@ -14,7 +14,7 @@ var decideVoteResult = function(yeas, nays) {
 }
 
 var voteStartedComment = '#### :ballot_box_with_check: Voting has begun.\n\n' +
-  'To cast a vote, post a comment containing `:+1:` (:+1:), or `:-1:` (:-1:).\n' +
+  'To cast a vote, post a comment containing `:godmode:` (:godmode:), or `:poop:` (:poop:).\n' +
   'Remember, you **must star this repo for your vote to count.**\n\n' +
   'A decision will be made after this PR has been open for **'+PERIOD+'** ' +
   'minutes, and at least **'+MIN_VOTES+'** votes have been made.\n\n' +
@@ -32,8 +32,8 @@ var couldntMergeWarning = '#### :warning: Error: This PR could not be merged\n\n
 
 var kitten = '';
 
-var votePassComment = ':+1: The vote passed! This PR will now be merged into master.';
-var voteFailComment = ':-1: The vote failed. This PR will now be closed.'
+var votePassComment = ':godmode: The vote passed! This PR will now be merged into master.';
+var voteFailComment = ':poop: The vote failed. This PR will now be closed.'
 
 var voteEndComment = function(pass, yea, nay, nonStarGazers) {
   var total = yea + nay;
@@ -43,8 +43,8 @@ var voteEndComment = function(pass, yea, nay, nonStarGazers) {
   var resp = '#### ' + (pass ? (kitten + votePassComment) : voteFailComment) + '\n\n' +
     '----\n' +
     '**Tallies:**\n' +
-    ':+1:: ' + yea + ' (' + yeaPercent + '%) \n' +
-    ':-1:: ' + nay + ' (' + nayPercent + '%)';
+    ':godmode:: ' + yea + ' (' + yeaPercent + '%) \n' +
+    ':poop:: ' + nay + ' (' + nayPercent + '%)';
   if (nonStarGazers.length > 0) {
     resp += "\n\n";
     resp += "These users aren't stargazers, so their votes were not counted: \n";
@@ -203,9 +203,9 @@ module.exports = function(config, gh) {
           }
 
           // Skip people who vote both ways.
-          if(body.indexOf(':-1:') !== -1 && body.indexOf(':+1:') !== -1) continue;
-          else if(body.indexOf(':-1:') !== -1) votes[user] = false;
-          else if(body.indexOf(':+1:') !== -1) votes[user] = true;
+          if(body.indexOf(':poop:') !== -1 && body.indexOf(':godmode:') !== -1) continue;
+          else if(body.indexOf(':poop:') !== -1) votes[user] = false;
+          else if(body.indexOf(':godmode:') !== -1) votes[user] = true;
         }
 
         // tally votes
