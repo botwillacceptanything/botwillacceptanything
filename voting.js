@@ -316,13 +316,15 @@ module.exports = function(config, gh, Twitter) {
         return console.error('Error getting Pull Requests.', err);
       }
 
-      cachedPRs = {};
       prs.map(function (pr) {
+        pr.comments = [];
         cachedPRs[pr.number] = pr;
         refreshAllComments(pr, handlePR);
       });
     });
   }
+  // Repoll all PRs every 30 minutes, just to be safe.
+  setInterval(refreshAllPRs, MINUTE * 30);
 
   function refreshAllComments(pr, cb) {
     getAllPages(pr, gh.issues.getComments, function(err, comments) {
