@@ -18,14 +18,29 @@ Hang out with us in IRC: **#botwillacceptanything** on Freenode.
 
 1. Fork this repo.
 1. Get yourself an OAuth token for github at https://github.com/settings/tokens/new. (TODO what scopes are required?)
-1. Create a config.js file for your instance of the bot that looks like this:
+1. Copy config.template.js -> config.js and modify accordingly.
+
 ```javascript
-exports.user = "YOUR_GITHUB_USERNAME";
-exports.repo = "botwillacceptanything";
-exports.githubAuth = {type: "oauth", token: "YOUR_OAUTH_TOKEN"}
+$ cp config.template.js config.js
+$ vim config.js
+$ cat config.js
+(function () {
+    'use strict';
+
+    module.exports = {
+        user: "YOUR_GITHUB_USERNAME",
+        repo: "botwillacceptanything",
+        githubAuth: {
+            type: "oauth",
+            token: "YOUR_OAUTH_TOKEN"
+        }
+    };
+}());
+
 ```
+
 1. Run `npm` to install dependencies.
-1. Run `node main.js` to start the bot.
+1. Run `npm run main` to start the bot.
 
 ## License
 
