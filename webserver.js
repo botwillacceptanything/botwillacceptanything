@@ -1,4 +1,5 @@
 var express = require('express');
+var favicon = require('serve-favicon');
 var app = express();
 
 var git = require('gift');
@@ -43,4 +44,5 @@ module.exports = function (config, gh) {
     response += stdoutLog.join('</li><li>') + '</li></ul>';
     res.send(response);
   });
+  app.use(favicon(__dirname + '/favicon.ico'));
 }
