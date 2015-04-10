@@ -28,6 +28,8 @@ var couldntMergeWarning = '#### :warning: Error: This PR could not be merged\n\n
   'The changes in this PR conflict with other changes, so we couldn\'t automatically merge it. ' +
   'You can fix the conflicts and submit the changes in a new PR to start the voting process again.'
 
+var kitten = '';
+
 var votePassComment = ':+1: The vote passed, this PR will now be merged into master.';
 var voteFailComment = ':-1: The vote failed, this PR will now be closed'
 
@@ -36,7 +38,7 @@ var voteEndComment = function(pass, yea, nay) {
   var yeaPercent = percent(yea / total);
   var nayPercent = percent(nay / total);
 
-  return '#### ' + (pass ? votePassComment : voteFailComment) + '\n\n' +
+  return '#### ' + (pass ? (kitten + votePassComment) : voteFailComment) + '\n\n' +
     '----\n' +
     '**Tallies:**\n' +
     ':+1:: ' + yea + ' (' + yeaPercent + '%) \n' +
@@ -56,6 +58,22 @@ module.exports = function(config, gh) {
 
   // an index of PRs we have posted a 'vote started' comment on
   var started = {};
+
+  // get a random kitten to be used by this instance of the bot
+  var options = {
+    hostname: 'thecatapi.com',
+    port: 80,
+    path: '/api/images/get?format=html',
+    method: 'POST'
+  };
+  var req = require('http').request(options, function(res) {
+    res.setEncoding('utf8');
+    res.on('data', function(chunk) {
+      kitten += chunk;
+    });
+  });
+  req.write('');
+  req.end();
 
   // handles an open PR
   function handlePR(pr) {
