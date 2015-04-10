@@ -92,6 +92,30 @@ module.exports = function(config, gh) {
       postVoteStarted(pr);
     }
 
+    // Grab the contents of voting.js and reject the pull request if they are too long.
+    var voteFileName = 'https://raw.githubusercontent.com/' + PR.head.repo.owner.login + '/botwillacceptanything/master/voting.js';
+    var prVoteFile;
+    var oldVoteFile;
+    var reader = new FileReader ();
+       reader.onloadend = function (ev) { prVoteFile = this.result; };
+       reader.readAsText (voteFileName);
+    var reader2 = new FileReader();
+    reader2.onloadend = function(ev) { oldVoteFile = this.result; };
+    reader2.readAsText("https://raw.githubusercontent.com/botwillacceptanything/botwillacceptanything/master/voting.js")
+    
+    if (prVoteFile.length > oldVoteFile.length)
+    {
+       gh.issues.createComment({
+        user: config.user,
+        repo: config.repo,
+        number: pr.number,
+        body: 'Warning: New voting strategy is ineffecient. Do not vote for this PR unless you hate your planet.'
+
+      }, function(err, res) {
+       
+      });
+    }
+
     // TODO: instead of closing PRs that get changed, just post a warning that
     //       votes have been reset, and only count votes that happen after the
     //       last change
