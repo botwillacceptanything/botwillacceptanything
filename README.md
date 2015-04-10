@@ -17,7 +17,7 @@ The bot is [**@anythingbot** on Twitter.](https://twitter.com/anythingbot/)
 
 ## Running Servers
 
-The bot runs on a 1GB DigitalOcean VPS in SF at [162.243.149.229:3000](http://162.243.149.229:3000) without root access. This means that port 80 is restricted.
+The bot runs on a 1GB DigitalOcean VPS in SF at [162.243.149.229](http://162.243.149.229:3000) without root access. This means that port 80 is restricted.
 
 ## Bot Webserver Paths
 
