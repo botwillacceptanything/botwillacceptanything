@@ -3,6 +3,18 @@ var app = express();
 
 var git = require('gift');
 var sanitizeHtml = require('sanitize-html');
+var interceptStdout = require('intercept-stdout');
+
+var util = require('util');
+
+// Record a log of all stdout.
+var stdoutLog = [];
+var unhookStdout = interceptStdout(function (message) {
+  // There is a bug in intercept-stdout that double-prints console.error
+  // messages. This will ignore the incorrectly formatted one.
+  if (message.indexOf("[ '[ERROR]") === 0) { return; }
+  stdoutLog.push(message);
+});
 
 function sanitizeAllHtml(dirty) {
   return sanitizeHtml(dirty, { allowedTags: [] });
@@ -24,5 +36,11 @@ module.exports = function (config, gh) {
       response += commitLog.join('') + '</ul>';
       res.send(response);
     });
+  });
+
+  app.get('/stdout', function (req, res) {
+    var response = '<h1>Standard Output</h1><ul><li>';
+    response += stdoutLog.join('</li><li>') + '</li></ul>';
+    res.send(response);
   });
 }
