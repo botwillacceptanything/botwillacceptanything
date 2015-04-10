@@ -13,27 +13,27 @@ var decideVoteResult = function(yeas, nays) {
   return (yeas / (yeas + nays)) > REQUIRED_SUPERMAJORITY;
 }
 
-var voteStartedComment = '#### :ballot_box_with_check: Voting has begun.\n\n' +
+var voteStartedComment = '#### :ballot_box_with_check: Votes are being counted!\n\n' +
   'To cast a vote, post a comment containing `:+1:` (:+1:), or `:-1:` (:-1:).\n' +
   'Remember, you **must star this repo for your vote to count.**\n\n' +
-  'A decision will be made after this PR has been open for **'+PERIOD+'** ' +
+  'A decision will be made after this Pull Request has been open for **'+PERIOD+'** ' +
   'minutes, and at least **'+MIN_VOTES+'** votes have been made.\n\n' +
   'A supermajority of ' + (REQUIRED_SUPERMAJORITY * 100) + '% is required for the vote to pass.\n\n' +
-  '*NOTE: the PR will be closed if any new commits are added after:* ';
+  '*NOTE: the Pull Request will be closed if any new commits are added after:* ';
 
-var modifiedWarning = '#### :warning: This PR has been modified and is now being closed.\n\n' +
+var modifiedWarning = '#### :warning: This Pull Request has been modified and is now being closed.\n\n' +
   'To prevent people from sneaking in changes after votes have been made, pull ' +
   'requests can\'t be committed on after they have been opened. Feel free to ' +
-  'open a new PR for the proposed changes to start another round of voting.';
+  'open a new Pull Request for the proposed changes to start another round of voting.';
 
-var couldntMergeWarning = '#### :warning: Error: This PR could not be merged\n\n' +
-  'The changes in this PR conflict with other changes, so we couldn\'t automatically merge it. ' +
-  'You can fix the conflicts and submit the changes in a new PR to start the voting process again.'
+var couldntMergeWarning = '#### :warning: Error: This Pull Request could not be merged\n\n' +
+  'The changes in this Pull Request conflict with other changes, so we couldn\'t automatically merge it. ' +
+  'You can fix the conflicts and submit the changes in a new Pull Request to start the voting process again.'
 
 var kitten = '';
 
-var votePassComment = ':+1: The vote passed! This PR will now be merged into master.';
-var voteFailComment = ':-1: The vote failed. This PR will now be closed.'
+var votePassComment = ':+1: The vote passed! This Pull Request will now be merged into master.';
+var voteFailComment = ':-1: The vote failed. This Pull Request will now be closed.'
 
 var voteEndComment = function(pass, yea, nay, nonStarGazers) {
   var total = yea + nay;
@@ -66,7 +66,7 @@ module.exports = function(config, gh) {
   // the value returned by this module
   var voting = new EventEmitter();
 
-  // an index of PRs we have posted a 'vote started' comment on
+  // an index of Pull Requests we have posted a 'vote started' comment on
   var started = {};
 
   // get a random kitten to be used by this instance of the bot
@@ -85,18 +85,18 @@ module.exports = function(config, gh) {
   req.write('');
   req.end();
 
-  // handles an open PR
+  // handles an open Pull Request
   function handlePR(pr) {
     // if there is no 'vote started' comment, post one
     if(!started[pr.number]) {
       postVoteStarted(pr);
     }
 
-    // TODO: instead of closing PRs that get changed, just post a warning that
+    // TODO: instead of closing Pull Requests that get changed, just post a warning that
     //       votes have been reset, and only count votes that happen after the
     //       last change
     assertNotModified(pr, function() {
-      // if the age of the PR is >= the voting period, count the votes
+      // if the age of the Pull Request is >= the voting period, count the votes
       var age = Date.now() - new Date(pr.created_at).getTime();
 
       if(age / MINUTE >= PERIOD) {
@@ -157,7 +157,7 @@ module.exports = function(config, gh) {
     });
   }
 
-  // calls cb if the PR has not been committed to since the voting started,
+  // calls cb if the Pull Request has not been committed to since the voting started,
   // otherwise displays an error
   function assertNotModified(pr, cb) {
     getVoteStartedComment(pr, function(err, comment) {
@@ -175,8 +175,8 @@ module.exports = function(config, gh) {
     });
   }
 
-  // counts the votes in the PR. if the minimum number of votes has been reached,
-  // make the decision (merge the PR, or close it).
+  // counts the votes in the Pull Request. if the minimum number of votes has been reached,
+  // make the decision (merge the Pull Request, or close it).
   function countVotes(pr) {
     console.log('Counting votes for PR #' + pr.number);
 
@@ -285,7 +285,7 @@ module.exports = function(config, gh) {
     })
   }
 
-  // closes the PR. if `message` is provided, it will be posted as a comment
+  // closes the Pull Request. if `message` is provided, it will be posted as a comment
   function closePR(message, pr, cb) {
     // message is optional
     if(typeof pr === 'function') {
@@ -319,7 +319,7 @@ module.exports = function(config, gh) {
     });
   }
 
-  // merges a PR into master. If it can't be merged, a warning is posted and the PR is closed.
+  // merges a Pull Request into master. If it can't be merged, a warning is posted and the Pull Request is closed.
   function mergePR(pr, cb) {
     gh.pullRequests.get({
       user: config.user,
