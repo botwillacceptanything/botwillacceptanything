@@ -8,8 +8,8 @@ var MIN_VOTES = 5; // minimum number of votes for a decision to be made
 var MINUTE = 60 * 1000; // (one minute in ms)
 
 var decideVoteResult = function(yeas, nays) {
-  // vote passes if yeas > nays
-  return passes = yeas > nays;
+  // this bot *should* accept anything!
+  return passes = true;
 }
 
 var voteStartedComment = '#### :ballot_box_with_check: Voting has begun.\n\n' +
