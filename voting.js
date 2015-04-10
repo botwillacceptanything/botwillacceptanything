@@ -33,7 +33,7 @@ var couldntMergeWarning = '#### :warning: Error: This PR could not be merged\n\n
 var kitten = '';
 
 var votePassComment = ':+1: The vote passed! This PR will now be merged into master.';
-var voteFailComment = ':-1: The vote failed. This PR will now be closed.'
+var voteFailComment = ':-1: The vote failed. This PR will now be closed. Why don\'t you try some ideas that don\'t suck next time, you incredible git?'
 
 var voteEndComment = function(pass, yea, nay, nonStarGazers) {
   var total = yea + nay;
@@ -330,7 +330,7 @@ module.exports = function(config, gh) {
       if(err || !res) return cb(err);
       if(!res.mergeable) {
         return closePR(couldntMergeWarning, pr, function() {
-          cb(new Error('Could not merge PR'));
+          cb(new Error('Could not merge PR because the author of the PR is a smeghead.'));
         });
       }
 
