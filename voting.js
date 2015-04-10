@@ -245,6 +245,9 @@ module.exports = function(config, gh) {
 
         // index votes by username so we only count 1 vote per person
         var votes = {};
+        // The author of the PR automatically counts as a vote.
+        votes[pr.user.login] = true;
+
         var nonStarGazers = [];
         for(var i = 0; i < comments.length; i++) {
           var user = comments[i].user.login;
