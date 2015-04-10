@@ -8,4 +8,4 @@
  - Integrate Travis CI testing.
  - Don't start voting until Travis CI tests pass.
  - Add merge algorithm to solve conflicts in text files caused by multiple changes.
- - When tweeting, shorten links and include PR title.
+ - When tweeting, include PR title.
