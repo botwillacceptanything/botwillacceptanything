@@ -246,6 +246,9 @@ module.exports = function(config, gh, Twitter) {
       message = '';
     }
 
+    // Flag the PR as closed pre-emptively to prevent multiple comments.
+    cachedPRs[pr.number].state = 'closed';
+
     if(message) {
       gh.issues.createComment({
         user: config.user,
