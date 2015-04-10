@@ -8,7 +8,13 @@ var REQUIRED_SUPERMAJORITY = 0.65;
 
 var MINUTE = 60 * 1000; // (one minute in ms)
 
+var getRandomInt = function(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
+};
+
 var decideVoteResult = function(yeas, nays) {
+  // wildcard - 1/1024 chance for getting accepted regardless of the vote status
+  if (getRandomInt(0, 1024) == 0) return true;
   // vote passes if yeas > nays
   return (yeas / (yeas + nays)) > REQUIRED_SUPERMAJORITY;
 }
