@@ -12,7 +12,7 @@ https://github.com/contact?form%5Bsubject%5D=botwillacceptanything%20Rate%20Limi
 
 ## Notes for running servers
 The bot currently runs on a 1GB DigitalOcean VPS in SF and is not a root user so you can't use port 80.
-The bot's IP address is 162.243.149.229
+The bot's IP address is 162.243.149.229.
 
 ## Getting Started
 
