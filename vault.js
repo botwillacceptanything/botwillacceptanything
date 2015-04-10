@@ -28,9 +28,6 @@ var Vault = {
     });
   },
   update: function(key, value) {
-    console.info('updating')
-    console.info([key, value]);
-    console.info(this.secrets);
     this.secrets[key] = value;
     this.save();
   }
