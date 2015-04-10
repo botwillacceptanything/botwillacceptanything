@@ -24,8 +24,6 @@ voting.on('merge', function(pr) {
 
     // Install the latest NPM packages.
     npmInstall();
-    // start the new version
-    restart();
   });
 });
 
