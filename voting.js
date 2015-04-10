@@ -20,8 +20,8 @@ var voteStartedComment = '#### :ballotbox: Voting procedure reminder:\n' +
   'All comments within this discussion are searched for votes, regardless of the time of posting.\n' +
   'You can cast as many votes as you want, but only the last one will be counted.\n' +
   '(You may consider editing your comment instead of adding a new one.)\n' +
-  'Comments containing both up- and dow-votes are disregarded.\n' +
-  'Pull request is not counted as a vote, so vote for (or against) your own PRs!\n' +
+  'Comments containing both up- and down-votes are disregarded.\n' +
+  'A pull request is counted as an upvote, so no need to vote for your own PRs.\n' +
   'A decision will be made after this PR has been open for **'+PERIOD+'** ' +
   'minutes, and at least **'+MIN_VOTES+'** votes have been made.\n\n' +
   'A supermajority of ' + (REQUIRED_SUPERMAJORITY * 100) + '% is required for the vote to pass.\n\n' +
