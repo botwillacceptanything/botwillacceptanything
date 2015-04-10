@@ -14,7 +14,7 @@ https://github.com/contact?form%5Bsubject%5D=botwillacceptanything%20Rate%20Limi
 
 * View the [open Pull Requests](https://github.com/botwillacceptanything/botwillacceptanything/pulls) to see what changes have been proposed
 * :star: **Star the repo**, or else your votes won't get counted
-* On a pull request thread, comment with `:+1:` (:+1:) to vote for the PR to pass, or `:-1:` (:-1:) to vote against the PR
+* On a pull request thread, add your vote along with a short explanation and/or feedback to the author. The string `:+1:` (:+1:) anywhere within the comment makes the comment count as a vote *for* the PR to pass; conversely, the string `:-1:` (:-1:) anywhere within the comment makes the comment count as a vote *against* the PR.
 
 ## Community
 
