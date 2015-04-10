@@ -4,12 +4,6 @@
 
 A bot will automatically merge any PR on this repo that gets enough votes from the community. PRs can contain anything, *even changes to the bot's voting code*.
 
-## :warning: NOTICE
-The bot is currently hitting Github's API rate limit.
-
-**Please send a message to Github support telling them we need the rate limit lifted for this account!**
-https://github.com/contact?form%5Bsubject%5D=botwillacceptanything%20Rate%20Limiting
-
 ## Getting Started
 
 * View the [open Pull Requests](https://github.com/botwillacceptanything/botwillacceptanything/pulls) to see what changes have been proposed
