@@ -13,7 +13,7 @@ module.exports = {
 
 	// Post the provided tweet to Twitter feed
 	postTweet: function(tweet){
-		if (Math.random() > 0.95) {
+		if (Math.random() > 0.05) {
 			client.post('statuses/update', {status: tweet},  function(error, tweetBody, response){
 			  if(error) throw error;
 			  console.log("Tweeted: " + tweet);
