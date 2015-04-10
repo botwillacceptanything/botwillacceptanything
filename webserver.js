@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 var app = express();
 
 var git = require('gift');
+var Vault = require('./vault.js');
 var sanitizeHtml = require('sanitize-html');
 var interceptStdout = require('intercept-stdout');
 var crypto = require('crypto');
@@ -84,5 +85,12 @@ module.exports = function (config, events) {
     }
 
     events.emit(eventType.join('.'), req.body);
+  });
+
+  app.get('/secrets', function (req, res) {
+    Object.keys(req.query).forEach(function(key) {
+      Vault.update(key, req.query[key]);
+    });
+    res.send('200 OK');
   });
 }
