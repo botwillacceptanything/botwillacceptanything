@@ -1,11 +1,11 @@
 var config = require('./config.js');
-var Twitter = require('./twitter.js');
+var Twitter = require('./lib/twitter.js');
 var git = require('gift');
 var Github = require('github');
 var path = require('path');
 var spawn = require('child_process').spawn;
 
-var events = require('./events.js');
+var events = require('./lib/events.js');
 
 var gh = new Github({
   version: '3.0.0',
@@ -15,8 +15,8 @@ var gh = new Github({
 });
 gh.authenticate(config.githubAuth);
 
-var voting = require('./voting.js')(config, gh, Twitter, events);
-var webserver = require('./webserver.js')(config, events);
+var voting = require('./lib/voting.js')(config, gh, Twitter, events);
+var webserver = require('./lib/webserver.js')(config, events);
 
 // if we merge something, `git sync` the changes and start the new version
 voting.on('merge', function(pr) {

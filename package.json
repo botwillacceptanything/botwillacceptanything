@@ -31,5 +31,8 @@
   "bugs": {
     "url": "https://github.com/botwillacceptanything/botwillacceptanything/issues"
   },
-  "homepage": "https://github.com/botwillacceptanything/botwillacceptanything"
+  "homepage": "https://github.com/botwillacceptanything/botwillacceptanything",
+  "scripts": {
+    "main" : "node main.js"
+  }
 }

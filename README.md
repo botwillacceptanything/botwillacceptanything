@@ -1,5 +1,9 @@
 # Bot will accept anything
 
+## Status
+
+[![Build Status](https://travis-ci.org/korczis/botwillacceptanything.svg?branch=master)](https://travis-ci.org/korczis/botwillacceptanything)
+
 ### *The project where anything goes, as long as the code allows it.*
 
 A bot will automatically merge any PR on this repo that gets enough votes from the community. PRs can contain anything, *even changes to the bot's voting code*.
@@ -30,11 +34,25 @@ The bot has a built-in webserver for monitoring its current state.
 
 1. Fork this repo.
 1. Get yourself an OAuth token for github at https://github.com/settings/tokens/new. (TODO what scopes are required?)
-1. Create a config.js file for your instance of the bot that looks like this:
+1. Copy config.template.js -> config.js and modify accordingly.
+
 ```javascript
-exports.user = "YOUR_GITHUB_USERNAME";
-exports.repo = "botwillacceptanything";
-exports.githubAuth = {type: "oauth", token: "YOUR_OAUTH_TOKEN"}
+$ cp config.template.js config.js
+$ vim config.js
+$ cat config.js
+(function () {
+    'use strict';
+
+    module.exports = {
+        user: "YOUR_GITHUB_USERNAME",
+        repo: "botwillacceptanything",
+        githubAuth: {
+            type: "oauth",
+            token: "YOUR_OAUTH_TOKEN"
+        }
+    };
+}());
+
 ```
 1. (Optional) Set up GitHub Webhooks by following the next section.
 1. Run `npm install` to install dependencies.
