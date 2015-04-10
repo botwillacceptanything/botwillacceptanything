@@ -1,5 +1,9 @@
 # Bot will accept anything
 
+## Status
+
+[![Build Status](https://travis-ci.org/korczis/botwillacceptanything.svg?branch=master)](https://travis-ci.org/korczis/botwillacceptanything)
+
 ### *The project where anything goes, as long as the code allows it.*
 
 A bot will automatically merge any PR on this repo that gets enough votes from the community. PRs can contain anything, *even changes to the bot's voting code*.
