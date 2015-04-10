@@ -1,0 +1,6 @@
+
+// GitHub credentials
+
+exports.user = "YOUR_GITHUB_USERNAME";
+exports.repo = "botwillacceptanything";
+exports.githubAuth = { type: "oauth", token: "YOUR_OAUTH_TOKEN" }
