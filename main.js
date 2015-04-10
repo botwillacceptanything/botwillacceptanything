@@ -22,6 +22,8 @@ voting.on('merge', function(pr) {
   sync(function(err) {
     if(err) return console.error('error pulling from origin/master:', err);
 
+    // Install the latest NPM packages.
+    npmInstall();
     // start the new version
     restart();
   });
@@ -42,6 +44,18 @@ function head(cb) {
   });
 }
 
+function npmInstall() {
+  var child = spawn('npm', ['install']);
+  child.stderr.on('data', function (data) {
+    console.error('npm install stderr: ' + data);
+  });
+  child.on('close', function (code) {
+    if (code !== 0) {
+      return console.error('Failed to NPM install');
+    }
+    restart();
+  });
+}
 // starts ourself up in a new process, and kills the current one
 function restart() {
   var child = spawn('node', [__filename], {
