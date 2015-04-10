@@ -200,10 +200,20 @@ module.exports = function(config, gh) {
             continue; // ignore people who didn't star the repo
           }
 
+          function hasVote(votes) {
+            for(var i = 0; i < votes.length; ++i) {
+              if(body.indexOf(votes[i] !== -1))
+                return true;
+            }
+            return false;
+          }
+          var upvoted = hasVote([':+1', ':heart:']);
+          var downvoted = hasVote([':-1']);
+
           // Skip people who vote both ways.
-          if(body.indexOf(':-1:') !== -1 && body.indexOf(':+1:') !== -1) continue;
-          else if(body.indexOf(':-1:') !== -1) votes[user] = false;
-          else if(body.indexOf(':+1:') !== -1) votes[user] = true;
+          if(upvoted && downvoted) continue;
+          else if(upvoted) votes[user] = true;
+          else if(downvoted) votes[user] = false;
         }
 
         // tally votes
