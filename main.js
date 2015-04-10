@@ -1,32 +1,25 @@
 
 var POLL_INTERVAL = 60; // how often to check the open PRs (in seconds)
 
-var config = require('./config.js');
-var git = require('gift');
-var Github = require('github');
-var path = require('path');
-var spawn = require('child_process').spawn;
+installDependencies(main);
 
-var gh = new Github({
-  version: '3.0.0',
-  headers: {
-    'User-Agent': config.user+'/'+config.repo
-  }
-});
-gh.authenticate(config.githubAuth);
-
-var voting = require('./voting.js')(config, gh);
-
-// if we merge something, `git sync` the changes and start the new version
-voting.on('merge', function(pr) {
-  sync(function(err) {
-    if(err) return console.error('error pulling from origin/master:', err);
-
-    // start the new version
-    restart();
+function initializeGlobals() {
+  this.config = require('./config.js');
+  this.git = require('gift');
+  this.Github = require('github');
+  this.path = require('path');
+  this.spawn = require('child_process').spawn;
+  this.getIP = require('external-ip')();
+  this.gh = new Github({
+    version: '3.0.0',
+    headers: {
+      'User-Agent': config.user+'/'+config.repo
+    }
   });
-});
+  gh.authenticate(config.githubAuth);
 
+  this.voting = require('./voting.js')(config, gh);
+}
 // `git sync`
 function sync(cb) {
   var repo = git(__dirname);
@@ -42,16 +35,28 @@ function head(cb) {
   });
 }
 
+function installDependencies(callback) {
+  require('child_process').exec('npm install', function (error, stdout, stderr) {
+    if (error == null) {
+      callback();
+    } else {
+      console.log(error, stdout, stderr);
+    }
+  });
+}
+
 // starts ourself up in a new process, and kills the current one
 function restart() {
-  var child = spawn('node', [__filename], {
-    detached: true,
-    stdio: 'inherit'
-  });
-  child.unref();
+  installDependencies(function() { 
+    var child = spawn('node', [__filename], {
+      detached: true,
+      stdio: 'inherit'
+    });
+    child.unref();
 
-  // TODO: ensure child is alive before terminating self
-  process.exit(0);
+    // TODO: ensure child is alive before terminating self
+    process.exit(0);
+  });
 }
 
 // gets and processes the currently open PRs
@@ -70,6 +75,27 @@ function checkPRs() {
 }
 
 function main() {
+  initializeGlobals();
+
+  getIP(function (err, ip) {
+    if (err) {
+      console.log("Unable to determine ip due to:", err);
+    } else {
+      console.log("I'm running on " + ip);
+    }
+  });
+
+  // if we merge something, `git sync` the changes and start the new version
+  voting.on('merge', function(pr) {
+    sync(function(err) {
+      if(err) return console.error('error pulling from origin/master:', err);
+
+      // start the new version
+      restart();
+    });
+  });
+
+
   // find the hash of the current HEAD
   head(function(err, initial) {
     if(err) return console.error('error checking HEAD:', err);
@@ -94,4 +120,3 @@ function main() {
     });
   });
 }
-main();
