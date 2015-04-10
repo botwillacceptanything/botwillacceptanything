@@ -23,8 +23,8 @@ voting.on('merge', function(pr) {
   sync(function(err) {
     if(err) return console.error('error pulling from origin/master:', err);
 
-    // start the new version
-    restart();
+    // Install the latest NPM packages and then restart.
+    npmInstall();
   });
 });
 
@@ -43,6 +43,18 @@ function head(cb) {
   });
 }
 
+function npmInstall() {
+  var child = spawn('npm', ['install']);
+  child.stderr.on('data', function (data) {
+    console.error('npm install stderr: ' + data);
+  });
+  child.on('close', function (code) {
+    if (code !== 0) {
+      return console.error('Failed to NPM install');
+    }
+    restart();
+  });
+}
 // starts ourself up in a new process, and kills the current one
 function restart() {
   var child = spawn('node', [__filename], {
@@ -86,8 +98,8 @@ function main() {
       head(function(err, current) {
         if(err) return console.error('error checking HEAD:', err);
 
-        // if we just got a new version, relaunch
-        if(initial !== current) return restart();
+        // if we just got a new version, upgrade npm packages and restart.
+        if(initial !== current) return npmInstall();
 
         console.log('Bot is initialized. HEAD:', current);
         considerExistence();
