@@ -29,6 +29,7 @@ The bot has a built-in webserver for monitoring its current state.
 
 * [Recent Commits](http://162.243.149.229:3000)
 * [Stdout Log](http://162.243.149.229:3000/stdout)
+* [Webhook Status](http://162.243.149.229:3000/webhook/github)
 
 ## Running the bot locally to test changes
 
