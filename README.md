@@ -16,6 +16,10 @@ https://github.com/contact?form%5Bsubject%5D=botwillacceptanything%20Rate%20Limi
 * :star: **Star the repo**, or else your votes won't get counted
 * On a pull request thread, comment with `:+1:` (:+1:) to vote for the PR to pass, or `:-1:` (:-1:) to vote against the PR
 
+## Community
+
+Hang out with us in IRC: **#botwillacceptanything** on Freenode.
+
 ## Running the bot locally to test changes
 
 1. Fork this repo.
