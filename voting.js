@@ -8,9 +8,9 @@ var REQUIRED_SUPERMAJORITY = 0.65;
 
 var MINUTE = 60 * 1000; // (one minute in ms)
 
-var decideVoteResult = function(yeas, nays) {
-  // vote passes if yeas > nays
-  return (yeas / (yeas + nays)) > REQUIRED_SUPERMAJORITY;
+var decideVoteResult = function(yays, nays) {
+  // vote passes if yays > nays
+  return (yays / (yays + nays)) > REQUIRED_SUPERMAJORITY;
 }
 
 var voteStartedComment = '#### :ballot_box_with_check: Voting has begun.\n\n' +
@@ -35,15 +35,15 @@ var kitten = '';
 var votePassComment = ':+1: The vote passed! This PR will now be merged into master.';
 var voteFailComment = ':-1: The vote failed. This PR will now be closed.'
 
-var voteEndComment = function(pass, yea, nay, nonStarGazers) {
-  var total = yea + nay;
-  var yeaPercent = percent(yea / total);
+var voteEndComment = function(pass, yay, nay, nonStarGazers) {
+  var total = yay + nay;
+  var yayPercent = percent(yay / total);
   var nayPercent = percent(nay / total);
 
   var resp = '#### ' + (pass ? (kitten + votePassComment) : voteFailComment) + '\n\n' +
     '----\n' +
     '**Tallies:**\n' +
-    ':+1:: ' + yea + ' (' + yeaPercent + '%) \n' +
+    ':+1:: ' + yay + ' (' + yayPercent + '%) \n' +
     ':-1:: ' + nay + ' (' + nayPercent + '%)';
   if (nonStarGazers.length > 0) {
     resp += "\n\n";
@@ -209,25 +209,25 @@ module.exports = function(config, gh) {
         }
 
         // tally votes
-        var yeas = 0, nays = 0;
+        var yays = 0, nays = 0;
         for(var user in votes) {
-          if(votes[user]) yeas++;
+          if(votes[user]) yays++;
           else nays++;
         }
 
-        console.log('Yeas: ' + yeas + ', Nays: ' + nays);
+        console.log('Yays: ' + yays + ', Nays: ' + nays);
 
         // only make a decision if we have the minimum amount of votes
-        if(yeas + nays < MIN_VOTES) return;
+        if(yays + nays < MIN_VOTES) return;
 
-        // vote passes if yeas > nays
-        var passes = decideVoteResult(yeas, nays);
+        // vote passes if yays > nays
+        var passes = decideVoteResult(yays, nays);
 
         gh.issues.createComment({
           user: config.user,
           repo: config.repo,
           number: pr.number,
-          body: voteEndComment(passes, yeas, nays, nonStarGazers)
+          body: voteEndComment(passes, yays, nays, nonStarGazers)
         }, noop);
 
         if(passes) {
