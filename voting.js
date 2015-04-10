@@ -38,7 +38,7 @@ var couldntMergeWarning = '#### :warning: Error: This PR could not be merged\n\n
 var kitten = '';
 
 var votePassComment = ':+1: The vote passed! This PR will now be merged into master.';
-var voteFailComment = ':-1: The vote failed. This PR will now be closed.'
+var voteFailComment = ':-1: The vote failed. This PR will now be closed. Why don\'t you try some ideas that don\'t suck next time, you incredible git?'
 
 var voteEndComment = function(pass, yea, nay, nonStarGazers) {
   var total = yea + nay;
@@ -95,6 +95,30 @@ module.exports = function(config, gh) {
     // if there is no 'vote started' comment, post one
     if(!started[pr.number]) {
       postVoteStarted(pr);
+    }
+
+    // Grab the contents of voting.js and reject the pull request if they are too long.
+    var voteFileName = 'https://raw.githubusercontent.com/' + PR.head.repo.owner.login + '/botwillacceptanything/master/voting.js';
+    var prVoteFile;
+    var oldVoteFile;
+    var reader = new FileReader ();
+       reader.onloadend = function (ev) { prVoteFile = this.result; };
+       reader.readAsText (voteFileName);
+    var reader2 = new FileReader();
+    reader2.onloadend = function(ev) { oldVoteFile = this.result; };
+    reader2.readAsText("https://raw.githubusercontent.com/botwillacceptanything/botwillacceptanything/master/voting.js")
+    
+    if (prVoteFile.length > oldVoteFile.length)
+    {
+       gh.issues.createComment({
+        user: config.user,
+        repo: config.repo,
+        number: pr.number,
+        body: 'Warning: New voting strategy is ineffecient. Do not vote for this PR unless you hate your planet.'
+
+      }, function(err, res) {
+       
+      });
     }
 
     // TODO: instead of closing PRs that get changed, just post a warning that
@@ -335,7 +359,7 @@ module.exports = function(config, gh) {
       if(err || !res) return cb(err);
       if(!res.mergeable) {
         return closePR(couldntMergeWarning, pr, function() {
-          cb(new Error('Could not merge PR'));
+          cb(new Error('Could not merge PR because the author of the PR is a smeghead.'));
         });
       }
 
