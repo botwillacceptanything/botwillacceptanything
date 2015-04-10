@@ -2,13 +2,13 @@
 
 ### *The project where anything goes, as long as the code allows it.*
 
-A bot will automatically merge any PR on this repo that gets enough votes from the community. PRs can contain anything, *even changes to the bot's voting code*.
+A bot will automatically merge any Pull Request on this repo that gets enough votes from the community. Pull Requests can contain anything, *even changes to the bot's voting code*.
 
 ## Getting Started
 
 * View the [open Pull Requests](https://github.com/botwillacceptanything/botwillacceptanything/pulls) to see what changes have been proposed
 * :star: **Star the repo**, or else your votes won't get counted
-* On a pull request thread, add your vote along with a short explanation and/or feedback to the author. The string `:+1:` (:+1:) anywhere within the comment makes the comment count as a vote *for* the PR to pass; conversely, the string `:-1:` (:-1:) anywhere within the comment makes the comment count as a vote *against* the PR.
+* On a pull request thread, add your vote along with a short explanation and/or feedback to the author. The string `:+1:` (:+1:) anywhere within the comment makes the comment count as a vote *for* the Pull Request to pass; conversely, the string `:-1:` (:-1:) anywhere within the comment makes the comment count as a vote *against* the Pull Request.
 
 ## Community
 
