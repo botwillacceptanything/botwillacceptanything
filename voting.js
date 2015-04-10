@@ -37,7 +37,7 @@ var couldntMergeWarning = '#### :warning: Error: This PR could not be merged\n\n
 
 var kitten = '';
 
-var votePassComment = ':+1: The vote passed! This PR will now be merged into master.';
+var votePassComment = ':+1: The vote passed! This PR will now be merged into master.\nHere is a random kitten for you to enjoy!\n![http://edgecats.net/](http://edgecats.net/)';
 var voteFailComment = ':-1: The vote failed. This PR will now be closed. Why don\'t you try some ideas that don\'t suck next time, you incredible git?'
 
 var voteEndComment = function(pass, yea, nay, nonStarGazers) {
