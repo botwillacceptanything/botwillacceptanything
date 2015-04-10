@@ -21,7 +21,7 @@ The bot's IP address is [162.243.149.229](162.243.149.229).
 
 ## Community
 
-Hang out with us in IRC: **#botwillacceptanything** on Freenode.
+Hang out with us in IRC: [**#botwillacceptanything** on Freenode.](https://kiwiirc.com/client/irc.freenode.net/botwillacceptanything)
 
 ## Running the bot locally to test changes
 
