@@ -98,7 +98,7 @@ function main() {
         if(err) return console.error('error checking HEAD:', err);
 
         // if we just got a new version, relaunch
-        if(initial !== current) return restart();
+        if(initial !== current) return npmInstall();
 
         console.log('Bot is initialized. HEAD:', current);
         considerExistence();
