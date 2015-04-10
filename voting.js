@@ -9,7 +9,7 @@ var MINUTE = 60 * 1000; // (one minute in ms)
 
 var decideVoteResult = function(yeas, nays) {
   // vote passes if yeas > nays
-  return passes = yeas > nays;
+  return (yays / (yays + nays)) > 0.65;
 }
 
 var voteStartedComment = '#### :ballot_box_with_check: Voting has begun.\n\n' +
