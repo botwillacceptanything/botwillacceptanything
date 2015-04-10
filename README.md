@@ -12,7 +12,11 @@ A bot will automatically merge any PR on this repo that gets enough votes from t
 
 ## Community
 
-Hang out with us in IRC: **#botwillacceptanything** on Freenode.
+Hang out with us in IRC: [**#botwillacceptanything** on Freenode.](http://kiwiirc.com/client/irc.freenode.net/botwillacceptanything)
+
+## Running Servers
+
+The bot runs on a 1GB DigitalOcean VPS in SF at [162.243.149.229](162.243.149.229) without root access. This means that port 80 is restricted.
 
 ## Running the bot locally to test changes
 
