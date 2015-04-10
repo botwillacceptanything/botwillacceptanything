@@ -186,6 +186,7 @@ module.exports = function(config, gh) {
           if(body.indexOf(':-1:') !== -1 && body.indexOf(':+1:') !== -1) continue;
           else if(body.indexOf(':-1:') !== -1) votes[user] = false;
           else if(body.indexOf(':+1:') !== -1) votes[user] = true;
+          else if(body.match(/:.*heart[s]*.*:$/) !== null) votes[user] = true; 
         }
 
         // tally votes
