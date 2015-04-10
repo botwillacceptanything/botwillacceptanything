@@ -2,7 +2,7 @@
 
 ## Status
 
-[![Build Status](https://travis-ci.org/korczis/botwillacceptanything.svg?branch=master)](https://travis-ci.org/korczis/botwillacceptanything)
+[![Build Status](https://travis-ci.org/botwillacceptanything/botwillacceptanything.svg?branch=master)](https://travis-ci.org/botwillacceptanything/botwillacceptanything)
 
 ### *The project where anything goes, as long as the code allows it.*
 

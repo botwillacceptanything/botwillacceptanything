@@ -34,6 +34,12 @@
   },
   "homepage": "https://github.com/botwillacceptanything/botwillacceptanything",
   "scripts": {
-    "main" : "node main.js"
+    "main": "node main.js",
+    "test": "gulp"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-jshint": "^1.10.0",
+    "gulp-jsdoc": "^0.1.4"
   }
 }
