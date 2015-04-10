@@ -102,3 +102,7 @@ function main() {
   });
 }
 main();
+
+process.on('uncaughtException', function(err) {
+  console.error('UNCAUGHT ERROR: ' + err);
+});
