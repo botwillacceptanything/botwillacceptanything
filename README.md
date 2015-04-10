@@ -35,7 +35,7 @@ exports.user = "YOUR_GITHUB_USERNAME";
 exports.repo = "botwillacceptanything";
 exports.githubAuth = {type: "oauth", token: "YOUR_OAUTH_TOKEN"}
 ```
-1. Run `npm` to install dependencies.
+1. Run `npm install` to install dependencies.
 1. Run `node main.js` to start the bot.
 
 ## License
