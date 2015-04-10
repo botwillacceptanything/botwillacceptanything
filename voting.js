@@ -306,10 +306,9 @@ module.exports = function(config, gh, Twitter) {
     });
   }
 
-
-
-
-
+  /**
+   * Fetch all PRs from GitHub, and then look up all of their comments.
+   */
   function refreshAllPRs() {
     getAllPages(gh.pullRequests.getAll, function (err, prs) {
       if (err || !prs) {
@@ -326,6 +325,9 @@ module.exports = function(config, gh, Twitter) {
   // Repoll all PRs every 30 minutes, just to be safe.
   setInterval(refreshAllPRs, MINUTE * 30);
 
+  /**
+   * Fetch all comments for a PR from GitHub.
+   */
   function refreshAllComments(pr, cb) {
     getAllPages(pr, gh.issues.getComments, function(err, comments) {
       if (err || !comments) {
@@ -337,6 +339,9 @@ module.exports = function(config, gh, Twitter) {
     });
   }
 
+  /**
+   * Tally all of the votes for a PR, and if conditions pass, merge or close it.
+   */
   function processPR(pr) {
     var voteResults = tallyVotes(pr);
     // only make a decision if we have the minimum amount of votes
@@ -359,6 +364,9 @@ module.exports = function(config, gh, Twitter) {
     }
   }
 
+  /**
+   * Tally up the votes on a PR, and monitor which users are stargazers.
+   */
   function tallyVotes(pr) {
     var tally = pr.comments.reduce(function (result, comment) {
       var user = comment.user.login
@@ -406,6 +414,9 @@ module.exports = function(config, gh, Twitter) {
     return tally;
   }
 
+  /**
+   * Check the text of a comment, and determine what vote was cast.
+   */
   function calculateUserVote(text) {
     var positive = (text.indexOf(':+1:') !== -1)
       , negative = (text.indexOf(':-1:') !== -1);
@@ -418,12 +429,18 @@ module.exports = function(config, gh, Twitter) {
     return positive;
   }
 
+  /**
+   * When a pull request is opened, add it to the cache and handle it.
+   */
   events.on('github.pull_request.opened', function (data) {
     data.pull_request.comments = [];
     cachedPRs[data.number] = data.pull_request;
     handlePR(data.pull_request);
   });
 
+  /**
+   * When a pull request is closed, mark it so we don't process it again.
+   */
   events.on('github.pull_request.closed', function (data) {
     var pr = cachedPRs[data.number];
     if (typeof pr !== 'undefined') {
@@ -431,6 +448,9 @@ module.exports = function(config, gh, Twitter) {
     }
   });
 
+  /**
+   * When a comment is created, push it onto the PR, and handle the PR again.
+   */
   events.on('github.comment.created', function (data) {
     var pr = cachedPRs[data.issue.number];
     if (typeof pr === 'undefined') {
@@ -440,6 +460,9 @@ module.exports = function(config, gh, Twitter) {
     handlePR(pr);
   });
 
+  /**
+   * Initialize the voting system by polling stargazers, and then fetching PRs.
+   */
   voting.initialize = function () {
     getStargazerIndex(refreshAllPRs);
 
