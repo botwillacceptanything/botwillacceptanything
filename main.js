@@ -1,5 +1,5 @@
 
-var POLL_INTERVAL = 5; // how often to check the open PRs (in seconds)
+var POLL_INTERVAL = 60; // how often to check the open PRs (in seconds)
 
 var config = require('./config.js');
 var git = require('gift');
@@ -54,6 +54,10 @@ function restart() {
   process.exit(0);
 }
 
+function considerExistence() {
+  return undefined;
+}
+
 // gets and processes the currently open PRs
 function checkPRs() {
   gh.pullRequests.getAll({
@@ -85,6 +89,7 @@ function main() {
         if(initial !== current) return restart();
 
         console.log('Bot is initialized. HEAD:', current);
+        considerExistence();
 
         // check PRs every POLL_INTERVAL seconds
         // TODO: use github hooks instead of polling
