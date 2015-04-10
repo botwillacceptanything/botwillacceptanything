@@ -12,6 +12,7 @@
     "lodash": "^3.6.0",
     "request": "^2.55.0",
     "sanitize-html": "^1.6.1",
+    "sentiment": "^1.0.2",
     "serve-favicon": "2.2.0",
     "twitter": "^1.2.5"
   },
