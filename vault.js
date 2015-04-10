@@ -4,7 +4,7 @@ var yaml = require('js-yaml');
 var filename = path.join(__dirname, 'secrets.yml');
 
 var Vault = {
-  secrets: null,
+  secrets: {},
   read: function() {
     try {
       fs.exists(filename, function(exist) {
@@ -32,7 +32,5 @@ var Vault = {
     this.save();
   }
 }
-
-Vault.read();
 
 module.exports = Vault

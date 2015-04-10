@@ -4,12 +4,13 @@ var bodyParser = require('body-parser');
 var app = express();
 
 var git = require('gift');
-var Vault = require('./vault.js');
 var sanitizeHtml = require('sanitize-html');
 var interceptStdout = require('intercept-stdout');
 var crypto = require('crypto');
 
 var util = require('util');
+var Vault = require('./vault.js');
+Vault.read();
 
 // Record a log of all stdout.
 var stdoutLog = [];
