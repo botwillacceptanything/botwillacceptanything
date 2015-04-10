@@ -188,7 +188,6 @@ module.exports = function(config, gh) {
           if(body.indexOf(DOWN_VOTE) !== -1 && body.indexOf(UP_VOTE) !== -1) continue;
           else if(body.indexOf(DOWN_VOTE) !== -1) votes[user] = false;
           else if(body.indexOf(UP_VOTE) !== -1) votes[user] = true;
-          else if(body.match(/:.*heart[s]*.*:$/) !== null) votes[user] = true;
         }
 
         // tally votes
