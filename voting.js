@@ -1,5 +1,6 @@
 
 var EventEmitter = require('events').EventEmitter;
+var protectedPaths = require('./protected.js');
 
 // voting settings
 var PERIOD = 30; // time for the vote to be open, in minutes
@@ -27,6 +28,11 @@ var modifiedWarning = '#### :warning: This PR has been modified and is now being
 var couldntMergeWarning = '#### :warning: Error: This PR could not be merged\n\n' +
   'The changes in this PR conflict with other changes, so we couldn\'t automatically merge it. ' +
   'You can fix the conflicts and submit the changes in a new PR to start the voting process again.'
+
+var protectedError = '#### :warning: Error: This PR touches a protected file!\n\n' +
+  'To protect itself against attach, this bot will not allow changes to certain files. ' +
+  'If you disagree, request a change to the list of protected files in `protected.js`';
+
 
 var kitten = '';
 
@@ -85,21 +91,24 @@ module.exports = function(config, gh) {
 
   // handles an open PR
   function handlePR(pr) {
-    // if there is no 'vote started' comment, post one
-    if(!started[pr.number]) {
-      postVoteStarted(pr);
-    }
+    assertNoTouchProtectedFile(pr, function() {
 
-    // TODO: instead of closing PRs that get changed, just post a warning that
-    //       votes have been reset, and only count votes that happen after the
-    //       last change
-    assertNotModified(pr, function() {
-      // if the age of the PR is >= the voting period, count the votes
-      var age = Date.now() - new Date(pr.created_at).getTime();
-
-      if(age / MINUTE >= PERIOD) {
-        countVotes(pr);
+      // if there is no 'vote started' comment, post one
+      if(!started[pr.number]) {
+        postVoteStarted(pr);
       }
+
+      // TODO: instead of closing PRs that get changed, just post a warning that
+      //       votes have been reset, and only count votes that happen after the
+      //       last change
+      assertNotModified(pr, function() {
+        // if the age of the PR is >= the voting period, count the votes
+        var age = Date.now() - new Date(pr.created_at).getTime();
+
+        if(age / MINUTE >= PERIOD) {
+          countVotes(pr);
+        }
+      });
     });
   }
 
@@ -314,6 +323,32 @@ module.exports = function(config, gh) {
       voting.emit('close', pr);
       console.log('Closed PR #' + pr.number);
       return cb(null, res);
+    });
+  }
+
+  function assertNoTouchProtectedFile(pr, cb) {
+    gh.pullRequests.getFiles({
+      user: config.user,
+      repo: config.repo,
+      number: pr.number,
+      per_page: 100
+
+    }, function (err, res) {
+      // TODO more than one page
+      var touched = false;
+      res.forEach(function(file) {
+        protectedPaths.forEach(function(regex) {
+          if(regex.test(file.filename)) {
+            touched = true;
+          }
+        });
+      });
+
+      if (touched) {
+        closePR(protectedError, pr, noop);
+      } else {
+        cb();
+      }
     });
   }
 
