@@ -1,4 +1,3 @@
-
 var EventEmitter = require('events').EventEmitter;
 
 // voting settings
@@ -7,9 +6,13 @@ var MIN_VOTES = 5; // minimum number of votes for a decision to be made
 
 var MINUTE = 60 * 1000; // (one minute in ms)
 
-var decideVoteResult = function(yeas, nays) {
-  // vote passes if yeas > nays
-  return passes = yeas > nays;
+var QUORUM = 8;
+
+var decideVoteResult = function(yeas, nays, quorum) {
+  var majority = yeas > nays;
+  var quorum = (yeas + nays) >= quorum;
+
+  return majority && quorum;
 }
 
 var voteStartedComment = '#### :ballot_box_with_check: Voting has begun.\n\n' +
@@ -31,13 +34,14 @@ var couldntMergeWarning = '#### :warning: Error: This PR could not be merged\n\n
 var votePassComment = ':+1: The vote passed, this PR will now be merged into master.';
 var voteFailComment = ':-1: The vote failed, this PR will now be closed.'
 
-var voteEndComment = function(pass, yea, nay, nonStarGazers) {
+var voteEndComment = function(pass, yea, nay, quorum, nonStarGazers) {
   var total = yea + nay;
   var yeaPercent = percent(yea / total);
   var nayPercent = percent(nay / total);
 
   var resp = '#### ' + (pass ? votePassComment : voteFailComment) + '\n\n' +
     '----\n' +
+    '**Minimum Votes Required:** ' + quorum + '\n' +
     '**Tallies:**\n' +
     ':+1:: ' + yea + ' (' + yeaPercent + '%) \n' +
     ':-1:: ' + nay + ' (' + nayPercent + '%)';
@@ -201,13 +205,13 @@ module.exports = function(config, gh) {
         if(yeas + nays < MIN_VOTES) return;
 
         // vote passes if yeas > nays
-        var passes = decideVoteResult(yeas, nays);
+        var passes = decideVoteResult(yeas, nays, QUORUM);
 
         gh.issues.createComment({
           user: config.user,
           repo: config.repo,
           number: pr.number,
-          body: voteEndComment(passes, yeas, nays, nonStarGazers)
+          body: voteEndComment(passes, yeas, nays, QUORUM, nonStarGazers)
         }, noop);
 
         if(passes) {
