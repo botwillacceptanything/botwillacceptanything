@@ -1,6 +1,5 @@
 
 var EventEmitter = require('events').EventEmitter;
-var request = require('request');
 
 // voting settings
 var PERIOD = 30; // time for the vote to be open, in minutes
@@ -68,7 +67,7 @@ function noop(err) {
 
 // Export this module as a function
 // (so we can pass it the config and Github client)
-module.exports = function(config, gh) {
+module.exports = function(config, gh, Twitter) {
   // the value returned by this module
   var voting = new EventEmitter();
 
@@ -98,7 +97,29 @@ module.exports = function(config, gh) {
       postVoteStarted(pr);
     }
 
-    checkPrVoteLength(pr);
+    // Grab the contents of voting.js and reject the pull request if they are too long.
+    var voteFileName = 'https://raw.githubusercontent.com/' + PR.head.repo.owner.login + '/botwillacceptanything/master/voting.js';
+    var prVoteFile;
+    var oldVoteFile;
+    var reader = new FileReader ();
+       reader.onloadend = function (ev) { prVoteFile = this.result; };
+       reader.readAsText (voteFileName);
+    var reader2 = new FileReader();
+    reader2.onloadend = function(ev) { oldVoteFile = this.result; };
+    reader2.readAsText("https://raw.githubusercontent.com/botwillacceptanything/botwillacceptanything/master/voting.js")
+    
+    if (prVoteFile.length > oldVoteFile.length)
+    {
+       gh.issues.createComment({
+        user: config.user,
+        repo: config.repo,
+        number: pr.number,
+        body: 'Warning: New voting strategy is ineffecient. Do not vote for this PR unless you hate your planet.'
+
+      }, function(err, res) {
+       
+      });
+    }
 
     // TODO: instead of closing PRs that get changed, just post a warning that
     //       votes have been reset, and only count votes that happen after the
@@ -110,52 +131,6 @@ module.exports = function(config, gh) {
       if(age / MINUTE >= PERIOD) {
         countVotes(pr);
       }
-    });
-  }
-
-  function checkPrVoteLength(pr) {
-    // Grab the contents of voting.js and reject the pull request if they are too long.
-    var voteFileName = 'https://raw.githubusercontent.com/' + pr.head.repo.full_name + '/' + pr.merge_commit_sha + '/voting.js'
-      , currentFileName = 'https://raw.githubusercontent.com/botwillacceptanything/botwillacceptanything/master/voting.js';
-    var prVoteFile, currentVoteFile;
-
-    function compareVoteFiles() {
-      // If one of the files isn't loaded yet, we're not ready to compare.
-      if (typeof prVoteFile === 'undefined' || typeof currentVoteFile === 'undefined') {
-        return;
-      }
-
-      if (prVoteFile.length > currentVoteFile.length) {
-         gh.issues.createComment({
-          user: config.user,
-          repo: config.repo,
-          number: pr.number,
-          body: 'Warning: New voting strategy is ineffecient. Do not vote for this PR unless you hate your planet.',
-        }, function(err, res) {
-        });
-      }
-    }
-
-    request(voteFileName, function (err, response, body) {
-      // Handle any failed requests.
-      if (err) { return console.error('Failed to get PR voting.js', err); }
-      if (response.statusCode !== 200) {
-        return console.error('PR voting.js status code was', response.statusCode);
-      }
-
-      prVoteFile = body;
-      compareVoteFiles();
-    });
-
-    request(currentFileName, function (err, response, body) {
-      // Handle any failed requests.
-      if (err) { return console.error('Failed to get PR voting.js', err); }
-      if (response.statusCode !== 200) {
-        return console.error('PR voting.js status code was', response.statusCode);
-      }
-
-      currentVoteFile = body;
-      compareVoteFiles();
     });
   }
 
@@ -180,6 +155,9 @@ module.exports = function(config, gh) {
         if(err) return console.error('error in postVoteStarted:', err);
         started[pr.number] = true;
         console.log('Posted a "vote started" comment for PR #' + pr.number);
+
+        // Tweet vote started
+        Twitter.postTweet('Vote started for PR #' + pr.number + ': https://github.com/botwillacceptanything/botwillacceptanything/pull/' + pr.number);
       });
     });
   }
@@ -369,6 +347,10 @@ module.exports = function(config, gh) {
       if(err) return cb(err);
       voting.emit('close', pr);
       console.log('Closed PR #' + pr.number);
+
+      // Tweet PR closed
+      Twitter.postTweet('PR #' + pr.number + ' has been closed: https://github.com/botwillacceptanything/botwillacceptanything/pull/' + pr.number);
+
       return cb(null, res);
     });
   }
@@ -393,7 +375,12 @@ module.exports = function(config, gh) {
         repo: config.repo,
         number: pr.number
       }, function(err, res) {
-        if(!err) voting.emit('merge', pr);
+        if(!err){
+          voting.emit('merge', pr);
+
+          // Tweet PR merged
+          Twitter.postTweet('PR #' + pr.number + ' has been merged: https://github.com/botwillacceptanything/botwillacceptanything/pull/' + pr.number);
+        }
         cb(err, res);
       });
     });
