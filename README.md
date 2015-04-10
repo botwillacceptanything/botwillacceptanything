@@ -16,7 +16,14 @@ Hang out with us in IRC: [**#botwillacceptanything** on Freenode.](http://kiwiir
 
 ## Running Servers
 
-The bot runs on a 1GB DigitalOcean VPS in SF at [162.243.149.229](162.243.149.229) without root access. This means that port 80 is restricted.
+The bot runs on a 1GB DigitalOcean VPS in SF at [162.243.149.229:3000](http://162.243.149.229:3000) without root access. This means that port 80 is restricted.
+
+## Bot Webserver Paths
+
+The bot has a built-in webserver for monitoring its current state.
+
+* [Recent Commits](http://162.243.149.229:3000)
+* [Stdout Log](http://162.243.149.229:3000/stdout)
 
 ## Running the bot locally to test changes
 
