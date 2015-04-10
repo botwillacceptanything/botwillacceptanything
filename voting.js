@@ -4,12 +4,13 @@ var EventEmitter = require('events').EventEmitter;
 // voting settings
 var PERIOD = 30; // time for the vote to be open, in minutes
 var MIN_VOTES = 5; // minimum number of votes for a decision to be made
+var REQUIRED_SUPERMAJORITY = 0.65;
 
 var MINUTE = 60 * 1000; // (one minute in ms)
 
 var decideVoteResult = function(yeas, nays) {
   // vote passes if yeas > nays
-  return (yeas / (yeas + nays)) > 0.65;
+  return (yeas / (yeas + nays)) > REQUIRED_SUPERMAJORITY;
 }
 
 var voteStartedComment = '#### :ballot_box_with_check: Voting has begun.\n\n' +
@@ -17,6 +18,7 @@ var voteStartedComment = '#### :ballot_box_with_check: Voting has begun.\n\n' +
   'Remember, you **must star this repo for your vote to count.**\n\n' +
   'A decision will be made after this PR has been open for **'+PERIOD+'** ' +
   'minutes, and at least **'+MIN_VOTES+'** votes have been made.\n\n' +
+  'A supermajority of ' + (REQUIRED_SUPERMAJORITY * 100) + '% is required for the vote to pass.\n\n' +
   '*NOTE: the PR will be closed if any new commits are added after:* ';
 
 var modifiedWarning = '#### :warning: This PR has been modified and is now being closed.\n\n' +
