@@ -14,6 +14,9 @@ A bot will automatically merge any Pull Request on this repo that gets enough vo
 
 Hang out with us in IRC: [**#botwillacceptanything** on Freenode.](http://kiwiirc.com/client/irc.freenode.net/botwillacceptanything)
 
+## Running Servers
+The bot runs at [162.243.149.229](162.243.149.229) on a 1GB DigitalOcean VPS in SF. Please note that it does not have root access so port 80 is restricted.
+
 ## Running the bot locally to test changes
 
 1. Fork this repo.
