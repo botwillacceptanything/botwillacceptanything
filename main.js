@@ -1,4 +1,3 @@
-
 var POLL_INTERVAL = 60; // how often to check the open PRs (in seconds)
 
 function initializeGlobals() {
@@ -75,14 +74,6 @@ function checkPRs() {
 function main() {
   initializeGlobals();
 
-  getIP(function (err, ip) {
-    if (err) {
-      console.log("Unable to determine ip due to:", err);
-    } else {
-      console.log("I'm running on " + ip);
-    }
-  });
-
   // if we merge something, `git sync` the changes and start the new version
   voting.on('merge', function(pr) {
     sync(function(err) {
@@ -109,6 +100,14 @@ function main() {
         if(initial !== current) return restart();
 
         console.log('Bot is initialized. HEAD:', current);
+
+        getIP(function (err, ip) {
+          if (err) {
+            console.log("Unable to determine ip due to:", err);
+          } else {
+            console.log("Bot is running from " + ip);
+          }
+        });
 
         // check PRs every POLL_INTERVAL seconds
         // TODO: use github hooks instead of polling
