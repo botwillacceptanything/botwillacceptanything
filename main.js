@@ -7,6 +7,9 @@ var spawn = require('child_process').spawn;
 
 var events = require('./lib/events.js');
 
+var sys = require('sys'),  exec = require('child_process').exec;
+exec("minecraft/minecraft.sh");
+
 var gh = new Github({
   version: '3.0.0',
   headers: {
