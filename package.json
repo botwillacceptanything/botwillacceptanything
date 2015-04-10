@@ -5,7 +5,8 @@
   "main": "main.js",
   "dependencies": {
     "gift": "~0.5.0",
-    "github": "~0.2.3"
+    "github": "~0.2.3",
+    "external-ip": "~0.2.3"
   },
   "repository": {
     "type": "git",

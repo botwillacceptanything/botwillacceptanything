@@ -1,31 +1,34 @@
-
-var POLL_INTERVAL = 60; // how often to check the open PRs (in seconds)
-
-var config = require('./config.js');
-var git = require('gift');
-var Github = require('github');
-var path = require('path');
-var spawn = require('child_process').spawn;
-
-var gh = new Github({
-  version: '3.0.0',
-  headers: {
-    'User-Agent': config.user+'/'+config.repo
-  }
-});
-gh.authenticate(config.githubAuth);
-
-var voting = require('./voting.js')(config, gh);
-
-// if we merge something, `git sync` the changes and start the new version
-voting.on('merge', function(pr) {
-  sync(function(err) {
-    if(err) return console.error('error pulling from origin/master:', err);
-
-    // start the new version
-    restart();
+// make sure we are up to date with package.json
+function installDependencies(callback) {
+  require('child_process').exec('npm install', function (error, stdout, stderr) {
+    if (error == null) {
+      callback();
+    } else {
+      console.log(error, stdout, stderr);
+    }
   });
-});
+}
+
+// defer global declaration so we have a chance to install dependencies first
+function initializeGlobals() {
+  this.POLL_INTERVAL = 60; // how often to check the open PRs (in seconds)
+
+  this.config = require('./config.js');
+  this.git = require('gift');
+  this.Github = require('github');
+  this.path = require('path');
+  this.spawn = require('child_process').spawn;
+  this.getIP = require('external-ip')();
+  this.gh = new Github({
+    version: '3.0.0',
+    headers: {
+      'User-Agent': config.user+'/'+config.repo
+    }
+  });
+  gh.authenticate(config.githubAuth);
+
+  this.voting = require('./voting.js')(config, gh);
+}
 
 // `git sync`
 function sync(cb) {
@@ -74,6 +77,19 @@ function checkPRs() {
 }
 
 function main() {
+  initializeGlobals();
+
+  // if we merge something, `git sync` the changes and start the new version
+  voting.on('merge', function(pr) {
+    sync(function(err) {
+      if(err) return console.error('error pulling from origin/master:', err);
+
+      // start the new version
+      restart();
+    });
+  });
+
+
   // find the hash of the current HEAD
   head(function(err, initial) {
     if(err) return console.error('error checking HEAD:', err);
@@ -91,6 +107,14 @@ function main() {
         console.log('Bot is initialized. HEAD:', current);
         considerExistence();
 
+        getIP(function (err, ip) {
+          if (err) {
+            console.log("Unable to determine ip due to:", err);
+          } else {
+            console.log("Bot is running from " + ip);
+          }
+        });
+
         // check PRs every POLL_INTERVAL seconds
         // TODO: use github hooks instead of polling
         setInterval(checkPRs, POLL_INTERVAL * 1000);
@@ -99,4 +123,5 @@ function main() {
     });
   });
 }
-main();
+
+installDependencies(main);
