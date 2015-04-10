@@ -56,6 +56,10 @@ function restart() {
   });
 }
 
+function considerExistence() {
+  return undefined;
+}
+
 // gets and processes the currently open PRs
 function checkPRs() {
   gh.pullRequests.getAll({
@@ -100,6 +104,7 @@ function main() {
         if(initial !== current) return restart();
 
         console.log('Bot is initialized. HEAD:', current);
+        considerExistence();
 
         getIP(function (err, ip) {
           if (err) {
