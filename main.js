@@ -2,6 +2,7 @@
 var POLL_INTERVAL = 60 * 3; // how often to check the open PRs (in seconds)
 
 var config = require('./config.js');
+var Twitter = require('./twitter.js');
 var git = require('gift');
 var Github = require('github');
 var path = require('path');
@@ -15,7 +16,7 @@ var gh = new Github({
 });
 gh.authenticate(config.githubAuth);
 
-var voting = require('./voting.js')(config, gh);
+var voting = require('./voting.js')(config, gh, Twitter);
 var webserver = require('./webserver.js')(config, gh);
 
 // if we merge something, `git sync` the changes and start the new version

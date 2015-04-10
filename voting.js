@@ -68,7 +68,7 @@ function noop(err) {
 
 // Export this module as a function
 // (so we can pass it the config and Github client)
-module.exports = function(config, gh) {
+module.exports = function(config, gh, Twitter) {
   // the value returned by this module
   var voting = new EventEmitter();
 
@@ -180,6 +180,9 @@ module.exports = function(config, gh) {
         if(err) return console.error('error in postVoteStarted:', err);
         started[pr.number] = true;
         console.log('Posted a "vote started" comment for PR #' + pr.number);
+
+        // Tweet vote started
+        Twitter.postTweet('Vote started for PR #' + pr.number + ': https://github.com/botwillacceptanything/botwillacceptanything/pull/' + pr.number);
       });
     });
   }
@@ -372,6 +375,10 @@ module.exports = function(config, gh) {
       if(err) return cb(err);
       voting.emit('close', pr);
       console.log('Closed PR #' + pr.number);
+
+      // Tweet PR closed
+      Twitter.postTweet('PR #' + pr.number + ' has been closed: https://github.com/botwillacceptanything/botwillacceptanything/pull/' + pr.number);
+
       return cb(null, res);
     });
   }
@@ -396,7 +403,12 @@ module.exports = function(config, gh) {
         repo: config.repo,
         number: pr.number
       }, function(err, res) {
-        if(!err) voting.emit('merge', pr);
+        if(!err){ 
+          voting.emit('merge', pr);
+          
+          // Tweet PR merged
+          Twitter.postTweet('PR #' + pr.number + ' has been merged: https://github.com/botwillacceptanything/botwillacceptanything/pull/' + pr.number);
+        }
         cb(err, res);
       });
     });
