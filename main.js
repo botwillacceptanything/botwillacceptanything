@@ -16,6 +16,7 @@ var gh = new Github({
 gh.authenticate(config.githubAuth);
 
 var voting = require('./voting.js')(config, gh);
+var webserver = require('./webserver.js')(config, gh);
 
 // if we merge something, `git sync` the changes and start the new version
 voting.on('merge', function(pr) {
