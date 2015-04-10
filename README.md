@@ -53,8 +53,23 @@ $ cat config.js
 }());
 
 ```
-1. Run `npm` to install dependencies.
+1. (Optional) Set up GitHub Webhooks by following the next section.
+1. Run `npm install` to install dependencies.
 1. Run `node main.js` to start the bot.
+
+## Setting up GitHub Webhooks
+
+1. Go to your repository settings, and click **Webhooks & Services**
+1. Create a new webhook with the following settings:
+  * Payload URL: Externally accessible address with a path of /webhook/github
+    * http://example.com:3000/webhook/github
+  * Content type: *application/json*
+  * Secret: **Copy this secret. It is used in the config.**
+  * Which events: *Send me **everything**.*
+1. Add the Webhook Secret into config.js like this:
+```javascript
+exports.githubAuth.webhookSecret = 'rsvz9ytsjMpYfKW8CO8SQPSoxiJsVb03';
+```
 
 ## License
 

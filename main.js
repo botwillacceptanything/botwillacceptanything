@@ -1,12 +1,11 @@
-
-var POLL_INTERVAL = 60 * 3; // how often to check the open PRs (in seconds)
-
 var config = require('./config.js');
 var Twitter = require('./lib/twitter.js');
 var git = require('gift');
 var Github = require('github');
 var path = require('path');
 var spawn = require('child_process').spawn;
+
+var events = require('./lib/events.js');
 
 var gh = new Github({
   version: '3.0.0',
@@ -60,21 +59,6 @@ function considerExistence() {
   return undefined;
 }
 
-// gets and processes the currently open PRs
-function checkPRs() {
-  gh.pullRequests.getAll({
-    user: config.user,
-    repo: config.repo,
-    per_page: 100
-
-  }, function(err, res) {
-    if(err || !res) return console.error('error in checkPRs:', err);
-
-    // handle all the voting/merging logic in the voting module
-    res.forEach(voting.handlePR);
-  })
-}
-
 function main() {
   // find the hash of the current HEAD
   head(function(err, initial) {
@@ -93,10 +77,8 @@ function main() {
         console.log('Bot is initialized. HEAD:', current);
         considerExistence();
 
-        // check PRs every POLL_INTERVAL seconds
-        // TODO: use github hooks instead of polling
-        setInterval(checkPRs, POLL_INTERVAL * 1000);
-        checkPRs();
+        // Allow the voting system to bootstrap and begin monitoring PRs.
+        voting.initialize();
       });
     });
   });
