@@ -47,16 +47,14 @@ function installDependencies(callback) {
 
 // starts ourself up in a new process, and kills the current one
 function restart() {
-  installDependencies(function() { 
-    var child = spawn('node', [__filename], {
-      detached: true,
-      stdio: 'inherit'
-    });
-    child.unref();
-
-    // TODO: ensure child is alive before terminating self
-    process.exit(0);
+  var child = spawn('node', [__filename], {
+    detached: true,
+    stdio: 'inherit'
   });
+  child.unref();
+
+  // TODO: ensure child is alive before terminating self
+  process.exit(0);
 }
 
 function considerExistence() {
