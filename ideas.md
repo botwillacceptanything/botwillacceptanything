@@ -8,3 +8,4 @@
  - Have bot check for bad and malicious code in pull requests.
  - Integrate Travis CI testing.
  - Don't start voting until Travis CI tests pass.
+ - Add merge algorithm to solve conflicts in text files caused by multiple changes.
