@@ -14,6 +14,7 @@
     "sanitize-html": "^1.6.1",
     "serve-favicon": "2.2.0",
     "twitter": "^1.2.5"
+    "nj-tinyurl": "0.1.0"
   },
   "repository": {
     "type": "git",
