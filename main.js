@@ -1,5 +1,6 @@
 var POLL_INTERVAL = 60; // how often to check the open PRs (in seconds)
 
+// declare globals in a single place for better organization
 function initializeGlobals() {
   this.config = require('./config.js');
   this.git = require('gift');
@@ -17,6 +18,7 @@ function initializeGlobals() {
 
   this.voting = require('./voting.js')(config, gh);
 }
+
 // `git sync`
 function sync(cb) {
   var repo = git(__dirname);
@@ -32,6 +34,7 @@ function head(cb) {
   });
 }
 
+// make sure we are up to date with package.json
 function installDependencies(callback) {
   require('child_process').exec('npm install', function (error, stdout, stderr) {
     if (error == null) {
