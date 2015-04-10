@@ -392,6 +392,9 @@ module.exports = function(config, gh, Twitter) {
       nonStarGazers: [],
     });
 
+    // Add the PR author as a positive vote.
+    tally.votes[pr.user.login] = true;
+
     var tallySpread = Object.keys(tally.votes).reduce(function (result, user) {
       // Increment the positive/negative counters.
       tally.votes[user] ? result.positive++ : result.negative++;
