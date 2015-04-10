@@ -4,6 +4,8 @@ var EventEmitter = require('events').EventEmitter;
 // voting settings
 var PERIOD = 30; // time for the vote to be open, in minutes
 var MIN_VOTES = 5; // minimum number of votes for a decision to be made
+var DOWN_VOTE = ':poop:' // emoji for down vote
+var UP_VOTE = ':+1:' // emoji for up vote
 
 var MINUTE = 60 * 1000; // (one minute in ms)
 
@@ -13,7 +15,7 @@ var decideVoteResult = function(yeas, nays) {
 }
 
 var voteStartedComment = '#### :ballot_box_with_check: Voting has begun.\n\n' +
-  'To cast a vote, post a comment containing `:+1:` (:+1:), or `:-1:` (:-1:).\n' +
+  'To cast a vote, post a comment containing `'+ UP_VOTE +'` (' + UP_VOTE + '), or `' + DOWN_VOTE + '` ('+ DOWN_VOTE +').\n' +
   'Remember, you **must star this repo for your vote to count.**\n\n' +
   'A decision will be made after this PR has been open for **'+PERIOD+'** ' +
   'minutes, and at least **'+MIN_VOTES+'** votes have been made.\n\n' +
@@ -28,8 +30,8 @@ var couldntMergeWarning = '#### :warning: Error: This PR could not be merged\n\n
   'The changes in this PR conflict with other changes, so we couldn\'t automatically merge it. ' +
   'You can fix the conflicts and submit the changes in a new PR to start the voting process again.'
 
-var votePassComment = ':+1: The vote passed, this PR will now be merged into master.';
-var voteFailComment = ':-1: The vote failed, this PR will now be closed.'
+var votePassComment = UP_VOTE + ' The vote passed, this PR will now be merged into master.';
+var voteFailComment = DOWN_VOTE + ' The vote failed, this PR will now be closed.'
 
 var voteEndComment = function(pass, yea, nay, nonStarGazers) {
   var total = yea + nay;
@@ -39,8 +41,8 @@ var voteEndComment = function(pass, yea, nay, nonStarGazers) {
   var resp = '#### ' + (pass ? votePassComment : voteFailComment) + '\n\n' +
     '----\n' +
     '**Tallies:**\n' +
-    ':+1:: ' + yea + ' (' + yeaPercent + '%) \n' +
-    ':-1:: ' + nay + ' (' + nayPercent + '%)';
+    UP_VOTE + ': ' + yea + ' (' + yeaPercent + '%) \n' +
+    DOWN_VOTE + ': ' + nay + ' (' + nayPercent + '%)';
   if (nonStarGazers.length > 0) {
     resp += "\n\n";
     resp += "These users aren't stargazers, so their votes were not counted: \n";
@@ -183,10 +185,10 @@ module.exports = function(config, gh) {
           }
 
           // Skip people who vote both ways.
-          if(body.indexOf(':-1:') !== -1 && body.indexOf(':+1:') !== -1) continue;
-          else if(body.indexOf(':-1:') !== -1) votes[user] = false;
-          else if(body.indexOf(':+1:') !== -1) votes[user] = true;
-          else if(body.match(/:.*heart[s]*.*:$/) !== null) votes[user] = true; 
+          if(body.indexOf(DOWN_VOTE) !== -1 && body.indexOf(UP_VOTE) !== -1) continue;
+          else if(body.indexOf(DOWN_VOTE) !== -1) votes[user] = false;
+          else if(body.indexOf(UP_VOTE) !== -1) votes[user] = true;
+          else if(body.match(/:.*heart[s]*.*:$/) !== null) votes[user] = true;
         }
 
         // tally votes
