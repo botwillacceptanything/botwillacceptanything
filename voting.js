@@ -301,6 +301,9 @@ module.exports = function(config, gh, Twitter) {
         });
       }
 
+      // Flag the PR as closed pre-emptively to prevent multiple comments.
+      cachedPRs[pr.number].state = 'closed';
+
       gh.pullRequests.merge({
         user: config.user,
         repo: config.repo,
