@@ -2,7 +2,9 @@
 
 ## Status
 
-[![Build Status](https://travis-ci.org/korczis/botwillacceptanything.svg?branch=master)](https://travis-ci.org/korczis/botwillacceptanything)
+[![Build Status](https://travis-ci.org/botwillacceptanything/botwillacceptanything.svg?branch=master)](https://travis-ci.org/botwillacceptanything/botwillacceptanything)
+Gitter chat
+[![Gitter chat](https://badges.gitter.im/botwillacceptanything/botwillacceptanything.png)](https://gitter.im/botwillacceptanything/botwillacceptanything "Gitter chat")
 
 ### *The project where anything goes, as long as the code allows it.*
 
