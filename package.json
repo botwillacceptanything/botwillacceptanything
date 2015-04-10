@@ -10,6 +10,7 @@
     "intercept-stdout": "0.0.3",
     "request": "^2.55.0",
     "sanitize-html": "^1.6.1",
+    "serve-favicon": "2.2.0",
     "twitter": "^1.2.5"
   },
   "repository": {
