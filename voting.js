@@ -9,7 +9,7 @@ var MINUTE = 60 * 1000; // (one minute in ms)
 
 var decideVoteResult = function(yeas, nays) {
   // vote passes if yeas > nays
-  return passes = yeas > nays;
+  return yeas > nays;
 }
 
 var voteStartedComment = '#### :ballot_box_with_check: Voting has begun.\n\n' +
@@ -28,8 +28,8 @@ var couldntMergeWarning = '#### :warning: Error: This PR could not be merged\n\n
   'The changes in this PR conflict with other changes, so we couldn\'t automatically merge it. ' +
   'You can fix the conflicts and submit the changes in a new PR to start the voting process again.'
 
-var votePassComment = ':+1: The vote passed, this PR will now be merged into master.';
-var voteFailComment = ':-1: The vote failed, this PR will now be closed.'
+var votePassComment = ':+1: The vote passed; this PR will now be merged into master.';
+var voteFailComment = ':-1: The vote failed; this PR will now be closed.'
 
 var voteEndComment = function(pass, yea, nay, nonStarGazers) {
   var total = yea + nay;
