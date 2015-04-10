@@ -12,7 +12,7 @@ module.exports = function (config, gh) {
   var server = app.listen(3000);
   app.get('/', function (req, res) {
     var repo = git(__dirname)
-    repo.commits('feature_port_3000_webserver', function (err, commits) {
+    repo.commits(function (err, commits) {
       var commitLog = commits.map(function (commit) {
         return '<li>' +
             sanitizeAllHtml(commit.author.name + ' added ' + commit.id) +
