@@ -3,20 +3,25 @@ var EventEmitter = require('events').EventEmitter;
 
 // voting settings
 var PERIOD = 30; // time for the vote to be open, in minutes
-var MIN_VOTES = 5; // minimum number of votes for a decision to be made
+var MIN_VOTES = 5; // minimum number of votes in the same direction for a decision to be made
+var REQUIRED_SUPERMAJORITY = 0.65;
 
 var MINUTE = 60 * 1000; // (one minute in ms)
 
-var decideVoteResult = function(yeas, nays) {
-  // vote passes if yeas > nays
-  return (yeas / (yeas + nays)) > 0.65;
+var voteOver = function(yeas, nays) {
+  // vote only finishes once enough people agree, one way or the other
+  return (yeas >= MIN_VOTES || nays >= MIN_VOTES) &&
+         Math.max(yeas,nays) / (yeas + nays) > REQUIRED_SUPERMAJORITY;
 }
 
 var voteStartedComment = '#### :ballot_box_with_check: Voting has begun.\n\n' +
   'To cast a vote, post a comment containing `:+1:` (:+1:), or `:-1:` (:-1:).\n' +
   'Remember, you **must star this repo for your vote to count.**\n\n' +
   'A decision will be made after this PR has been open for **'+PERIOD+'** ' +
-  'minutes, and at least **'+MIN_VOTES+'** votes have been made.\n\n' +
+  'minutes, at least **'+MIN_VOTES+'** up-votes or **'+MIN_VOTES+'**' +
+  'down-votes have been made, and more than ' + (REQUIRED_SUPERMAJORITY * 100) +
+  '% of the votes are in the same direction.\n\n' +
+  'Until these conditions are fulfilled, the vote remains open.\n\n' +
   '*NOTE: the PR will be closed if any new commits are added after:* ';
 
 var modifiedWarning = '#### :warning: This PR has been modified and is now being closed.\n\n' +
@@ -215,11 +220,9 @@ module.exports = function(config, gh) {
 
         console.log('Yeas: ' + yeas + ', Nays: ' + nays);
 
-        // only make a decision if we have the minimum amount of votes
-        if(yeas + nays < MIN_VOTES) return;
-
-        // vote passes if yeas > nays
-        var passes = decideVoteResult(yeas, nays);
+        // only make a decision if we have enough votes one way or another
+        if (!voteOver(yeas, nays)) return;
+        var passes = yeas > nays;
 
         gh.issues.createComment({
           user: config.user,
