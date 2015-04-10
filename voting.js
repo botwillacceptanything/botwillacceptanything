@@ -18,7 +18,7 @@ var decideVoteResult = function(yeas, nays) {
   return (yeas / (yeas + nays)) > REQUIRED_SUPERMAJORITY;
 }
 
-var voteStartedComment = '#### :ballot_box_with_check: Voting procedure reminder:\n' +
+var voteStartedComment = '#### :ballot_box_with_check: Voting has begun\n' +
   'To cast a vote, post a comment containing `:+1:` (:+1:), or `:-1:` (:-1:).\n' +
   'Remember, you **must :star:star this repo for your vote to count.**\n\n' +
   'All comments within this discussion are searched for votes, regardless of the time of posting.\n' +
