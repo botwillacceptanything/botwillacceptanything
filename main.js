@@ -1,8 +1,6 @@
 
 var POLL_INTERVAL = 60; // how often to check the open PRs (in seconds)
 
-installDependencies(main);
-
 function initializeGlobals() {
   this.config = require('./config.js');
   this.git = require('gift');
@@ -120,3 +118,5 @@ function main() {
     });
   });
 }
+
+installDependencies(main);
