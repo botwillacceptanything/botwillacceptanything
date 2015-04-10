@@ -259,12 +259,13 @@ module.exports = function(config, gh) {
       pr = null;
     }
     if(!results) results = [];
+    if(!n) n = 0;
 
     f({
       user: config.user,
       repo: config.repo,
       number: pr ? pr.number : null,
-      page: n || 0,
+      page: n,
       per_page: 100
 
     }, function(err, res) {
