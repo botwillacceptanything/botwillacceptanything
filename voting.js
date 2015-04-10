@@ -13,9 +13,14 @@ var decideVoteResult = function(yeas, nays) {
   return (yeas / (yeas + nays)) > REQUIRED_SUPERMAJORITY;
 }
 
-var voteStartedComment = '#### :ballot_box_with_check: Voting has begun.\n\n' +
+var voteStartedComment = '#### :ballotbox: Voting procedure reminder:\n' +
   'To cast a vote, post a comment containing `:+1:` (:+1:), or `:-1:` (:-1:).\n' +
   'Remember, you **must star this repo for your vote to count.**\n\n' +
+  'All comments within this discussion are searched for votes, regardless of the time of posting.\n' +
+  'You can cast as many votes as you want, but only the last one will be counted.\n' +
+  '(You may consider editing your comment instead of adding a new one.)\n' +
+  'Comments containing both up- and dow-votes are disregarded.\n' +
+  'Pull request is not counted as a vote, so vote for (or against) your own PRs!\n' +
   'A decision will be made after this PR has been open for **'+PERIOD+'** ' +
   'minutes, and at least **'+MIN_VOTES+'** votes have been made.\n\n' +
   'A supermajority of ' + (REQUIRED_SUPERMAJORITY * 100) + '% is required for the vote to pass.\n\n' +
