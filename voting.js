@@ -3,7 +3,7 @@ var EventEmitter = require('events').EventEmitter;
 
 // voting settings
 var PERIOD = 30; // time for the vote to be open, in minutes
-var MIN_VOTES = 5; // minimum number of votes for a decision to be made
+var MIN_VOTES_WEIGHT = 80; // weight for changes to determine votes required
 
 var MINUTE = 60 * 1000; // (one minute in ms)
 
@@ -12,12 +12,14 @@ var decideVoteResult = function(yeas, nays) {
   return passes = yeas > nays;
 }
 
-var voteStartedComment = '#### :ballot_box_with_check: Voting has begun.\n\n' +
+var voteStartedComment = function (minVotes) {
+  return '#### :ballot_box_with_check: Voting has begun.\n\n' +
   'To cast a vote, post a comment containing `:+1:` (:+1:), or `:-1:` (:-1:).\n' +
   'Remember, you **must star this repo for your vote to count.**\n\n' +
   'A decision will be made after this PR has been open for **'+PERIOD+'** ' +
-  'minutes, and at least **'+MIN_VOTES+'** votes have been made.\n\n' +
+  'minutes, and at least **'+minVotes+'** votes have been made.\n\n' +
   '*NOTE: the PR will be closed if any new commits are added after:* ';
+};
 
 var modifiedWarning = '#### :warning: This PR has been modified and is now being closed.\n\n' +
   'To prevent people from sneaking in changes after votes have been made, pull ' +
@@ -96,11 +98,12 @@ module.exports = function(config, gh) {
         return;
       }
 
+      var formattedComment = voteStartedComment(numVotesRequired(pr));
       gh.issues.createComment({
         user: config.user,
         repo: config.repo,
         number: pr.number,
-        body: voteStartedComment + pr.head.sha
+        body: formattedComment + pr.head.sha
 
       }, function(err, res) {
         if(err) return console.error('error in postVoteStarted:', err);
@@ -122,10 +125,11 @@ module.exports = function(config, gh) {
 
     }, function(err, comments) {
       if(err || !comments) return cb(err);
-
+      
+      var formattedComment = voteStartedComment(numVotesRequired(pr));
       for(var i = 0; i < comments.length; i++) {
         var postedByMe = comments[i].user.login === config.user;
-        var isVoteStarted = comments[i].body.indexOf(voteStartedComment) === 0;
+        var isVoteStarted = comments[i].body.indexOf(formattedComment) === 0;
         if(postedByMe && isVoteStarted) {
           // comment was found
           return cb(null, comments[i]);
@@ -153,6 +157,14 @@ module.exports = function(config, gh) {
 
       cb();
     });
+  }
+  
+  // Determine the number of votes required for a given PR. Smaller NET changes
+  // (additions & deletions) are easier to merge. Can be thought of as
+  // encouraging small (incremental) mutations over larger mutations.
+  function numVotesRequired(pr) {
+    var netChanges = (pr.additions + pr.deletions) / MIN_VOTES_WEIGHT;
+    return Math.round(Math.log(Math.E + netChanges));
   }
 
   // counts the votes in the PR. if the minimum number of votes has been reached,
@@ -198,7 +210,7 @@ module.exports = function(config, gh) {
         console.log('Yeas: ' + yeas + ', Nays: ' + nays);
 
         // only make a decision if we have the minimum amount of votes
-        if(yeas + nays < MIN_VOTES) return;
+        if(yeas + nays < numVotesRequired(pr)) return;
 
         // vote passes if yeas > nays
         var passes = decideVoteResult(yeas, nays);
