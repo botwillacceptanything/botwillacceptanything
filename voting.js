@@ -4,6 +4,7 @@ var request = require('request');
 
 // voting settings
 var PERIOD = 30; // time for the vote to be open, in minutes
+var PERIOD_JITTER = 0.2; // fraction of period that is random
 var MIN_VOTES = 5; // minimum number of votes for a decision to be made
 var REQUIRED_SUPERMAJORITY = 0.65;
 
@@ -23,7 +24,8 @@ var voteStartedComment = '#### :ballot_box_with_check: Voting procedure reminder
   'Comments containing both up- and down-votes are disregarded.\n' +
   'PR authors automatically count as a :+1: vote.\n\n' +
   'A decision will be made after this PR has been open for **'+PERIOD+'** ' +
-  'minutes, and at least **'+MIN_VOTES+'** votes have been made.\n' +
+  'minutes (plus/minus **' + (PERIOD_JITTER*100) + '** percent, to avoid people timing their votes), ' +
+  'and at least **'+MIN_VOTES+'** votes have been made.\n' +
   'A supermajority of **' + (REQUIRED_SUPERMAJORITY * 100) + '%** is required for the vote to pass.\n\n' +
   '*NOTE: the PR will be closed if any new commits are added after:* ';
 
@@ -40,6 +42,12 @@ var kitten = '';
 
 var votePassComment = ':+1: The vote passed! This PR will now be merged into master.';
 var voteFailComment = ':-1: The vote failed. This PR will now be closed. Why don\'t you try some ideas that don\'t suck next time, you incredible git?'
+
+
+// We add a jitter to the PERIOD after the comment has been created, "to avoid people timing their votes".
+// More precisely, there is an incentive in the previous constant-period system to send in the vote at the last second,
+// because otherwise people can "react" to it by voting in the opposite direction (with our without sock-puppet accounts).
+PERIOD = PERIOD * (1 + (Math.random() - 0.5) * PERIOD_JITTER)
 
 var voteEndComment = function(pass, yea, nay, nonStarGazers) {
   var total = yea + nay;
