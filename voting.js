@@ -1,13 +1,16 @@
 
 var EventEmitter = require('events').EventEmitter;
 var request = require('request');
+var _ = require('lodash');
+
+var events = require('./events.js');
 
 // voting settings
 var PERIOD = 30; // time for the vote to be open, in minutes
 var MIN_VOTES = 5; // minimum number of votes for a decision to be made
 var REQUIRED_SUPERMAJORITY = 0.65;
-
 var MINUTE = 60 * 1000; // (one minute in ms)
+var POLL_INTERVAL = MINUTE * 3; // how often to check the open PRs (in seconds)
 
 var decideVoteResult = function(yeas, nays) {
   // vote passes if yeas > nays
@@ -61,6 +64,10 @@ var voteEndComment = function(pass, yea, nay, nonStarGazers) {
   return resp;
 }
 
+var votesPerPR = {};
+var cachedStarGazers = {};
+var cachedPRs = {};
+
 function percent(n) { return Math.floor(n * 1000) / 10; }
 function noop(err) {
   if(err) console.error(err);
@@ -106,7 +113,7 @@ module.exports = function(config, gh, Twitter) {
       var age = Date.now() - new Date(pr.created_at).getTime();
 
       if(age / MINUTE >= PERIOD) {
-        countVotes(pr);
+        processPR(pr);
       }
     });
   }
@@ -142,28 +149,17 @@ module.exports = function(config, gh, Twitter) {
   // checks for a "vote started" comment posted by ourself
   // returns the comment if found
   function getVoteStartedComment(pr, cb) {
-    // TODO: check more than just the first page
-    gh.issues.getComments({
-      user: config.user,
-      repo: config.repo,
-      number: pr.number,
-      per_page: 100
-
-    }, function(err, comments) {
-      if(err || !comments) return cb(err);
-
-      for(var i = 0; i < comments.length; i++) {
-        var postedByMe = comments[i].user.login === config.user;
-        var isVoteStarted = comments[i].body.indexOf(voteStartedComment) === 0;
-        if(postedByMe && isVoteStarted) {
-          // comment was found
-          return cb(null, comments[i]);
-        }
+    for(var i = 0; i < pr.comments.length; i++) {
+      var postedByMe = pr.comments[i].user.login === config.user;
+      var isVoteStarted = pr.comments[i].body.indexOf(voteStartedComment) === 0;
+      if(postedByMe && isVoteStarted) {
+        // comment was found
+        return cb(null, pr.comments[i]);
       }
+    }
 
-      // comment wasn't found
-      return cb(null, null);
-    });
+    // comment wasn't found
+    return cb(null, null);
   }
 
   // calls cb if the PR has not been committed to since the voting started,
@@ -184,85 +180,24 @@ module.exports = function(config, gh, Twitter) {
     });
   }
 
-  // counts the votes in the PR. if the minimum number of votes has been reached,
-  // make the decision (merge the PR, or close it).
-  function countVotes(pr) {
-    console.log('Counting votes for PR #' + pr.number);
-
-    // TODO: cache the stargazers list so we don't have to make a bunch of requests to check?
-    // get the people who starred the repo so we can ignore votes from people who did not star it
-    getStargazerIndex(function(err, stargazers) {
-      if(err || !stargazers) return console.error('error in countVotes:', err);
-
-      // get the comments so we can count the votes
-      getAllPages(pr, gh.issues.getComments, function(err, comments) {
-        if(err || !comments) return console.error('error in countVotes:', err);
-
-        // index votes by username so we only count 1 vote per person
-        var votes = {};
-        // The author of the PR automatically counts as a vote.
-        votes[pr.user.login] = true;
-
-        var nonStarGazers = [];
-        for(var i = 0; i < comments.length; i++) {
-          var user = comments[i].user.login;
-          var body = comments[i].body;
-
-          if(user === config.user) continue; // ignore self
-          if(!stargazers[user]) {
-            nonStarGazers.push(user);
-            continue; // ignore people who didn't star the repo
-          }
-
-          // Skip people who vote both ways.
-          if(body.indexOf(':-1:') !== -1 && body.indexOf(':+1:') !== -1) continue;
-          else if(body.indexOf(':-1:') !== -1) votes[user] = false;
-          else if(body.indexOf(':+1:') !== -1) votes[user] = true;
-        }
-
-        // tally votes
-        var yeas = 0, nays = 0;
-        for(var user in votes) {
-          if(votes[user]) yeas++;
-          else nays++;
-        }
-
-        console.log('Yeas: ' + yeas + ', Nays: ' + nays);
-
-        // only make a decision if we have the minimum amount of votes
-        if(yeas + nays < MIN_VOTES) return;
-
-        // vote passes if yeas > nays
-        var passes = decideVoteResult(yeas, nays);
-
-        gh.issues.createComment({
-          user: config.user,
-          repo: config.repo,
-          number: pr.number,
-          body: voteEndComment(passes, yeas, nays, nonStarGazers)
-        }, noop);
-
-        if(passes) {
-          mergePR(pr, noop);
-        } else {
-          closePR(pr, noop);
-        }
-      });
-    });
-  }
-
   // returns an object of all the people who have starred the repo, indexed by username
   function getStargazerIndex(cb) {
     getAllPages(gh.repos.getStargazers, function(err, stargazers) {
-      if(err || !stargazers) return cb(err);
+      if (err || !stargazers) {
+        console.error('Error getting stargazers:', err);
+        if (typeof cb === 'function') { return cb(err, stargazers); }
+        return;
+      }
 
       var index = {};
       stargazers.forEach(function(stargazer) {
         index[stargazer.login] = true;
       });
-      cb(null, index);
+      cachedStarGazers = index;
+      if (typeof cb === 'function') { cb(stargazers); }
     });
   }
+  setInterval(getStargazerIndex, POLL_INTERVAL);
 
   // returns all results of a paginated function
   function getAllPages(pr, f, cb, n, results) {
@@ -366,6 +301,134 @@ module.exports = function(config, gh, Twitter) {
     });
   }
 
-  voting.handlePR = handlePR;
+
+
+
+
+  function refreshAllPRs() {
+    getAllPages(gh.pullRequests.getAll, function (err, prs) {
+      if (err || !prs) {
+        return console.error('Error getting Pull Requests.', err);
+      }
+
+      cachedPRs = {};
+      prs.map(function (pr) {
+        cachedPRs[pr.number] = pr;
+        refreshAllComments(pr, handlePR);
+      });
+    });
+  }
+
+  function refreshAllComments(pr, cb) {
+    getAllPages(pr, gh.issues.getComments, function(err, comments) {
+      if (err || !comments) {
+        return console.error('Error getting Comments.', err);
+      }
+
+      pr.comments = comments;
+      if (typeof cb === 'function') { cb(pr); }
+    });
+  }
+
+  function processPR(pr) {
+    var voteResults = tallyVotes(pr);
+    // only make a decision if we have the minimum amount of votes
+    if (voteResults.total < MIN_VOTES) return;
+
+    // vote passes if yeas > nays
+    var passes = decideVoteResult(voteResults.positive, voteResults.negative);
+
+    gh.issues.createComment({
+      user: config.user,
+      repo: config.repo,
+      number: pr.number,
+      body: voteEndComment(passes, voteResults.positive, voteResults.negative, voteResults.nonStarGazers)
+    }, noop);
+
+    if(passes) {
+      mergePR(pr, noop);
+    } else {
+      closePR(pr, noop);
+    }
+  }
+
+  function tallyVotes(pr) {
+    var tally = pr.comments.reduce(function (result, comment) {
+      var user = comment.user.login
+        , body = comment.body;
+
+      // Don't check comments from the config user.
+      if(user === config.user) return result;
+      // People that don't star the repo cannot vote.
+      if(!cachedStarGazers[user]) {
+        result.nonStarGazers.push(user);
+        return result; 
+      }
+
+      // Skip people who vote both ways.
+      var voteCast = calculateUserVote(body);
+      if (voteCast === null) { return result; }
+
+      result.votes[user] = voteCast;
+
+      return result;
+    }, {
+      votes: {},
+      nonStarGazers: [],
+    });
+
+    var tallySpread = Object.keys(tally.votes).reduce(function (result, user) {
+      // Increment the positive/negative counters.
+      tally.votes[user] ? result.positive++ : result.negative++;
+      result.total++;
+      return result;
+    }, {
+      positive: 0,
+      negative: 0,
+      total: 0,
+    });
+
+    tallySpread.percentPositive = percent(tallySpread.positive / tallySpread.total);
+    tallySpread.percentNegative = percent(tallySpread.negative / tallySpread.total);
+
+    _.merge(tally, tallySpread);
+
+    // Store this so that we can eventually make a votes webserver endpoint.
+    votesPerPR[pr.number] = tally;
+
+    return tally;
+  }
+
+  function calculateUserVote(text) {
+    var positive = (text.indexOf(':+1:') !== -1)
+      , negative = (text.indexOf(':-1:') !== -1);
+
+    // If the user has voted positive and negative, or hasn't voted, ignore it.
+    if (positive && negative) { return null; }
+    if (!positive && !negative) { return null; }
+
+    // If positive is true, its positive. If its false, they voted negative.
+    return positive;
+  }
+
+  events.on('github.pull_request.opened', function (data) {
+    handlePR(data.pull_request);
+  });
+
+  events.on('github.comment.created', function (data) {
+    var pr = cachedPRs[data.issue.number];
+    pr.comments.push(data.comment);
+    handlePR(pr);
+  });
+
+  voting.initialize = function () {
+    getStargazerIndex(refreshAllPRs);
+
+    // If we're not set up for GitHub Webhooks, poll the server every interval.
+    if (typeof config.githubAuth === 'undefined') {
+      setInterval(refreshAllPRs, POLL_INTERVAL);
+    }
+  };
+
   return voting;
 };

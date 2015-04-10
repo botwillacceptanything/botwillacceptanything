@@ -4,10 +4,12 @@
   "description": "An autotonomous program that accepts pull requests for itself",
   "main": "main.js",
   "dependencies": {
+    "body-parser": "^1.12.2",
     "express": "^4.12.3",
     "gift": "~0.5.0",
     "github": "~0.2.3",
     "intercept-stdout": "0.0.3",
+    "lodash": "^3.6.0",
     "request": "^2.55.0",
     "sanitize-html": "^1.6.1",
     "serve-favicon": "2.2.0",
