@@ -4,8 +4,10 @@
   "description": "An autotonomous program that accepts pull requests for itself",
   "main": "main.js",
   "dependencies": {
+    "express": "^4.12.3",
     "gift": "~0.5.0",
-    "github": "~0.2.3"
+    "github": "~0.2.3",
+    "sanitize-html": "^1.6.1"
   },
   "repository": {
     "type": "git",
