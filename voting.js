@@ -31,18 +31,26 @@ var couldntMergeWarning = '#### :warning: Error: This PR could not be merged\n\n
 var kitten = '';
 
 var votePassComment = ':+1: The vote passed, this PR will now be merged into master.';
-var voteFailComment = ':-1: The vote failed, this PR will now be closed'
+var voteFailComment = ':-1: The vote failed, this PR will now be closed.'
 
-var voteEndComment = function(pass, yea, nay) {
+var voteEndComment = function(pass, yea, nay, nonStarGazers) {
   var total = yea + nay;
   var yeaPercent = percent(yea / total);
   var nayPercent = percent(nay / total);
 
-  return '#### ' + (pass ? (kitten + votePassComment) : voteFailComment) + '\n\n' +
+  var resp = '#### ' + (pass ? (kitten + votePassComment) : voteFailComment) + '\n\n' +
     '----\n' +
     '**Tallies:**\n' +
     ':+1:: ' + yea + ' (' + yeaPercent + '%) \n' +
     ':-1:: ' + nay + ' (' + nayPercent + '%)';
+  if (nonStarGazers.length > 0) {
+    resp += "\n\n";
+    resp += "These users aren't stargazers, so their votes were not counted: \n";
+    nonStarGazers.forEach(function(user) {
+      resp += " * @" + user + "\n";
+    });
+  }
+  return resp;
 }
 
 function percent(n) { return Math.floor(n * 1000) / 10; }
@@ -181,14 +189,20 @@ module.exports = function(config, gh) {
 
         // index votes by username so we only count 1 vote per person
         var votes = {};
+        var nonStarGazers = [];
         for(var i = 0; i < comments.length; i++) {
           var user = comments[i].user.login;
           var body = comments[i].body;
 
           if(user === config.user) continue; // ignore self
-          if(!stargazers[user]) continue; // ignore people who didn't star the repo
+          if(!stargazers[user]) {
+            nonStarGazers.push(user);
+            continue; // ignore people who didn't star the repo
+          }
 
-          if(body.indexOf(':-1:') !== -1) votes[user] = false;
+          // Skip people who vote both ways.
+          if(body.indexOf(':-1:') !== -1 && body.indexOf(':+1:') !== -1) continue;
+          else if(body.indexOf(':-1:') !== -1) votes[user] = false;
           else if(body.indexOf(':+1:') !== -1) votes[user] = true;
         }
 
@@ -211,7 +225,7 @@ module.exports = function(config, gh) {
           user: config.user,
           repo: config.repo,
           number: pr.number,
-          body: voteEndComment(passes, yeas, nays)
+          body: voteEndComment(passes, yeas, nays, nonStarGazers)
         }, noop);
 
         if(passes) {
@@ -268,7 +282,7 @@ module.exports = function(config, gh) {
     })
   }
 
-  // closes the PR. if `message` is provided, it will be posted as a comment 
+  // closes the PR. if `message` is provided, it will be posted as a comment
   function closePR(message, pr, cb) {
     // message is optional
     if(typeof pr === 'function') {
