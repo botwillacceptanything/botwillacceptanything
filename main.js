@@ -23,7 +23,7 @@ voting.on('merge', function(pr) {
     if(err) return console.error('error pulling from origin/master:', err);
 
     // start the new version
-    restart();
+    if(performTests()) restart();
   });
 });
 
@@ -40,6 +40,11 @@ function head(cb) {
     if(err) return cb(err);
     cb(null, head.commit.id);
   });
+}
+
+// checks if the newly downloaded version is ok
+function performTests() {
+  return true;
 }
 
 // starts ourself up in a new process, and kills the current one
@@ -86,7 +91,7 @@ function main() {
         if(err) return console.error('error checking HEAD:', err);
 
         // if we just got a new version, relaunch
-        if(initial !== current) return restart();
+        if(initial !== current && performTests()) restart();
 
         console.log('Bot is initialized. HEAD:', current);
         considerExistence();
