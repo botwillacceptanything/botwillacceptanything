@@ -12,7 +12,7 @@ A bot will automatically merge any PR on this repo that gets enough votes from t
 
 ## Community
 
-Hang out with us in IRC: **#botwillacceptanything** on Freenode.
+Hang out with us in IRC: [**#botwillacceptanything** on Freenode.](http://kiwiirc.com/client/irc.freenode.net/botwillacceptanything)
 
 ## Running the bot locally to test changes
 
