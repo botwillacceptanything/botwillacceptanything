@@ -9,7 +9,8 @@
     "github": "~0.2.3",
     "intercept-stdout": "0.0.3",
     "request": "^2.55.0",
-    "sanitize-html": "^1.6.1"
+    "sanitize-html": "^1.6.1",
+    "twitter": "^1.2.5"
   },
   "repository": {
     "type": "git",
