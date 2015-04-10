@@ -1,3 +1,14 @@
+// make sure we are up to date with package.json
+function installDependencies(callback) {
+  require('child_process').exec('npm install', function (error, stdout, stderr) {
+    if (error == null) {
+      callback();
+    } else {
+      console.log(error, stdout, stderr);
+    }
+  });
+}
+
 // defer global declaration so we have a chance to install dependencies first
 function initializeGlobals() {
   this.POLL_INTERVAL = 60; // how often to check the open PRs (in seconds)
@@ -31,17 +42,6 @@ function head(cb) {
   repo.branch(function(err, head) {
     if(err) return cb(err);
     cb(null, head.commit.id);
-  });
-}
-
-// make sure we are up to date with package.json
-function installDependencies(callback) {
-  require('child_process').exec('npm install', function (error, stdout, stderr) {
-    if (error == null) {
-      callback();
-    } else {
-      console.log(error, stdout, stderr);
-    }
   });
 }
 
