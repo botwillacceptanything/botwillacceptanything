@@ -1,4 +1,4 @@
-// declare globals in a single place for better organization
+// defer global declaration so we have a chance to install dependencies first
 function initializeGlobals() {
   this.POLL_INTERVAL = 60; // how often to check the open PRs (in seconds)
 
