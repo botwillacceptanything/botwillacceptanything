@@ -1,7 +1,7 @@
-var POLL_INTERVAL = 60; // how often to check the open PRs (in seconds)
-
 // declare globals in a single place for better organization
 function initializeGlobals() {
+  this.POLL_INTERVAL = 60; // how often to check the open PRs (in seconds)
+
   this.config = require('./config.js');
   this.git = require('gift');
   this.Github = require('github');
