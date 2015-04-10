@@ -1,7 +1,8 @@
-
+	
 var EventEmitter = require('events').EventEmitter;
 var request = require('request');
 var _ = require('lodash');
+var TinyUrl = require('nj-tinyurl');
 
 var events = require('./events.js');
 
@@ -154,7 +155,8 @@ module.exports = function(config, gh, Twitter) {
         console.log('Posted a "vote started" comment for PR #' + pr.number);
 
         // Tweet vote started
-        Twitter.postTweet('Vote started for PR #' + pr.number + ': https://github.com/botwillacceptanything/botwillacceptanything/pull/' + pr.number);
+        var starturl = TinyUrl.shorten('https://github.com/botwillacceptanything/botwillacceptanything/pull/' + pr.number);
+	Twitter.postTweet('Vote started for PR #' + pr.number + ': ' + start);
       });
     });
   }
@@ -280,7 +282,8 @@ module.exports = function(config, gh, Twitter) {
       console.log('Closed PR #' + pr.number);
 
       // Tweet PR closed
-      Twitter.postTweet('PR #' + pr.number + ' has been closed: https://github.com/botwillacceptanything/botwillacceptanything/pull/' + pr.number);
+      var closeurl = TinyUrl.shorten('https://github.com/botwillacceptanything/botwillacceptanything/pull/' + pr.number);
+      Twitter.postTweet('PR #' + pr.number + ' has been closed: ' + closeurl);
 
       return cb(null, res);
     });
@@ -310,7 +313,8 @@ module.exports = function(config, gh, Twitter) {
           voting.emit('merge', pr);
           
           // Tweet PR merged
-          Twitter.postTweet('PR #' + pr.number + ' has been merged: https://github.com/botwillacceptanything/botwillacceptanything/pull/' + pr.number);
+          var mergeurl = TinyUrl.shorten('http://github.com/botwillacceptanything/botwillacceptanything/pull/' + pr.number);
+	  Twitter.postTweet('PR #' + pr.number + ' has been merged: ' + mergeurl);
         }
         cb(err, res);
       });
