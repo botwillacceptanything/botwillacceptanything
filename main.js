@@ -2,7 +2,7 @@
 var POLL_INTERVAL = 60 * 3; // how often to check the open PRs (in seconds)
 
 var config = require('./config.js');
-var Twitter = require('./twitter.js');
+var Twitter = require('./lib/twitter.js');
 var git = require('gift');
 var Github = require('github');
 var path = require('path');
