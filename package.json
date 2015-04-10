@@ -1,7 +1,7 @@
 {
   "name": "botwillacceptanything",
   "version": "0.0.1",
-  "description": "An autotonomous program that accepts pull requests for itself",
+  "description": "An autonomous program that accepts pull requests for itself",
   "main": "main.js",
   "dependencies": {
     "body-parser": "^1.12.2",
