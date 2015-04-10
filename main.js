@@ -1,4 +1,5 @@
-var POLL_INTERVAL = 5; // how often to check the open PRs (in seconds)
+
+var POLL_INTERVAL = 60 * 3; // how often to check the open PRs (in seconds)
 
 var config = require('./config.js');
 var git = require('gift');
@@ -15,14 +16,15 @@ var gh = new Github({
 gh.authenticate(config.githubAuth);
 
 var voting = require('./voting.js')(config, gh);
+var webserver = require('./webserver.js')(config, gh);
 
 // if we merge something, `git sync` the changes and start the new version
 voting.on('merge', function(pr) {
   sync(function(err) {
     if(err) return console.error('error pulling from origin/master:', err);
 
-    // start the new version
-    restart();
+    // Install the latest NPM packages and then restart.
+    npmInstall();
   });
 });
 
@@ -41,6 +43,18 @@ function head(cb) {
   });
 }
 
+function npmInstall() {
+  var child = spawn('npm', ['install']);
+  child.stderr.on('data', function (data) {
+    console.error('npm install stderr: ' + data);
+  });
+  child.on('close', function (code) {
+    if (code !== 0) {
+      return console.error('Failed to NPM install');
+    }
+    restart();
+  });
+}
 // starts ourself up in a new process, and kills the current one
 function restart() {
   var child = spawn('node', [__filename], {
@@ -51,6 +65,10 @@ function restart() {
 
   // TODO: ensure child is alive before terminating self
   process.exit(0);
+}
+
+function considerExistence() {
+  return undefined;
 }
 
 // gets and processes the currently open PRs
@@ -80,10 +98,11 @@ function main() {
       head(function(err, current) {
         if(err) return console.error('error checking HEAD:', err);
 
-        // if we just got a new version, relaunch
-        if(initial !== current) return restart();
+        // if we just got a new version, upgrade npm packages and restart.
+        if(initial !== current) return npmInstall();
 
-        console.log('Nomic is initialized. HEAD:', current);
+        console.log('Bot is initialized. HEAD:', current);
+        considerExistence();
 
         // check PRs every POLL_INTERVAL seconds
         // TODO: use github hooks instead of polling

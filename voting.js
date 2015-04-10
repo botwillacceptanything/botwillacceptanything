@@ -1,16 +1,24 @@
+
 var EventEmitter = require('events').EventEmitter;
 
 // voting settings
 var PERIOD = 30; // time for the vote to be open, in minutes
 var MIN_VOTES = 5; // minimum number of votes for a decision to be made
+var REQUIRED_SUPERMAJORITY = 0.65;
 
 var MINUTE = 60 * 1000; // (one minute in ms)
+
+var decideVoteResult = function(yeas, nays) {
+  // vote passes if yeas > nays
+  return (yeas / (yeas + nays)) > REQUIRED_SUPERMAJORITY;
+}
 
 var voteStartedComment = '#### :ballot_box_with_check: Voting has begun.\n\n' +
   'To cast a vote, post a comment containing `:+1:` (:+1:), or `:-1:` (:-1:).\n' +
   'Remember, you **must star this repo for your vote to count.**\n\n' +
   'A decision will be made after this PR has been open for **'+PERIOD+'** ' +
   'minutes, and at least **'+MIN_VOTES+'** votes have been made.\n\n' +
+  'A supermajority of ' + (REQUIRED_SUPERMAJORITY * 100) + '% is required for the vote to pass.\n\n' +
   '*NOTE: the PR will be closed if any new commits are added after:* ';
 
 var modifiedWarning = '#### :warning: This PR has been modified and is now being closed.\n\n' +
@@ -22,19 +30,29 @@ var couldntMergeWarning = '#### :warning: Error: This PR could not be merged\n\n
   'The changes in this PR conflict with other changes, so we couldn\'t automatically merge it. ' +
   'You can fix the conflicts and submit the changes in a new PR to start the voting process again.'
 
-var votePassComment = ':+1: The vote passed, this PR will now be merged into master.';
-var voteFailComment = ':-1: The vote failed, this PR will now be closed'
+var kitten = '';
 
-var voteEndComment = function(pass, yea, nay) {
+var votePassComment = ':+1: The vote passed! This PR will now be merged into master.';
+var voteFailComment = ':-1: The vote failed. This PR will now be closed.'
+
+var voteEndComment = function(pass, yea, nay, nonStarGazers) {
   var total = yea + nay;
   var yeaPercent = percent(yea / total);
   var nayPercent = percent(nay / total);
 
-  return '#### ' + (pass ? votePassComment : voteFailComment) + '\n\n' +
+  var resp = '#### ' + (pass ? (kitten + votePassComment) : voteFailComment) + '\n\n' +
     '----\n' +
     '**Tallies:**\n' +
     ':+1:: ' + yea + ' (' + yeaPercent + '%) \n' +
     ':-1:: ' + nay + ' (' + nayPercent + '%)';
+  if (nonStarGazers.length > 0) {
+    resp += "\n\n";
+    resp += "These users aren't stargazers, so their votes were not counted: \n";
+    nonStarGazers.forEach(function(user) {
+      resp += " * @" + user + "\n";
+    });
+  }
+  return resp;
 }
 
 function percent(n) { return Math.floor(n * 1000) / 10; }
@@ -50,6 +68,22 @@ module.exports = function(config, gh) {
 
   // an index of PRs we have posted a 'vote started' comment on
   var started = {};
+
+  // get a random kitten to be used by this instance of the bot
+  var options = {
+    hostname: 'thecatapi.com',
+    port: 80,
+    path: '/api/images/get?format=html',
+    method: 'POST'
+  };
+  var req = require('http').request(options, function(res) {
+    res.setEncoding('utf8');
+    res.on('data', function(chunk) {
+      kitten += chunk;
+    });
+  });
+  req.write('');
+  req.end();
 
   // handles an open PR
   function handlePR(pr) {
@@ -157,14 +191,20 @@ module.exports = function(config, gh) {
 
         // index votes by username so we only count 1 vote per person
         var votes = {};
+        var nonStarGazers = [];
         for(var i = 0; i < comments.length; i++) {
           var user = comments[i].user.login;
           var body = comments[i].body;
 
           if(user === config.user) continue; // ignore self
-          if(!stargazers[user]) continue; // ignore people who didn't star the repo
+          if(!stargazers[user]) {
+            nonStarGazers.push(user);
+            continue; // ignore people who didn't star the repo
+          }
 
-          if(body.indexOf(':-1:') !== -1) votes[user] = false;
+          // Skip people who vote both ways.
+          if(body.indexOf(':-1:') !== -1 && body.indexOf(':+1:') !== -1) continue;
+          else if(body.indexOf(':-1:') !== -1) votes[user] = false;
           else if(body.indexOf(':+1:') !== -1) votes[user] = true;
         }
 
@@ -181,13 +221,13 @@ module.exports = function(config, gh) {
         if(yeas + nays < MIN_VOTES) return;
 
         // vote passes if yeas > nays
-        var passes = yeas > nays;
+        var passes = decideVoteResult(yeas, nays);
 
         gh.issues.createComment({
           user: config.user,
           repo: config.repo,
           number: pr.number,
-          body: voteEndComment(passes, yeas, nays)
+          body: voteEndComment(passes, yeas, nays, nonStarGazers)
         }, noop);
 
         if(passes) {
@@ -221,12 +261,13 @@ module.exports = function(config, gh) {
       pr = null;
     }
     if(!results) results = [];
+    if(!n) n = 0;
 
     f({
       user: config.user,
       repo: config.repo,
       number: pr ? pr.number : null,
-      page: n || 0,
+      page: n,
       per_page: 100
 
     }, function(err, res) {
@@ -244,7 +285,7 @@ module.exports = function(config, gh) {
     })
   }
 
-  // closes the PR. if `message` is provided, it will be posted as a comment 
+  // closes the PR. if `message` is provided, it will be posted as a comment
   function closePR(message, pr, cb) {
     // message is optional
     if(typeof pr === 'function') {
