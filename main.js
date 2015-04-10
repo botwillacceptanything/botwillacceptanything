@@ -22,7 +22,7 @@ voting.on('merge', function(pr) {
   sync(function(err) {
     if(err) return console.error('error pulling from origin/master:', err);
 
-    // Install the latest NPM packages.
+    // Install the latest NPM packages and then restart.
     npmInstall();
   });
 });
@@ -97,7 +97,7 @@ function main() {
       head(function(err, current) {
         if(err) return console.error('error checking HEAD:', err);
 
-        // if we just got a new version, relaunch
+        // if we just got a new version, upgrade npm packages and restart.
         if(initial !== current) return npmInstall();
 
         console.log('Bot is initialized. HEAD:', current);
