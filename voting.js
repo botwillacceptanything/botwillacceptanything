@@ -29,7 +29,7 @@ var couldntMergeWarning = '#### :warning: Error: This PR could not be merged\n\n
   'You can fix the conflicts and submit the changes in a new PR to start the voting process again.'
 
 var votePassComment = ':+1: The vote passed, this PR will now be merged into master.';
-var voteFailComment = ':-1: The vote failed, this PR will now be closed'
+var voteFailComment = ':-1: The vote failed, this PR will now be closed.'
 
 var voteEndComment = function(pass, yea, nay) {
   var total = yea + nay;
