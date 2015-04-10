@@ -1,5 +1,9 @@
 # Bot will accept anything
 
+## Status
+
+[![Build Status](https://travis-ci.org/korczis/botwillacceptanything.svg?branch=master)](https://travis-ci.org/korczis/botwillacceptanything)
+
 ### *The project where anything goes, as long as the code allows it.*
 
 A bot will automatically merge any PR on this repo that gets enough votes from the community. PRs can contain anything, *even changes to the bot's voting code*.
@@ -30,14 +34,43 @@ The bot has a built-in webserver for monitoring its current state.
 
 1. Fork this repo.
 1. Get yourself an OAuth token for github at https://github.com/settings/tokens/new. (TODO what scopes are required?)
-1. Create a config.js file for your instance of the bot that looks like this:
+1. Copy config.template.js -> config.js and modify accordingly.
+
 ```javascript
-exports.user = "YOUR_GITHUB_USERNAME";
-exports.repo = "botwillacceptanything";
-exports.githubAuth = {type: "oauth", token: "YOUR_OAUTH_TOKEN"}
+$ cp config.template.js config.js
+$ vim config.js
+$ cat config.js
+(function () {
+    'use strict';
+
+    module.exports = {
+        user: "YOUR_GITHUB_USERNAME",
+        repo: "botwillacceptanything",
+        githubAuth: {
+            type: "oauth",
+            token: "YOUR_OAUTH_TOKEN"
+        }
+    };
+}());
+
 ```
+1. (Optional) Set up GitHub Webhooks by following the next section.
 1. Run `npm install` to install dependencies.
 1. Run `node main.js` to start the bot.
+
+## Setting up GitHub Webhooks
+
+1. Go to your repository settings, and click **Webhooks & Services**
+1. Create a new webhook with the following settings:
+  * Payload URL: Externally accessible address with a path of /webhook/github
+    * http://example.com:3000/webhook/github
+  * Content type: *application/json*
+  * Secret: **Copy this secret. It is used in the config.**
+  * Which events: *Send me **everything**.*
+1. Add the Webhook Secret into config.js like this:
+```javascript
+exports.githubAuth.webhookSecret = 'rsvz9ytsjMpYfKW8CO8SQPSoxiJsVb03';
+```
 
 ## License
 
