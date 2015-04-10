@@ -45,7 +45,7 @@ function head(cb) {
 
 // starts ourself up in a new process, and kills the current one
 function restart() {
-  var child = spawn('node', [__dirname + "/launcher.js"], {
+  var child = spawn('node', [__dirname + "/lib/launcher.js"], {
     detached: true,
     stdio: 'inherit'
   });
