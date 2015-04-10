@@ -2,17 +2,22 @@ var express = require('express');
 var app = express();
 
 var git = require('gift');
+var sanitizeHtml = require('sanitize-html');
+
+function sanitizeAllHtml(dirty) {
+  return sanitizeHtml(dirty, { allowedTags: [] });
+}
 
 module.exports = function (config, gh) {
   var server = app.listen(3000);
   app.get('/', function (req, res) {
     var repo = git(__dirname)
-    repo.commits(function (err, commits) {
+    repo.commits('feature_port_3000_webserver', function (err, commits) {
       var commitLog = commits.map(function (commit) {
         return '<li>' +
-            commit.author.name + ' added ' + commit.id +
+            sanitizeAllHtml(commit.author.name + ' added ' + commit.id) +
             "<br />" +
-            commit.message.replace("\n", '<br />') +
+            sanitizeAllHtml(commit.message).replace("\n", '<br />') +
           '</li>';
       });
       var response = 'Last 10 commits:<ul>';
