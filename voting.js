@@ -100,6 +100,11 @@ module.exports = function(config, gh, Twitter) {
 
   // handles an open PR
   function handlePR(pr) {
+    // Don't act on closed PRs
+    if (pr.state === 'closed') {
+      return console.log('Update triggered on closed PR #' + pr.number);
+    }
+
     // if there is no 'vote started' comment, post one
     if(!started[pr.number]) {
       postVoteStarted(pr);
@@ -412,11 +417,23 @@ module.exports = function(config, gh, Twitter) {
   }
 
   events.on('github.pull_request.opened', function (data) {
+    data.pull_request.comments = [];
+    cachedPRs[data.number] = data.pull_request;
     handlePR(data.pull_request);
+  });
+
+  events.on('github.pull_request.closed', function (data) {
+    var pr = cachedPRs[data.number];
+    if (typeof pr !== 'undefined') {
+      pr.state = 'closed';
+    }
   });
 
   events.on('github.comment.created', function (data) {
     var pr = cachedPRs[data.issue.number];
+    if (typeof pr === 'undefined') {
+      return console.error('Could not find PR', data.issue.number, 'when adding a comment');
+    }
     pr.comments.push(data.comment);
     handlePR(pr);
   });
