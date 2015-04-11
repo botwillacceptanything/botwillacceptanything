@@ -12,8 +12,7 @@ RUN apt-get install -y nodejs nodejs-legacy git npm
 COPY . /src
 
 RUN cd /src
-RUN /usr/bin/npm install -g forever gulp bower 
-
+RUN /usr/bin/npm install -g forever gulp bower
 
 EXPOSE 80 3000 8080
  
