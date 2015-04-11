@@ -80,6 +80,9 @@
                     console.log('Bot is initialized. HEAD:', current);
                     considerExistence();
 
+                    // greet the other bots
+                    talk.speak();
+
                     // Allow the voting system to bootstrap and begin monitoring PRs.
                     voting.initialize();
                 });
