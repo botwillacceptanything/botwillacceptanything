@@ -1,0 +1,1 @@
+:-1: The vote failed. This PR will now be closed. Why don't you try some ideas that don't suck next time, you incredible git?
