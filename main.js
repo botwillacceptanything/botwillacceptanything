@@ -19,6 +19,7 @@
 
     var voting = require('./lib/voting.js')(config, gh, Twitter, events, irc);
     var webserver = require('./lib/webserver.js')(config, events);
+    var talk = require('./lib/talk.js')(config, gh);
 
 // if we merge something, `git sync` the changes and start the new version
     voting.on('merge', function (pr) {
