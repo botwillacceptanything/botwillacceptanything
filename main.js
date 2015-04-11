@@ -2,6 +2,7 @@ var config = require('./config.js');
 var Twitter = require('./lib/twitter.js');
 var git = require('gift');
 var Github = require('github');
+var irc = require('./lib/irc.js')(config);
 var path = require('path');
 var spawn = require('child_process').spawn;
 
@@ -15,7 +16,7 @@ var gh = new Github({
 });
 gh.authenticate(config.githubAuth);
 
-var voting = require('./lib/voting.js')(config, gh, Twitter, events);
+var voting = require('./lib/voting.js')(config, gh, Twitter, events, irc);
 var webserver = require('./lib/webserver.js')(config, events);
 
 // if we merge something, `git sync` the changes and start the new version
@@ -86,5 +87,5 @@ function main() {
 main();
 
 process.on('uncaughtException', function(err) {
-  console.error('UNCAUGHT ERROR: ' + err);
+  console.error('UNCAUGHT ERROR: ' + err + '\n' + err.stack);
 });
