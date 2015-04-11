@@ -27,7 +27,8 @@ The bot runs on a 1GB DigitalOcean VPS in SF at [162.243.149.229](http://162.243
 
 The bot has a built-in webserver for monitoring its current state.
 
-* [Recent Commits](http://162.243.149.229:3000)
+* [Homepage](http://162.243.149.229:3000/)
+* [Recent Commits](http://162.243.149.229:3000/commits)
 * [Stdout Log](http://162.243.149.229:3000/stdout)
 * [Webhook Status](http://162.243.149.229:3000/webhook/github)
 
