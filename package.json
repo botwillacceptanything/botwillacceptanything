@@ -5,6 +5,7 @@
   "main": "main.js",
   "dependencies": {
     "body-parser": "^1.12.2",
+    "eliza": "0.0.1-2",
     "express": "^4.12.3",
     "gift": "~0.5.0",
     "github": "~0.2.3",
