@@ -2,7 +2,7 @@
 
 cd /src
 
-git clone https://github.com/korczis/botwillacceptanything.git
+git clone http://github.com/korczis/botwillacceptanything.git
 
 cd botwillacceptanything
 
