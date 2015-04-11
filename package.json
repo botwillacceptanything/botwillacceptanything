@@ -16,7 +16,8 @@
     "sanitize-html": "^1.6.1",
     "sentiment": "^1.0.2",
     "serve-favicon": "2.2.0",
-    "twitter": "^1.2.5"
+    "twitter": "^1.2.5",
+    "amdefine": "^0.1.0"
   },
   "repository": {
     "type": "git",
