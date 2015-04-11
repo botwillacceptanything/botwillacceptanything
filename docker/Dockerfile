@@ -13,8 +13,6 @@ COPY . /src
 
 RUN cd /src
 RUN /usr/bin/npm install -g forever gulp bower
-RUN /usr/bin/npm install ws
-
 
 EXPOSE 80 3000 8080
  
