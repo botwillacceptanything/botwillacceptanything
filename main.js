@@ -17,7 +17,7 @@
     });
     gh.authenticate(config.githubAuth);
 
-    var voting = require('./lib/voting.js')(config, gh, Twitter, events, irc);
+    var voting = require('./lib/voting.js')(config, gh, events, irc);
     var webserver = require('./lib/webserver.js')(config, events);
     var talk = require('./lib/talk.js')(config, gh);
 
