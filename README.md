@@ -21,16 +21,16 @@ The bot is [**@anythingbot** on Twitter.](https://twitter.com/anythingbot/)
 
 ## Running Servers
 
-The bot runs on a 1GB DigitalOcean VPS in SF at [botwillacceptanything.com](http://botwillacceptanything.com:3000) without root access. This means that port 80 is restricted.
+The bot runs on a 1GB DigitalOcean VPS in SF at [botwillacceptanything.com](http://botwillacceptanything.com) without root access. Port 80 is a proxy to port 3000 via nginx.
 
 ## Bot Webserver Paths
 
 The bot has a built-in webserver for monitoring its current state.
 
-* [Homepage](http://botwillacceptanything.com:3000/)
-* [Recent Commits](http://botwillacceptanything.com:3000/commits)
-* [Stdout Log](http://botwillacceptanything.com:3000/stdout)
-* [Statistics](http://botwillacceptanything.com:3000/statistics)
+* [Homepage](http://botwillacceptanything.com/)
+* [Recent Commits](http://botwillacceptanything.com/commits)
+* [Stdout Log](http://botwillacceptanything.com/stdout)
+* [Statistics](http://botwillacceptanything.com/statistics)
 
 ## Running the bot locally to test changes
 
