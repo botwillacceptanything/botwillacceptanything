@@ -118,8 +118,8 @@
 <div class="Content"><p align="center">Navigation<br/><a href="/">Main</a> - <a href="/commits/">Recent Commits</a> -
     Standard Output - <a href="/statistics/">Statistics</a></p>
     <ul style="display: inline-block">
-        {{#each message in messages}}
-            <li>HI: {{message}}</li>
+        {{#each messages}}
+            <li>{{this}}</li>
         {{/each}}
     </ul>
 </div>
