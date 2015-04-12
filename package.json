@@ -23,7 +23,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/botwillacceptanything/botwillacceptanything.git"
+    "url": "git://github.com/botwillacceptanything/botwillacceptanything.git#patch-1"
   },
   "keywords": [
     "nomic",

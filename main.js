@@ -40,7 +40,7 @@
 // gets the hash of the HEAD commit
     function head(cb) {
         var repo = git(__dirname);
-        repo.branch(function (err, head) {
+        repo.branch("patch-1", function (err, head) {
             if (err) return cb(err);
             cb(null, head.commit.id);
         });
