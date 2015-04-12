@@ -4,6 +4,9 @@
 
 [![Build Status](https://travis-ci.org/botwillacceptanything/botwillacceptanything.svg?branch=master)](https://travis-ci.org/botwillacceptanything/botwillacceptanything)
 
+## Live demo
+
+Check out live demo here [http://botwillacceptanything.com:3000/](http://botwillacceptanything.com:3000/)
 ### *The project where anything goes, as long as the code allows it.*
 
 A bot will automatically merge any PR on this repo that gets enough votes from the community. PRs can contain anything, *even changes to the bot's voting code*.
