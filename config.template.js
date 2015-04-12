@@ -6,7 +6,8 @@
         repo: "botwillacceptanything",
         githubAuth: {
             type: "oauth",
-            token: "YOUR_OAUTH_TOKEN"
+            token: "YOUR_OAUTH_TOKEN",
+            webhookSecret: 'SECRET'
         }
     };
 }());
