@@ -20,7 +20,7 @@
     gulp.task('jsdoc', [], function () {
         return gulp.src(src)
             .pipe(jsdoc.parser())
-            .pipe(jsdoc.generator('doc/'));
+            .pipe(jsdoc.generator('data/doc/'));
     });
 
     // Build Task
