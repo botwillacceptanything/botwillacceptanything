@@ -6,7 +6,7 @@
 
 ## Live demo
 
-Check live demo @ [botwillacceptanything.com:3000](botwillacceptanything.com:3000)
+Check live demo @ [botwillacceptanything.com:3000](http://botwillacceptanything.com:3000)
 
 ### *The project where anything goes, as long as the code allows it.*
 
