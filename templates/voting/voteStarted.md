@@ -11,4 +11,4 @@ PR authors automatically count as a :+1: vote.
 A decision will be made after this PR has been open for **{{period}}** minutes (plus/minus **{{jitter}}** percent, to avoid people timing their votes), and at least **{{min_votes}}** votes have been made.
 A supermajority of **{{majority}}%** is required for the vote to pass.
 
-*NOTE: the PR will be closed if any new commits are added after:*
+*NOTE: the PR will be closed if any new commits are added after:* 
