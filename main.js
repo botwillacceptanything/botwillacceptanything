@@ -3,7 +3,7 @@
     var Twitter = require('./lib/twitter.js');
     var git = require('gift');
     var Github = require('github');
-    var irc = require('./lib/irc.js')(config);
+    var irc = require('./lib/irc.js');
     var path = require('path');
     var spawn = require('child_process').spawn;
 
@@ -17,7 +17,7 @@
     });
     gh.authenticate(config.githubAuth);
 
-    var voting = require('./lib/voting.js')(config, gh, events, irc);
+    var voting = require('./lib/voting.js')(config, gh, events);
     var webserver = require('./lib/webserver.js')(config, events);
     var talk = require('./lib/talk.js')(config, gh);
 
