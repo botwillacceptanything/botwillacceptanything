@@ -2,7 +2,7 @@
     'use strict';
 
     module.exports = {
-        webser: {
+        webserver: {
             port: 3000
         },
 
