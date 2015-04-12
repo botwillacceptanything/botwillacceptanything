@@ -19,7 +19,10 @@
     "serve-favicon": "2.2.0",
     "twitter": "^1.2.5",
     "amdefine": "^0.1.0",
-    "mustache": "2.0.0"
+    "mustache": "2.0.0",
+    "morgan": "^1.5.2",
+    "deferred": "^0.7.2",
+    "errorhandler": "^1.3.5"
   },
   "repository": {
     "type": "git",
