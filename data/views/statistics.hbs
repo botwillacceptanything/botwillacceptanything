@@ -2,7 +2,13 @@
     <table>
         <tr>
             <td>Webhook Status:</td>
-            <td>Disabled</td>
+            <td>
+                {{#if config.githubAuth.webhookSecret}}
+                    Enabled
+                {{else}}
+                    Disabled
+                {{/if}}
+            </td>
         </tr>
         <tr>
             <td>Operating System:</td>
@@ -15,14 +21,6 @@
         <tr>
             <td>System Name:</td>
             <td>{{os.hostname}}</td>
-        </tr>
-        <tr>
-            <td>Webhook Status:</td>
-            {{#if config.githubAuth.webhookSecret}}
-                Enabled
-            {{else}}
-                Disabled
-            {{/if}}
         </tr>
     </table>
 </center>
