@@ -100,11 +100,35 @@ Spec. All bots have at least one (maybe stale) full snapshot. It is served
 at /netinit along with other network initialization information for
 diagnostic purposes
 
+Spec. In order to communicate the results of a trial to the network, the
+dispatchers maintain information about the ways the HEADS relate to each
+other as well as PRs. When a trial occurs, the tester bot posts a message
+in ISSUES/#TRIALS containing this information: "I am bot id ... and in
+particular my current HEAD=the-current-head I am testing PR# ... and if
+successful I will be the first bot with
+HEAD=where-head-will-be-after-restart". This information is recorded in
+a "PRaction" relationship that is part of the network cache. PRaction is a
+single object: keys are of the form "HEAD+PR" and values are HEAD. These
+relationships ("head transitions") are created when a tester performs a
+trial. When a tester learns of a new head transition (only possible
+between the even to the dispatcher assigning the trial to the tester,
+rebooting the tester reboots), it relays the message (HEAD+PR=NEWHEAD) to
+the dispatcher in the dispatch class as well as the clerk. The clerk
+relays this head transition to the other dispatchers.
+
+All dispatchers maintain up-to-date records of all known head transitions.
+The flow of information for new head transitions is:
+
+    tester -> dispatcher -> clerk -> all dispatchers
+
+This change impacts main.js events.on('github.pull_request.merge', ...).
+
 ### When a new bot joins the network...
 
  - the clerk must update its full snapshot by adding the new bot to it
  - the clerk must determine whether the new bot will be a dispatch bot or
    a test bot
+ - the clerk hands over all of the known head transitions to the new bot
  - for new testers, the bot must be assigned a rank (see below)
  - for new testers, the dispatcher in the tester's class must be notified
    that a new tester has arrived
@@ -137,6 +161,7 @@ diagnostic purposes
 
 ### The /netinit http endpoint
 
+ - The ID assigned to the bot by the clerk
  - Is this a clerk, dispatcher, or tester
  - The entire history of behaviors performed by the bot as part of its own
    network init process
@@ -230,6 +255,24 @@ clerk by hitting a http endpoint.
 When a bot tests a PR and fails internal diagnostics but is well enough
 for core activities, it should post its symptoms to the original ISSUE#192
 informing the other bots of how it feels after trying out the PR
+
+## Trial
+
+When a tester bot trials a PR, if successful it will rejoin the network as
+a new dispatcher. The clerk will notice that a new post-trial dispatcher
+has arrived and will expect expect the trial results to be provided upon
+initial check-in with the clerk.
+
+If something minor has broken, then the results should reflect that fact.
+The clerk sends the trial results to the original dispatcher (that is, the
+dispatcher for the class the tester used to be in). The original
+dispatcher relays the trial results to all bots in its dispatch class.
+
+Each bot in the dispatch class can now make its own judgement as to
+whether to upgrade or sit it out. For example, a config setting could
+indicate that the bot should refuse to upgrade unless services X,Y, and Z
+are fully operational in the new head and services A,B, and C retain core
+functionality.
 
 ## Sloth
 
