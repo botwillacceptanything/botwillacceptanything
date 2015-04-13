@@ -333,13 +333,6 @@ Role-playing setting (play role of clerk, dispatcher, or tester)
 New files: bwmain.js lib/botword.js lib/mockgithub.js lib/mocktwitter.js
 lib/mockirc.js
 
-## Internationalization
-
-In Bot ID, LANG is one of
-http://www.loc.gov/standards/iso639-2/php/code_list.php, the three letter
-version or some other standard. Once text keys are set up...this is
-another discussion for another day.
-
 ## End material
 
 Random note: custom favicons, switched by github username in config.js.
