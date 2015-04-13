@@ -1,10 +1,10 @@
-# Round-Robin Dispatcher Development (R2D2) a.k.a. "Network of Guinea Pigs"
+# Round-Robin Dispatcher Development (R2D2)
 
-Abstract: Protocol for testing new BWAA code.
+Abstract: Protocol for testing new BWAA code
 
-Purpose: spread the risk of testing new code
+Purpose: Spread the risk of testing new code
 
-New file: network.js (a.k.a. "the public bwaadcasting system" (PBWAAS)
+New file: net.js behave.js
 
 ## Main Section
 
@@ -16,12 +16,13 @@ Two bots are in the same dispatch class if and only if they have the same
 HEAD (git commit ID). Everything else can be different, but the HEADs must
 match.
 
-#### Definition. 192 trick.
+#### Definition. 192 bwaadcasting.
 
+It is possible to use the same technique as
 https://github.com/botwillacceptanything/botwillacceptanything/issues/192
-New issues in github function as channels for the bots, which are, for the
-purposes of this document, arbitrary numerical constants. They look like
-ISSUES/#DESCRIPTIONHERE.  which refers to a URL like the one above.
+to coordinate network init activity for small networks. New issues in
+github function as channels for the bots. They look like
+ISSUES/#DESCRIPTIONHERE which refers to a URL like the one above.
 
 #### Definition. The ID of a bot.
 
@@ -163,13 +164,11 @@ The current contents of the network cache:
    assigned rank for a bot that joins the network is one plus the maximum
    of the ranks of the bots in the network dispatch class. The dispatcher
    has no rank.
- - It would be useful to have some plan at some point for rehosting all of
-   the 192 services if they start to get out of hand
  - Assume a 1-1 correspondence between IP:PORT pairs and bots.
  - r2d2 network activity is logged to stdout (in the future maybe a
    net.log file in a logs/ directory of the git tree root)
 
-## Bwaadcast (a.k.a. 192 technique)
+## Bwaadcast channels
 
  - ISSUES/#DISPATCH : this is the channel for dispatchers to indicate that
    they are farming out PRs to testers
@@ -182,6 +181,12 @@ The current contents of the network cache:
    this issue
  - ISSUES/#NETINIT : Bots talk about joining the network
  - ISSUES/#BEHAVIOR : The bots state what actions they are performing
+
+Using github in this way is not compatible with long-term growth, but it
+sure is handy. If the bwaa network is going to be "autonomous" then it
+follows that the bwaadcast channels would be managed and maintained by the
+bots; however, the bots could collectively rely on some service (more
+appropriate than github issues) in order to support network maintenance.
 
 ## Roles
 
@@ -233,7 +238,7 @@ some subtle bug that will cause the network to overload and fail some
 point down the line. A crude mechanism for controlling this behavior and
 preventing the possible charge of accidentally triggering something that
 could be perceived as an attack against some host or service is to insert
-a delay (sleep.usleep) between 0.1 sec and 1 minute. This delay is
+a delay (setTimeout) between 0.001 sec and 1 minute. This delay is
 incurred for every executed behavior.
 
 Ideally, the sloth factor would be set centrally by a designated network
@@ -248,9 +253,11 @@ a spammy infinite loop, the rate at which it will be able to cause trouble
 will be relatively low. After the network is sure the bot with the new
 HEAD isn't going to blow up, the sloth factor can be lowered.
 
-A change to the sloth factor can originate at the clerk, which then relays
-the change order (only to those dispatchers matching one of the HEADs
-condition, if there is one associated with the change order
+A change to the sloth factor can originate (SFCO) at the clerk, which then
+relays the change order to dispatchers (only to those dispatchers matching
+one of the HEADs condition, if there is one associated with the change
+order), OR a SFCO can originate at a dispatcher, which then propagates the
+change order only to its dispatch class.
 
 Sloth factor change order 
  - does this change order apply to
@@ -280,9 +287,8 @@ but not in main.js)
 
 Role-playing setting (play role of clerk, dispatcher, or tester)
 
-Testing of behaviors...each behavior has an identifier
-
-New files: mockgithub.js mocktwitter.js mockirc.js
+New files: bwmain.js lib/botword.js lib/mockgithub.js lib/mocktwitter.js
+lib/mockirc.js
 
 ## Internationalization
 
@@ -312,5 +318,4 @@ Advisory: this is potentially dangerous...there is much talk of testing
 out new commits before they reach the eyeballs of a single human being
 other than the author, which is a security hazard. There are ways around
 this, such as separation of voting for testing vs. voting for merging but
-that is another direction. Also there are lots of repetitions in this
-document and it is potentially self-contradictory
+that is another direction.
