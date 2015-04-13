@@ -1,9 +1,7 @@
 (function() {
     var config = require('./config.js');
-    var Twitter = require('./lib/twitter.js');
     var git = require('gift');
     var Github = require('github');
-    var irc = require('./lib/irc.js')(config);
     var path = require('path');
     var spawn = require('child_process').spawn;
 
@@ -17,12 +15,14 @@
     });
     gh.authenticate(config.githubAuth);
 
-    var voting = require('./lib/voting.js')(config, gh, Twitter, events, irc);
+    var voting = require('./lib/voting.js')(config, gh, events);
     var webserver = require('./lib/webserver.js')(config, events);
     var talk = require('./lib/talk.js')(config, gh);
+    var integrations = require('./lib/integrations/index.js');
+    var Logger = require('./lib/logger');
 
 // if we merge something, `git sync` the changes and start the new version
-    voting.on('merge', function (pr) {
+    events.on('github.pull_request.merge', function (event) {
         sync(function (err) {
             if (err) return console.error('error pulling from origin/master:', err);
 
@@ -90,7 +90,10 @@
         });
     }
 
-    main();
+    integrations().then(main, function (err) {
+      Logger.error(err);
+      Logger.error(err.stack);
+    });
 
     process.on('uncaughtException', function (err) {
         console.error('UNCAUGHT ERROR: ' + err + '\n' + err.stack);
