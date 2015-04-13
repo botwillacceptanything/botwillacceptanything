@@ -16,5 +16,13 @@
             <td>System Name:</td>
             <td>{{os.hostname}}</td>
         </tr>
+        <tr>
+            <td>Webhook Status:</td>
+            {{#if config.githubAuth.webhookSecret}}
+                Enabled
+            {{else}}
+                Disabled
+            {{/if}}
+        </tr>
     </table>
 </center>
