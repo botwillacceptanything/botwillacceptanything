@@ -22,7 +22,7 @@
     var Logger = require('./lib/logger');
 
 // if we merge something, `git sync` the changes and start the new version
-    events.on('github.pull_request.merge', function (event) {
+    events.on('github.pull_request.merged', function (event) {
         sync(function (err) {
             if (err) return console.error('error pulling from origin/master:', err);
 
