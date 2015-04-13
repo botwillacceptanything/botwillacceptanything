@@ -37,6 +37,7 @@ The bot has a built-in webserver for monitoring its current state.
 1. Fork this repo.
 1. Get yourself an OAuth token for github at https://github.com/settings/tokens/new. (TODO what scopes are required?)
 1. Copy config.template.js -> config.js and modify accordingly.
+1. Disable any items in the mocks section that you would like to function normally.
 
 ```javascript
 $ cp config.template.js config.js
@@ -46,12 +47,18 @@ $ cat config.js
     'use strict';
 
     module.exports = {
+        webserver: {
+            port: 3000
+        },
         user: "YOUR_GITHUB_USERNAME",
         repo: "botwillacceptanything",
         githubAuth: {
             type: "oauth",
             token: "YOUR_OAUTH_TOKEN"
-        }
+        },
+        mocks: {
+            twitter: true,
+        },
     };
 }());
 
