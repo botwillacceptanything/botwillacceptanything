@@ -25,24 +25,24 @@ ISSUES/#DESCRIPTIONHERE.  which refers to a URL like the one above.
 
 #### Definition. The ID of a bot.
 
-is a quintuple (IP:PORT:HEAD:ROLE:LANG) where
-role is one of CLERK,DISPATCH,TEST and language is something that doesn't
-have to be implemented until internationalization, but why not now...six
-one way, half dozen another (see below for brief notes on
-internationalization). When any bot updates its code, it must talk with
-clerk to figure out its role in order to get its proper ID. When a bot
-transitions from TEST to DISPATCH role, it must rejoin the network
-(through reinit, see below).
+is a quadruple (IP:PORT:HEAD:ROLE) where
+ - IP is host IP address
+ - PORT is for http endpoints
+ - HEAD is the git commit corresponding to the live code
+ - ROLE is one of CLERK,DISPATCH,TEST,NEW
+When a bot restarts, it must talk with clerk to figure out its role in
+order to get its proper ID. When a bot transitions from TEST to DISPATCH
+role, it must rejoin the network (by performing reinit behavior, see
+below).
 
 #### Definition. Network caches.
 
-The network is maintained through a system of caches, one
-cache per bot, each bot determining its behavior based on the contents of
-its network cache. The "snapshot" is a particular kind of cache that
-contains a master directory of the bots in the network. Full snapshot
-means all bots in the network, partial snapshot means a subset of the
-bots. Bots can hold onto multiple snapshots (in reality at most 2, but
-potentially any number)
+The network is maintained through a system of caches, one cache per bot,
+each bot determining its behavior based on the contents of its network
+cache. The "snapshot" is a particular kind of cache that contains a master
+directory of the bots in the network. Full snapshot means all bots in the
+network, partial snapshot means a subset of the bots. Bots can hold onto
+multiple snapshots (in reality at most 2, but potentially any number)
 
 Spec. The clerk's network cache is special because it is the only bot that
 contains an up-to-date list of all of the bots on the network (all other
@@ -63,7 +63,7 @@ network cache consists of a single full snapshot, composed of:
        - which bot is the dispatcher
        - list of bots in the class
 
- - the main behavior of a clerk: it must know what to do when a bot with a
+ - The main behavior of a clerk: it must know what to do when a bot with a
    given HEAD shows up. Is there an existing dispatch class for that HEAD?
    If so, then do behavior join-existing-class, otherwise do behavior
    create-new-class
@@ -134,11 +134,18 @@ diagnostic purposes
  - for all values of HEAD and all integers n, there is at most one bot
    with that head and rank in the network
 
-### The /netinit endpoint lists the following information:
+### The /netinit http endpoint
 
- - is this a clerk, dispatcher, or tester
- - The other live bots in the network (the current contents of the bot's
-   own network cache).
+ - Is this a clerk, dispatcher, or tester
+ - The entire history of behaviors performed by the bot as part of its own
+   network init process
+ - A log of the last 20 interactions it had with the network
+
+### The /netcache http endpoint
+
+The current contents of the network cache:
+ - The other live bots on the network
+ - Last 50 changes to netcache (represented as a list of netcache deltas)
 
 ### Notes
 
@@ -159,6 +166,8 @@ diagnostic purposes
  - It would be useful to have some plan at some point for rehosting all of
    the 192 services if they start to get out of hand
  - Assume a 1-1 correspondence between IP:PORT pairs and bots.
+ - r2d2 network activity is logged to stdout (in the future maybe a
+   net.log file in a logs/ directory of the git tree root)
 
 ## Bwaadcast (a.k.a. 192 technique)
 
@@ -172,6 +181,7 @@ diagnostic purposes
    should be; this will be one plus the maximum of the stated ranks in
    this issue
  - ISSUES/#NETINIT : Bots talk about joining the network
+ - ISSUES/#BEHAVIOR : The bots state what actions they are performing
 
 ## Roles
 
@@ -194,14 +204,64 @@ is now performed when processing a PR that passes a vote.
 
 ## Behaviors
 
-Published to ISSUES/#BEHAVIOR via 192 trick
+Published to ISSUES/#BEHAVIOR
 
-netinit, handle-new-member, become-tester, become-dispatcher,
-become-clerk, dispatch PR # ... , test PR #, ...
+Each behavior has a simple name such as "netinit" and a full name such as
+"clerk-netinit". The role is required information in order to determine
+what code to call to perform the behavior.
 
-When a bot tests a PR and fails internal diagnostics, it should post its
-symptoms to the original ISSUE#192 informing the other bots of how it
-feels.
+List of behaviors:
+ - all: netinit,update-sloth
+ - new: become-clerk,become-tester,become-dispatcher
+ - clerk,dispatch: handle-new-member, dispatch(PR#)
+ - tester: perform-trial(PR#)
+
+The clerk behavior is a little awkward: a bot is the clerk if and only if
+the github user in the config is botwillacceptanything, which is known at
+startup; nevertheless, it will go through a netinit followed by
+become-clerk. For all other bots, netinit is followed by contacting the
+clerk by hitting a http endpoint.
+
+When a bot tests a PR and fails internal diagnostics but is well enough
+for core activities, it should post its symptoms to the original ISSUE#192
+informing the other bots of how it feels after trying out the PR
+
+## Sloth
+
+Suppose that code is pushed that appears to be OK but in reality contains
+some subtle bug that will cause the network to overload and fail some
+point down the line. A crude mechanism for controlling this behavior and
+preventing the possible charge of accidentally triggering something that
+could be perceived as an attack against some host or service is to insert
+a delay (sleep.usleep) between 0.1 sec and 1 minute. This delay is
+incurred for every executed behavior.
+
+Ideally, the sloth factor would be set centrally by a designated network
+sysadmin; an update to the sloth factor would be perceived by the network
+as an emergency event. In addition, could be useful to issue "change sloth
+value" orders only to a specific subset of the network (for example a
+dispatch class).
+
+In addition, as part of a new PR trial, the bot can join the network with
+a relatively high sloth factor of, say, 0.3 sec. This way if it goes into
+a spammy infinite loop, the rate at which it will be able to cause trouble
+will be relatively low. After the network is sure the bot with the new
+HEAD isn't going to blow up, the sloth factor can be lowered.
+
+A change to the sloth factor can originate at the clerk, which then relays
+the change order (only to those dispatchers matching one of the HEADs
+condition, if there is one associated with the change order
+
+Sloth factor change order 
+ - does this change order apply to
+   - all bots
+   - all bots with a HEAD on an given list
+   - all bots with a HEAD *not* on a given list
+
+## HTTP
+
+A bot that has received a snapshot from the clerk is free to contact other
+bots in the network for any reason.
 
 ## Botworld
 
@@ -233,7 +293,7 @@ another discussion for another day.
 
 ## End material
 
-Random note: Custom favicons, switched by github username in config.js.
+Random note: custom favicons, switched by github username in config.js.
 I'm having a hard time telling them apart; different favicon avatars to
 give the bots some personality.
 
