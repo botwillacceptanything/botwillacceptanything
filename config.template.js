@@ -12,6 +12,9 @@
             type: "oauth",
             token: "YOUR_OAUTH_TOKEN",
             webhookSecret: 'SECRET'
-        }
+        },
+        mocks: {
+            twitter: true,
+        },
     };
 }());
