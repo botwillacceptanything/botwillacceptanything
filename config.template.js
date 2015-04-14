@@ -14,7 +14,7 @@
             webhookSecret: 'SECRET'
         },
         mocks: {
-            twitter: true,
-        },
+            twitter: true
+        }
     };
 }());
