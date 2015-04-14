@@ -3,6 +3,7 @@
 ## Status
 
 [![Build Status](https://travis-ci.org/botwillacceptanything/botwillacceptanything.svg?branch=master)](https://travis-ci.org/botwillacceptanything/botwillacceptanything)
+[![Code Climate](https://codeclimate.com/github/botwillacceptanything/botwillacceptanything/badges/gpa.svg)](https://codeclimate.com/github/botwillacceptanything/botwillacceptanything)
 
 ### *The project where anything goes, as long as the code allows it.*
 
