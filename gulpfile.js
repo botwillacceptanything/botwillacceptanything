@@ -3,35 +3,53 @@
 (function () {
     'use strict';
 
-    var gulp = require('gulp');
-    var jsdoc = require('gulp-jsdoc');
-    var jshint = require('gulp-jshint');
+    var define = require('amdefine')(module);
 
-    var src = [
-        'lib/*.js'
+    var deps = [
+        'gulp',
+        'gulp-jsdoc',
+        'gulp-jshint',
+        'gulp-mocha'
     ];
 
-    gulp.task('lint', [], function () {
-        return gulp.src(src)
-            .pipe(jshint())
-            .pipe(jshint.reporter('default'));
+    define(deps, function(gulp, jsdoc, jshint, mocha) {
+        var src = [
+            'lib/*.js'
+        ];
+
+        gulp.task('lint', [], function () {
+            return gulp.src(src)
+                .pipe(jshint())
+                .pipe(jshint.reporter('default'));
+        });
+
+        gulp.task('jsdoc', [], function () {
+            return gulp.src(src)
+                .pipe(jsdoc.parser())
+                .pipe(jsdoc.generator('data/doc/'));
+        });
+
+        gulp.task('mocha', [], function () {
+            return gulp.src('tests/unit/*.js', {read: false})
+                .pipe(mocha({reporter: 'nyan'}));
+        });
+
+        // Build Task
+        gulp.task('build', [
+            'lint',
+            'jsdoc',
+            'test'
+        ]);
+
+        // Build Task
+        gulp.task('test', [
+            'mocha'
+        ]);
+
+        // Default Task
+        gulp.task('default', [
+            'build'
+        ]);
+
     });
-
-    gulp.task('jsdoc', [], function () {
-        return gulp.src(src)
-            .pipe(jsdoc.parser())
-            .pipe(jsdoc.generator('data/doc/'));
-    });
-
-    // Build Task
-    gulp.task('build', [
-        'lint',
-        'jsdoc',
-    ]);
-
-    // Default Task
-    gulp.task('default', [
-        'build'
-    ]);
-
 }());
