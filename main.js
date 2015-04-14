@@ -1,30 +1,22 @@
 (function() {
     var config = require('./config.js');
-    var Twitter = require('./lib/twitter.js');
     var git = require('gift');
-    var Github = require('github');
-    var irc = require('./lib/irc.js')(config);
-    var path = require('path');
     var spawn = require('child_process').spawn;
 
     var events = require('./lib/events.js');
 
-    var gh = new Github({
-        version: '3.0.0',
-        headers: {
-            'User-Agent': config.user + '/' + config.repo
-        }
-    });
-    gh.authenticate(config.githubAuth);
-
-    var voting = require('./lib/voting.js')(config, gh, Twitter, events, irc);
-    var webserver = require('./lib/webserver.js')(config, events);
+    var gh = require('./lib/github.js');
+    var voting = require('./lib/voting.js');
+    var webserver = require('./lib/webserver.js')(config);
     var talk = require('./lib/talk.js')(config, gh);
+    var mocks = require('./tests/mocks/index.js');
+    var integrations = require('./lib/integrations/index.js');
+    var Logger = require('./lib/logger');
 
 // if we merge something, `git sync` the changes and start the new version
-    voting.on('merge', function (pr) {
+    events.on('github.pull_request.merged', function () {
         sync(function (err) {
-            if (err) return console.error('error pulling from origin/master:', err);
+            if (err) { return console.error('error pulling from origin/master:', err); }
 
             // Install the latest NPM packages and then restart.
             restart();
@@ -41,7 +33,7 @@
     function head(cb) {
         var repo = git(__dirname);
         repo.branch(function (err, head) {
-            if (err) return cb(err);
+            if (err) { return cb(err); }
             cb(null, head.commit.id);
         });
     }
@@ -65,17 +57,17 @@
     function main() {
         // find the hash of the current HEAD
         head(function (err, initial) {
-            if (err) return console.error('error checking HEAD:', err);
+            if (err) { return console.error('error checking HEAD:', err); }
 
             // make sure we are in sync with the remote repo
             sync(function (err) {
-                if (err) return console.error('error pulling from origin/master:', err);
+                if (err) { return console.error('error pulling from origin/master:', err); }
 
                 head(function (err, current) {
-                    if (err) return console.error('error checking HEAD:', err);
+                    if (err) { return console.error('error checking HEAD:', err); }
 
                     // if we just got a new version, upgrade npm packages and restart.
-                    if (initial !== current) return restart();
+                    if (initial !== current) { return restart(); }
 
                     console.log('Bot is initialized. HEAD:', current);
                     considerExistence();
@@ -90,7 +82,12 @@
         });
     }
 
-    main();
+    mocks()
+      .then(integrations)
+      .then(main, function (err) {
+        Logger.error(err);
+        Logger.error(err.stack);
+      });
 
     process.on('uncaughtException', function (err) {
         console.error('UNCAUGHT ERROR: ' + err + '\n' + err.stack);

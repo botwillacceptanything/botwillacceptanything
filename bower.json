@@ -1,5 +1,5 @@
 {
-  "name": "rwg",
+  "name": "botwillacceptanything",
   "version": "0.0.1",
   "homepage": "https://github.com/botwillacceptanything/botwillacceptanything",
   "authors": [
@@ -24,7 +24,6 @@
     "requirejs-plugins": "~1.0.3"
   },
   "resolutions": {
-    "jquery": ">= 1.7.0 <= 2.1.0",
-    "ember": "1.8.1"
+    "jquery": ">= 1.7.0 <= 2.1.0"
   }
 }

@@ -3,6 +3,7 @@
 ## Status
 
 [![Build Status](https://travis-ci.org/botwillacceptanything/botwillacceptanything.svg?branch=master)](https://travis-ci.org/botwillacceptanything/botwillacceptanything)
+[![Code Climate](https://codeclimate.com/github/botwillacceptanything/botwillacceptanything/badges/gpa.svg)](https://codeclimate.com/github/botwillacceptanything/botwillacceptanything)
 
 ### *The project where anything goes, as long as the code allows it.*
 
@@ -37,6 +38,7 @@ The bot has a built-in webserver for monitoring its current state.
 1. Fork this repo.
 1. Get yourself an OAuth token for github at https://github.com/settings/tokens/new. (TODO what scopes are required?)
 1. Copy config.template.js -> config.js and modify accordingly.
+1. Disable any items in the mocks section that you would like to function normally.
 
 ```javascript
 $ cp config.template.js config.js
@@ -46,12 +48,18 @@ $ cat config.js
     'use strict';
 
     module.exports = {
+        webserver: {
+            port: 3000
+        },
         user: "YOUR_GITHUB_USERNAME",
         repo: "botwillacceptanything",
         githubAuth: {
             type: "oauth",
             token: "YOUR_OAUTH_TOKEN"
-        }
+        },
+        mocks: {
+            twitter: true,
+        },
     };
 }());
 
@@ -73,6 +81,10 @@ $ cat config.js
 ```javascript
 exports.githubAuth.webhookSecret = 'rsvz9ytsjMpYfKW8CO8SQPSoxiJsVb03';
 ```
+
+## Our motto
+
+> hopefully you tested it - I'm too lazy :+1:
 
 ## License
 
