@@ -4,6 +4,7 @@
 
 [![Build Status](https://travis-ci.org/botwillacceptanything/botwillacceptanything.svg?branch=master)](https://travis-ci.org/botwillacceptanything/botwillacceptanything)
 [![Code Climate](https://codeclimate.com/github/botwillacceptanything/botwillacceptanything/badges/gpa.svg)](https://codeclimate.com/github/botwillacceptanything/botwillacceptanything)
+[![Dependency Status](https://gemnasium.com/botwillacceptanything/botwillacceptanything.svg)](https://gemnasium.com/botwillacceptanything/botwillacceptanything) 
 
 ### *The project where anything goes, as long as the code allows it.*
 
