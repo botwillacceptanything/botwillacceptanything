@@ -1,21 +1,13 @@
 (function() {
     var config = require('./config.js');
     var git = require('gift');
-    var Github = require('github');
     var path = require('path');
     var spawn = require('child_process').spawn;
 
     var events = require('./lib/events.js');
 
-    var gh = new Github({
-        version: '3.0.0',
-        headers: {
-            'User-Agent': config.user + '/' + config.repo
-        }
-    });
-    gh.authenticate(config.githubAuth);
-
-    var voting = require('./lib/voting.js')(config, gh, events);
+    var gh = require('./lib/github.js');
+    var voting = require('./lib/voting.js');
     var webserver = require('./lib/webserver.js')(config, events);
     var talk = require('./lib/talk.js')(config, gh);
     var integrations = require('./lib/integrations/index.js');
