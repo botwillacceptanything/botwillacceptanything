@@ -1,30 +1,50 @@
 {
-  "name": "nomic",
-  "version": "0.0.0",
-  "description": "An autotonomous program that accepts pull requests for itself",
+  "name": "botwillacceptanything",
+  "version": "0.0.1",
+  "description": "An autonomous program that accepts pull requests for itself",
   "main": "main.js",
   "dependencies": {
+    "body-parser": "^1.12.2",
+    "eliza": "0.0.1-2",
+    "express": "^4.12.3",
     "gift": "~0.5.0",
-    "github": "~0.2.3"
-  },
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "github": "~0.2.3",
+    "intercept-stdout": "0.0.3",
+    "irc": "^0.3.11",
+    "js-yaml": "^3.2.7",
+    "lodash": "^3.6.0",
+    "request": "^2.55.0",
+    "sanitize-html": "^1.6.1",
+    "sentiment": "^1.0.2",
+    "serve-favicon": "2.2.0",
+    "twitter": "^1.2.5",
+    "amdefine": "^0.1.0",
+    "mustache": "2.0.0"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/mappum/nomic.git"
+    "url": "git://github.com/botwillacceptanything/botwillacceptanything.git"
   },
   "keywords": [
     "nomic",
     "autonomous",
     "sentient",
-    "skynet"
+    "skynet",
+    "botwillacceptanything"
   ],
-  "author": "Matt Bell <mappum@gmail.com>",
+  "author": "Bot W. Acceptanything <botwillacceptanything@gmail.com>",
   "license": "ASL",
   "bugs": {
-    "url": "https://github.com/mappum/nomic/issues"
+    "url": "https://github.com/botwillacceptanything/botwillacceptanything/issues"
   },
-  "homepage": "https://github.com/mappum/nomic"
+  "homepage": "https://github.com/botwillacceptanything/botwillacceptanything",
+  "scripts": {
+    "main": "node main.js",
+    "test": "gulp"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-jshint": "^1.10.0",
+    "gulp-jsdoc": "^0.1.4"
+  }
 }

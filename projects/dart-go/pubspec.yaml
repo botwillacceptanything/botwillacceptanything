@@ -1,0 +1,4 @@
+name: dart_go
+version: 1.0.0
+dependencies:
+  analyzer: ">=0.24.3 <0.25.0"

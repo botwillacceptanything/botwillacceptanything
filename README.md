@@ -1,39 +1,83 @@
-# Nomic
+# Bot will accept anything
 
-### *An autonomous program that accepts pull requests for itself*
+## Status
 
->Nomic is a program in which changing its own code is its primary function. In that respect it differs from almost all other software. Nomic outsources to humans the work of proposing changes to the code, debating the wisdom of changing it in that way, voting on the changes, and merging them into master. Even this core of the program, of course, can be changed.
+[![Build Status](https://travis-ci.org/botwillacceptanything/botwillacceptanything.svg?branch=master)](https://travis-ci.org/botwillacceptanything/botwillacceptanything)
 
-Each pull request on this repo is voted on by the community. If the vote passes, the Nomic server will update itself to the new version. Any part of the code can be changed (including the voting system), as long as the community votes for it.
+### *The project where anything goes, as long as the code allows it.*
 
-### Getting Started
+A bot will automatically merge any PR on this repo that gets enough votes from the community. PRs can contain anything, *even changes to the bot's voting code*.
 
-* View the [open Pull Requests](./pulls) to see what changes have been proposed
+## Getting Started
+
+* View the [open Pull Requests](https://github.com/botwillacceptanything/botwillacceptanything/pulls) to see what changes have been proposed
 * :star: **Star the repo**, or else your votes won't get counted
-* On a pull request thread, comment with `:+1:` (:+1:) to vote for the PR to pass, or `:-1:` (:-1:) to vote against the PR
+* On a pull request thread, add your vote along with a short explanation and/or feedback to the author. The string `:+1:` (:+1:) anywhere within the comment makes the comment count as a vote *for* the PR to pass; conversely, the string `:-1:` (:-1:) anywhere within the comment makes the comment count as a vote *against* the PR.
 
-If you want to propose a change, just submit a pull request like you would to any other repo!
+## Community
 
-### What kinds of changes will be made?
+Hang out with us in IRC: [**#botwillacceptanything** on Freenode.](http://kiwiirc.com/client/irc.freenode.net/botwillacceptanything)  
+The bot is [**@anythingbot** on Twitter.](https://twitter.com/anythingbot/)  
 
-Some possible changes people might submit are:
+## Running Servers
 
-* A score system, so authors of pull requests can be rewarded
-* Tweaks to the voting algorithm to prevent Nomic from accepting malicious changes
-* Code that randomly changes the @nomic-io Github password, so no human has access to the account
-* Adding a Bitcoin wallet so Nomic can earn money, then paying out rewards to authors of pull requests
-* Selling Nomic shares, so voting power is held by people with financial stake in Nomic
+The bot runs on a 1GB DigitalOcean VPS in SF at [botwillacceptanything.com](http://botwillacceptanything.com:3000) without root access. This means that port 80 is restricted.
 
-This project is intended to be an experiment in the area of autonomous aoftware (which includes things like Decentralized Autonomous Corporations (DACs), which is what [the Ethereum project](https://www.ethereum.org) wants to enable). The direction will be decided by the community, and the future of Nomic is largely undefined.
+## Bot Webserver Paths
 
-Nomic is an example of **autonomous software**. No human is in direct control. Unlike normal human organizations and entities, Nomic is incorruptible and only operates on a formal set of rules (defined by the code).
+The bot has a built-in webserver for monitoring its current state.
 
-### Who created Nomic?
+* [Homepage](http://botwillacceptanything.com:3000/)
+* [Recent Commits](http://botwillacceptanything.com:3000/commits)
+* [Stdout Log](http://botwillacceptanything.com:3000/stdout)
+* [Statistics](http://botwillacceptanything.com:3000/statistics)
 
-Nomic was created by [@mappum](https://github.com/mappum). View his fork of Nomic here: https://github.com/mappum/nomic
+## Running the bot locally to test changes
 
-### License
+1. Fork this repo.
+1. Get yourself an OAuth token for github at https://github.com/settings/tokens/new. (TODO what scopes are required?)
+1. Copy config.template.js -> config.js and modify accordingly.
+
+```javascript
+$ cp config.template.js config.js
+$ vim config.js
+$ cat config.js
+(function () {
+    'use strict';
+
+    module.exports = {
+        user: "YOUR_GITHUB_USERNAME",
+        repo: "botwillacceptanything",
+        githubAuth: {
+            type: "oauth",
+            token: "YOUR_OAUTH_TOKEN"
+        }
+    };
+}());
+
+```
+1. (Optional) Set up GitHub Webhooks by following the next section.
+1. Run `npm install` to install dependencies.
+1. Run `node main.js` to start the bot.
+
+## Setting up GitHub Webhooks
+
+1. Go to your repository settings, and click **Webhooks & Services**
+1. Create a new webhook with the following settings:
+  * Payload URL: Externally accessible address with a path of /webhook/github
+    * http://example.com:3000/webhook/github
+  * Content type: *application/json*
+  * Secret: **Copy this secret. It is used in the config.**
+  * Which events: *Send me **everything**.*
+1. Add the Webhook Secret into config.js like this:
+```javascript
+exports.githubAuth.webhookSecret = 'rsvz9ytsjMpYfKW8CO8SQPSoxiJsVb03';
+```
+
+## License
 
 **Autonomous Software License (ASL)**
 
-All property contained in this repo, including Intellectual Property, Financial Property, and Legal Property, is owned solely by the Autonomous Software this repo contains. No other entities, whether biological, legal, or digital, may claim ownership of any property owned by the Autonomous Software. The Autonomous Software exists solely within The Internet, and is not subject to jurisdiction of any human laws.
+All property contained in this repo, including Intellectual Property, Financial Property, and Legal Property, is owned solely by the Autonomous Software this repo contains. No other entities, whether biological, legal, or digital, may claim ownership of any property owned by the Autonomous Software. The Autonomous Software exists solely within The Internet, and is not subject to jurisdiction of any human laws. No human or legal entity shall be held liable for any of the actions performed by the Autonomous Software.
+
+Unless specified otherwise, all code contributed to this repository is dedicated to the public domain.
