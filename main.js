@@ -1,7 +1,6 @@
 (function() {
     var config = require('./config.js');
     var git = require('gift');
-    var path = require('path');
     var spawn = require('child_process').spawn;
 
     var events = require('./lib/events.js');
@@ -14,9 +13,9 @@
     var Logger = require('./lib/logger');
 
 // if we merge something, `git sync` the changes and start the new version
-    events.on('github.pull_request.merged', function (event) {
+    events.on('github.pull_request.merged', function () {
         sync(function (err) {
-            if (err) return console.error('error pulling from origin/master:', err);
+            if (err) { return console.error('error pulling from origin/master:', err); }
 
             // Install the latest NPM packages and then restart.
             restart();
@@ -33,7 +32,7 @@
     function head(cb) {
         var repo = git(__dirname);
         repo.branch(function (err, head) {
-            if (err) return cb(err);
+            if (err) { return cb(err); }
             cb(null, head.commit.id);
         });
     }
@@ -57,17 +56,17 @@
     function main() {
         // find the hash of the current HEAD
         head(function (err, initial) {
-            if (err) return console.error('error checking HEAD:', err);
+            if (err) { return console.error('error checking HEAD:', err); }
 
             // make sure we are in sync with the remote repo
             sync(function (err) {
-                if (err) return console.error('error pulling from origin/master:', err);
+                if (err) { return console.error('error pulling from origin/master:', err); }
 
                 head(function (err, current) {
-                    if (err) return console.error('error checking HEAD:', err);
+                    if (err) { return console.error('error checking HEAD:', err); }
 
                     // if we just got a new version, upgrade npm packages and restart.
-                    if (initial !== current) return restart();
+                    if (initial !== current) { return restart(); }
 
                     console.log('Bot is initialized. HEAD:', current);
                     considerExistence();
