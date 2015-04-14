@@ -10,6 +10,7 @@
     var voting = require('./lib/voting.js');
     var webserver = require('./lib/webserver.js')(config, events);
     var talk = require('./lib/talk.js')(config, gh);
+    var mocks = require('./tests/mocks/index.js');
     var integrations = require('./lib/integrations/index.js');
     var Logger = require('./lib/logger');
 
@@ -82,10 +83,12 @@
         });
     }
 
-    integrations().then(main, function (err) {
-      Logger.error(err);
-      Logger.error(err.stack);
-    });
+    mocks()
+      .then(integrations)
+      .then(main, function (err) {
+        Logger.error(err);
+        Logger.error(err.stack);
+      });
 
     process.on('uncaughtException', function (err) {
         console.error('UNCAUGHT ERROR: ' + err + '\n' + err.stack);
