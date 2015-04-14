@@ -7,7 +7,7 @@
 
     var gh = require('./lib/github.js');
     var voting = require('./lib/voting.js');
-    var webserver = require('./lib/webserver.js')(config, events);
+    var webserver = require('./lib/webserver.js')(config);
     var talk = require('./lib/talk.js')(config, gh);
     var integrations = require('./lib/integrations/index.js');
     var Logger = require('./lib/logger');
