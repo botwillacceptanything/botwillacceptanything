@@ -84,7 +84,7 @@ exports.githubAuth.webhookSecret = 'rsvz9ytsjMpYfKW8CO8SQPSoxiJsVb03';
 
 ## Our motto
 
-> hopefully you tested it - I'm too lazy :+1:
+> Any sufficiently advanced technology is indistinguishable from magic. - Arthur C. Clarke
 
 ## License
 
