@@ -10,6 +10,7 @@
   define(deps, function (nock) {
     module.exports = function () {
       nock('https://api.twitter.com')
+        .persist()
         .post('/1.1/statuses/update.json')
         .reply(200, {
           id_str: '123456789012345678',
