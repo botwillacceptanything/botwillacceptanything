@@ -20,6 +20,7 @@
     "lodash": "^3.6.0",
     "morgan": "^1.5.2",
     "mustache": "2.0.0",
+    "nock": "^1.6.0",
     "request": "^2.55.0",
     "sanitize-html": "^1.6.1",
     "sentiment": "^1.0.2",
