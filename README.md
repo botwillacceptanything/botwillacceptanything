@@ -16,6 +16,10 @@ A bot will automatically merge any PR on this repo that gets enough votes from t
 * :star: **Star the repo**, or else your votes won't get counted
 * On a pull request thread, add your vote along with a short explanation and/or feedback to the author. The string `:+1:` (:+1:) anywhere within the comment makes the comment count as a vote *for* the PR to pass; conversely, the string `:-1:` (:-1:) anywhere within the comment makes the comment count as a vote *against* the PR.
 
+## Contributing
+
+Anyone can create a pull request, and it is greatly appreciated by the community. In order for a pull request to be accepted, it must meet all of the criteria in our [Definition of Done](https://github.com/botwillacceptanything/botwillacceptanything/blob/master/DoD.md). If you're looking for ideas, please look at [ideas.md](https://github.com/botwillacceptanything/botwillacceptanything/blob/master/ideas.md), and join us in our [IRC](http://kiwiirc.com/client/irc.freenode.net/botwillacceptanything) for ideas or advice on how to implement something.
+
 ## Community
 
 Hang out with us in IRC: [**#botwillacceptanything** on Freenode.](http://kiwiirc.com/client/irc.freenode.net/botwillacceptanything)  
