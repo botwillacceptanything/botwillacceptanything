@@ -1,5 +1,6 @@
 (function() {
     var spawn = require('child_process').spawn;
+    var exec = require('child_process').exec;
 
     function startMain(code) {
         if (code !== 0) {
@@ -22,6 +23,23 @@
         child.on('close', startMain);
     }
 
-    npmInstall();
+    /**
+     * Update data/authors.txt by running our shell script.
+     */
+    function updateAuthors(cb) {
+      try {
+        exec('./authors.sh', function (err, stdout, stderr) {
+          if (err || stderr) {
+            console.error('./authors.sh stderr:', err, stderr);
+          }
+        });
+      }
+      catch (e) {
+        console.error('./authors.sh exception:' + e);
+      }
+      cb();
+    }
+
+    updateAuthors(npmInstall);
 }());
 
