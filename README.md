@@ -74,6 +74,10 @@ $ cat config.js
 exports.githubAuth.webhookSecret = 'rsvz9ytsjMpYfKW8CO8SQPSoxiJsVb03';
 ```
 
+## Our motto
+
+> hopefully you tested it - I'm too lazy :+1:
+
 ## License
 
 **Autonomous Software License (ASL)**
