@@ -15,9 +15,8 @@
 	</script>
 <br />
 <h1>Recent Commits</h1>
-"<p>
+<p>
     {{#each messages}}
-        {{this.author.name}} added {{this.id}} - {{this.message}}<br />
-    {{/each}}
+        <a href="https://github.com/{{../config.user}}/{{../config.repo}}/commit/{{this.id}}">{{this.author.name}} - {{this.message}}</a><br />    {{/each}}
 </p>
 </center>
