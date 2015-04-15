@@ -19,7 +19,7 @@
 
       if (typeof config.mocks === 'undefined') { return deferred(1); }
 
-      var d = deferred(1);
+      var d = deferred([]);
 
       Logger.log('Initializing mocks.');
 
@@ -30,7 +30,10 @@
         .map(function (mock) {
           var filePath = path.join(__dirname, mock + '.js');
           Logger.info('Loading ' + filePath);
-          d.then(function () { require(filePath)(); });
+          d.then(function (mocks) {
+            mocks[mock] = require(filePath)();
+            return mocks;
+          });
         });
 
       d.then(d.resolve,
