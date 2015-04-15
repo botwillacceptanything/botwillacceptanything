@@ -2,26 +2,46 @@
 <html>
     <head>
         <link rel="icon" type="image/ico" href="/favicon.ico?raw=true">
+        <script src="https://w.soundcloud.com/player/api.js"></script>
+        <script>
+
+var state = {
+    SCoffsetMilliseconds : 1000 * {{data.time}},
+};
+
+function pageLoaded() {
+    var iframeElement   = document.querySelector('iframe');
+    var widget = SC.Widget(iframeElement);
+    widget.bind(SC.Widget.Events.READY,function(){ //When player is ready, attach an event
+        widget.bind(SC.Widget.Events.PLAY,function(){ //When song starts playing
+            widget.seekTo(state.SCoffsetMilliseconds);
+            widget.unbind(SC.Widget.Events.PLAY); //Remove event, to avoid problems when playing is paused and then restarted
+        });
+    });
+
+}
+        
+        </script>
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
         <title>Bot Will Accept Anything</title>
         <meta name="author" content="GitHub Commitors">
         <style type="text/css" media="all">body {
-            margin: 0px;
-            padding: 0px;
+            margin: 5px;
+            padding: 5px;
             background-repeat: no-repeat;
             background-position: top right;
-            background-color: white;
+            background-color: black;
             color: black;
         }
 
         #Header {
             margin: 85px 100px 0px 100px;
-            padding: 0px;
+            padding: 5px;
         }
 
         .Content {
             margin: 0px 100px 50px;
-            padding: 20px;
+            padding: 10px;
             color: black;
             background-color: #eee;
             border: 1px dashed black;
@@ -31,7 +51,7 @@
             font-size: 11px;
             line-height: 20px;
             font-family: verdana, arial, helvetica, sans-serif;
-            margin: 0px 0px 12px 0px;
+            margin: 3px 3px 12px 3px;
         }
 
         #Content > p {
@@ -112,17 +132,9 @@
             border: 1px solid black;
         }</style>
     </head>
-    <body><h1 id="Header">Bot Will Accept Anything - The project where anything goes, as long as the code allows it </h1>
+    <body onload="pageLoaded()"><h1 id="Header">BWAA TV - The project where anything goes</h1>
 
     <div class="Content">
-        <p align="center">Navigation<br/>
-            <a href="/">Main</a> -
-            <a href="/commits/">Recent Commits</a> -
-            <a href="/stdout">Standard Output</a> -
-            <a href="/statistics/">Statistics</a> -
-            <a href="/votes">Current Votes</a> -
-            <a href="/video">Video</a>
-        </p>
         {{{body}}}
     </div>
     <center>
