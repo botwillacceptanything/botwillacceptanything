@@ -9,10 +9,11 @@
         'gulp',
         'gulp-jsdoc',
         'gulp-jshint',
-        'gulp-mocha'
+        'gulp-spawn-mocha',
+        'gulp-foreach',
     ];
 
-    define(deps, function(gulp, jsdoc, jshint, mocha) {
+    define(deps, function(gulp, jsdoc, jshint, mocha, foreach) {
         var src = [
             'lib/*.js'
         ];
@@ -31,7 +32,9 @@
 
         gulp.task('mocha', [], function () {
             return gulp.src('tests/unit/**/*.js', {read: false})
-                .pipe(mocha());
+                .pipe(foreach(function (stream, file) {
+                  return stream.pipe(mocha());
+                }));
         });
 
         // Build Task
