@@ -6,6 +6,8 @@
     var define = require('amdefine')(module);
 
     var deps = [
+        './config.js',
+
         'gulp',
         'gulp-jsdoc',
         'gulp-jshint',
@@ -13,7 +15,7 @@
         'gulp-foreach',
     ];
 
-    define(deps, function(gulp, jsdoc, jshint, mocha, foreach) {
+    define(deps, function(config, gulp, jsdoc, jshint, mocha, foreach) {
         var src = [
             'lib/*.js'
         ];
@@ -31,9 +33,16 @@
         });
 
         gulp.task('mocha', [], function () {
+            var ciMode = (process.env.CI === 'true');
             return gulp.src('tests/unit/**/*.js', {read: false})
                 .pipe(foreach(function (stream, file) {
-                  return stream.pipe(mocha());
+                  return stream.pipe(mocha({
+                    debugBrk: (process.env.NODE_ENV === 'debug'),
+                    reporter: ((!ciMode && config.test_reporter) || 'spec'),
+                    env: {
+                      BUILD_ENVIRONMENT: 'test',
+                    },
+                  }));
                 }));
         });
 
