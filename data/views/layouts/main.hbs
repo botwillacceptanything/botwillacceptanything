@@ -110,9 +110,39 @@
 
         .boxed {
             border: 1px solid black;
-        }</style>
+        }
+
+        .rainbow {
+            background: url('/rainbow.png');
+            height: 353px;
+            width: 400px;
+            position: fixed;
+            left: 0;
+            bottom: 0;
+        }
+        .rainbow_dash_container {
+            width: 100%;
+            height: 87px;
+        }
+        .rainbow_dash_container .rainbow_dash {
+            background: url('/rainbow_dash.png');
+            height: 87px;
+            width: 225px;
+            position: fixed;
+            left: 0%;
+            top: 0;
+            transition: left 1s linear;
+        }
+        .rainbow_dash_container:hover .rainbow_dash {
+            left: 100%;
+        }
+        </style>
     </head>
-    <body><h1 id="Header">Bot Will Accept Anything - The project where anything goes, as long as the code allows it </h1>
+    <body>
+        <div class="rainbow_dash_container">
+            <div class="rainbow_dash"></div>
+        </div>
+        <h1 id="Header">Bot Will Accept Anything - The project where anything goes, as long as the code allows it </h1>
 
     <div class="Content">
         <p align="center">Navigation<br/>
@@ -131,5 +161,6 @@
           <img src="/under-construction-flashing-barracade-animation.gif" alt="Under construction" />
         </marquee>
     </center>
+    <div class="rainbow"></div>
     </body>
 </html>
