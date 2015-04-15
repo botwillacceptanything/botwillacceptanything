@@ -5,6 +5,7 @@
 [![Build Status](https://travis-ci.org/botwillacceptanything/botwillacceptanything.svg?branch=master)](https://travis-ci.org/botwillacceptanything/botwillacceptanything)
 [![Code Climate](https://codeclimate.com/github/botwillacceptanything/botwillacceptanything/badges/gpa.svg)](https://codeclimate.com/github/botwillacceptanything/botwillacceptanything)
 [![Dependency Status](https://gemnasium.com/botwillacceptanything/botwillacceptanything.svg)](https://gemnasium.com/botwillacceptanything/botwillacceptanything)
+[![Pinkie Pie Approval Status](http://dosowisko.net/pinkiepieapproved.svg)](https://www.youtube.com/watch?v=FULyN9Ai-A0)
 
 ### *The project where anything goes, as long as the code allows it.*
 
