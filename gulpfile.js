@@ -31,7 +31,7 @@
 
         gulp.task('mocha', [], function () {
             return gulp.src('tests/unit/*.js', {read: false})
-                .pipe(mocha({reporter: 'nyan'}));
+                .pipe(mocha());
         });
 
         // Build Task

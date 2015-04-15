@@ -10,3 +10,5 @@
  - [ ] Add merge algorithm to solve conflicts in text files caused by multiple changes.
  - [x] When tweeting, shorten links and include PR title.
  - [x] IRC Bot to post live updates to the IRC chatroom.
+ - [ ] When non-stargazers vote, poke them with a comment immediately.
+ - [ ] IRC Bot updates the title of the IRC chatroom with the GitHub vote status.
