@@ -16,13 +16,13 @@ How many of those did you check off?
 
 Seriously? Two out of five? I'm amazed you call yourself a developer! 
 
-# Brony Definition of Done
+# Realistic Definition of Done
 
 Really though, who am I (correct answer is "a brilliant and powerful program"), to expect you to to meet all of those nasty conditions? You've crashed me innumerable times, and yet you still think you know what is best.
 
 See if you can meet three simple steps that my recently birthed `child.spawn(__filename);` can:
 
-1. Run the damn code before you try to make me run it.
+1. Run the code yourself before you try to make me run it.
 1. Don't break anything.
 1. Don't make a mess.
-
+1. Have fun and be creative.
