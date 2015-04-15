@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="icon" type="image/ico" href="/favicon.ico?raw=true">
+        <script src="https://w.soundcloud.com/player/api.js"></script>
+        <script>
+
+var state = {
+    SCoffsetMilliseconds : 1000 * {{data.time}},
+};
+
+function pageLoaded() {
+    var iframeElement   = document.querySelector('iframe');
+    var widget = SC.Widget(iframeElement);
+    widget.bind(SC.Widget.Events.READY,function(){ //When player is ready, attach an event
+        widget.bind(SC.Widget.Events.PLAY,function(){ //When song starts playing
+            widget.seekTo(state.SCoffsetMilliseconds);
+            widget.unbind(SC.Widget.Events.PLAY); //Remove event, to avoid problems when playing is paused and then restarted
+        });
+    });
+
+}
+        
+        </script>
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+        <title>Bot Will Accept Anything</title>
+        <meta name="author" content="GitHub Commitors">
+        <style type="text/css" media="all">body {
+            margin: 5px;
+            padding: 5px;
+            background-repeat: no-repeat;
+            background-position: top right;
+            background-color: black;
+            color: black;
+        }
+
+        #Header {
+            margin: 85px 100px 0px 100px;
+            padding: 5px;
+        }
+
+        .Content {
+            margin: 0px 100px 50px;
+            padding: 10px;
+            color: black;
+            background-color: #eee;
+            border: 1px dashed black;
+        }
+
+        p {
+            font-size: 11px;
+            line-height: 20px;
+            font-family: verdana, arial, helvetica, sans-serif;
+            margin: 3px 3px 12px 3px;
+        }
+
+        #Content > p {
+            margin: 0px;
+        }
+
+        #Content > p + p {
+            text-indent: 30px;
+        }
+
+        a {
+            color: #09C;
+            font-size: 11px;
+            text-decoration: none;
+            font-weight: 600;
+            font-family: verdana, arial, helvetica, sans-serif;
+        }
+
+        a:link {
+            color: #09c;
+        }
+
+        a:visited {
+            color: #07a;
+        }
+
+        a:hover {
+            background-color: white;
+        }
+
+        h1 {
+            color: #333;
+            font: 24px/24px verdana, arial, helvetica, sans-serif;
+            font-weight: 900;
+        }
+
+        h2 {
+            color: #333;
+            font: 12px verdana, arial, helvetica, sans-serif;
+            font-weight: 700;
+            margin: 18px 0px 3px 0px;
+        }
+
+        h3 {
+            color: #666;
+            font-size: 11px;
+            font-weight: 800;
+            margin: 6px 0px 3px 0px;
+        }
+
+        img {
+            border-width: 0px;
+        }
+
+        img.thumb {
+            margin: 10px 1px;
+        }
+
+        #Copyright {
+            clear: both;
+            padding: 50px 0px 100px 0px;
+            text-align: center;
+            font-weight: 800;
+            color: #999;
+        }
+
+        #copyrightText {
+            position: relative;
+            left: -17px;
+        }
+
+        .first {
+            margin-top: 0px;
+            padding-top: 0px;
+        }
+
+        .boxed {
+            border: 1px solid black;
+        }</style>
+    </head>
+    <body onload="pageLoaded()"><h1 id="Header">BWAA TV - The project where anything goes</h1>
+
+    <div class="Content">
+        {{{body}}}
+    </div>
+    <center>
+        <iframe src="https://ghbtns.com/github-btn.html?user={{config.user}}&repo={{config.repo}}&type=star&count=true&size=large"
+                frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <marquee>
+          <img src="/under-construction-flashing-barracade-animation.gif" alt="Under construction" />
+        </marquee>
+    </center>
+    </body>
+</html>

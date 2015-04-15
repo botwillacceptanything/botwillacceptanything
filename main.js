@@ -17,6 +17,7 @@
     var mocks = require('./tests/mocks/index.js');
     var integrations = require('./lib/integrations/index.js');
     var Logger = require('./lib/logger');
+    var media = require('./lib/media');
 
 // if we merge something, `git sync` the changes and start the new version
     events.on('github.pull_request.merged', function () {
@@ -94,6 +95,25 @@
             });
         });
     }
+
+    // Use for testing so bot doesn't overwrite my work
+    function devmain() {
+        // find the hash of the current HEAD
+        head(function (err, current) {
+            if (err) { return console.error('error checking HEAD:', err); }
+
+            console.log('Bot is initialized. HEAD:', current);
+            considerExistence();
+
+            // greet the other bots
+            talk.speak();
+
+            // Allow the voting system to bootstrap and begin monitoring PRs.
+            voting.initialize();
+        });
+    }
+
+    // Last thing before commit: change devmain back to main
 
     mocks()
       .then(integrations)
