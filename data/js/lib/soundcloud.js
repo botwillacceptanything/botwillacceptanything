@@ -1,5 +1,4 @@
-
-function pageLoaded() {
+$(function () {
     var iframeElement   = document.querySelector('iframe');
     var widget = SC.Widget(iframeElement);
     widget.bind(SC.Widget.Events.READY,function(){ //When player is ready, attach an event
@@ -9,5 +8,4 @@ function pageLoaded() {
         });
     });
 
-}
-
+});
