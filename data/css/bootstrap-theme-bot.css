@@ -1,0 +1,30 @@
+body {
+	background: #ffa9e1;
+	color: #fff;
+}
+
+.navbar-default .navbar-brand,
+.navbar-default .navbar-nav>li>a {
+	color: #fff;
+}
+
+.navbar-default {
+	color: #fff;
+	background: -webkit-linear-gradient(#ff0bb6, #ff53d4);
+	background: -moz-linear-gradient(#ff0bb6, #ff53d4);
+	background: -o-linear-gradient(#ff0bb6, #ff53d4);
+	background: linear-gradient(#ff0bb6, #ff53d4);
+	border: none;
+}
+
+.container {
+	color: #fff;
+}
+
+h1, a {
+	color: #ff0bb6;
+}
+
+.jumbotron {
+	background: #fff;
+}
