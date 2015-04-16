@@ -1,3 +1,3 @@
-Thanks for your interest @{{user}}, but your {{vote}} doesn't count.
+{{body}}
 
-If you want your {{vote}} to be counted, you need to :star: the repository.
+:monkey: @{{user}} - This {{vote}} cannot be counted as you must :star:star the repository.
