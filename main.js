@@ -1,5 +1,10 @@
 (function() {
-    var config = require('./config.js');
+    // If no env is set yet, set it to development.
+    if (typeof process.env.BUILD_ENVIRONMENT === 'undefined') {
+        process.env.BUILD_ENVIRONMENT = 'development';
+    }
+
+    var config = require('./config.loader.js');
     var git = require('gift');
     var spawn = require('child_process').spawn;
 
