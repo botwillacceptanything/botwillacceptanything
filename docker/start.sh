@@ -8,6 +8,6 @@ cd botwillacceptanything
 
 npm install
 
-cp config.template.js config.js
+cp configs/template.js configs/custom.js
 
 npm run main
