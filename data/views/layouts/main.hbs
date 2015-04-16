@@ -3,85 +3,20 @@
     <head>
         <link rel="icon" type="image/ico" href="/favicon.ico?raw=true">
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Bot Will Accept Anything</title>
         <meta name="author" content="GitHub Commitors">
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap-theme.min.css" />
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap-theme-bot.css" />
         <style type="text/css" media="all">
         body {
             margin: 0px;
             padding: 0px;
-            background-repeat: no-repeat;
-            background-position: top right;
-            background-color: white;
             color: black;
         }
 
-        #Header {
-            margin: 85px 100px 0px 100px;
-            padding: 0px;
-        }
-
-        .Content {
-            margin: 0px 100px 50px;
-            padding: 20px;
-            color: black;
-            background-color: #eee;
-            border: 1px dashed black;
-        }
-
-        p {
-            font-size: 11px;
-            line-height: 20px;
-            font-family: verdana, arial, helvetica, sans-serif;
-            margin: 0px 0px 12px 0px;
-        }
-
-        #Content > p {
-            margin: 0px;
-        }
-
-        #Content > p + p {
-            text-indent: 30px;
-        }
-
-        a {
-            color: #09C;
-            font-size: 11px;
-            text-decoration: none;
-            font-weight: 600;
-            font-family: verdana, arial, helvetica, sans-serif;
-        }
-
-        a:link {
-            color: #09c;
-        }
-
-        a:visited {
-            color: #07a;
-        }
-
-        a:hover {
-            background-color: white;
-        }
-
-        h1 {
-            color: #333;
-            font: 24px/24px verdana, arial, helvetica, sans-serif;
-            font-weight: 900;
-        }
-
-        h2 {
-            color: #333;
-            font: 12px verdana, arial, helvetica, sans-serif;
-            font-weight: 700;
-            margin: 18px 0px 3px 0px;
-        }
-
-        h3 {
-            color: #666;
-            font-size: 11px;
-            font-weight: 800;
-            margin: 6px 0px 3px 0px;
-        }
 
         img {
             border-width: 0px;
@@ -134,6 +69,7 @@
             height: 87px;
             width: 225px;
             position: absolute;
+            z-index: 2000;
             left: 0%;
             top: 0;
             transition: left 1s linear;
@@ -152,6 +88,7 @@
         </style>
         <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/smore-inc/clippy.js/8bfd1f92c725c6bc3a435d538a77c3302b327c08/build/clippy.css" />
         <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+        <script src="/js/lib/bootstrap.min.js"></script>
         <script src="https://cdn.rawgit.com/smore-inc/clippy.js/8bfd1f92c725c6bc3a435d538a77c3302b327c08/build/clippy.min.js"></script>
         <script type="text/javascript">
           clippy.load('Clippy', function(agent) {
@@ -160,30 +97,50 @@
         </script>
     </head>
     <body>
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">{{name}}</a>
+                </div>
+                <div id="navbar" class="collapse navbar-collapse">
+                    <ul class="nav nav-pills navbar-nav">
+                        <li><a href="/">Main</a></li>
+                        <li><a href="/stdout">Standard Output</a></li>
+                        <li><a href="/commits/">Recent Commits</a></li>
+                        <li><a href="/statistics/">Statistics</a></li>
+                        <li><a href="/votes">Current Votes</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
         <div class="rainbow_dash_container">
             <div class="rainbow_dash"></div>
         </div>
-        <h1 id="name">{{name}}</h1>
-        <h1 id="Header">Bot Will Accept Anything - The project where anything goes, as long as the code allows it </h1>
-
-    <div class="Content">
-        <p align="center">Navigation<br/>
-            <a href="/">Main</a> -
-            <a href="/commits/">Recent Commits</a> -
-            <a href="/stdout">Standard Output</a> -
-            <a href="/statistics/">Statistics</a> -
-            <a href="/votes">Current Votes</a>
-        </p>
-        {{{body}}}
-    </div>
-    <center>
-        <iframe src="https://ghbtns.com/github-btn.html?user={{config.user}}&repo={{config.repo}}&type=star&count=true&size=large"
-                frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
-        <marquee class="under_construction">
-          <img src="/under-construction-flashing-barracade-animation.gif" alt="Under construction" />
-        </marquee>
-    </center>
-    <div class="rainbow"></div>
-    <a href="https://github.com/{{config.user}}/{{config.repo}}"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67" alt="Fork {{config.repo}} on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png"></a>
+        <div class="container" >
+            <div class="starter-template">
+                <h1>{{name}}</h1>
+                <p class="lead">Bot Will Accept Anything - The project where anything goes, as long as the code allows it </h1>
+                {{{body}}}
+                <center>
+                    <iframe src="https://ghbtns.com/github-btn.html?user={{config.user}}&repo={{config.repo}}&type=star&count=true&size=large"
+                    frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+                    <div class="jumbotron">
+                        <div class="container">
+                            <marquee class="under_construction">
+                                <img src="/under-construction-flashing-barracade-animation.gif" alt="Under construction" />
+                            </marquee>
+                        </div>
+                    </div>
+                </center>
+            </div>
+        </div>
+        <div class="rainbow"></div>
+        <a href="https://github.com/{{config.user}}/{{config.repo}}"><img style="position: absolute; top: 0; right: 0; border: 0; z-index:2050;" src="https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67" alt="Fork {{config.repo}} on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png"></a>
     </body>
 </html>
