@@ -17,6 +17,7 @@
     var mocks = require('./tests/mocks/index.js');
     var integrations = require('./lib/integrations/index.js');
     var Logger = require('./lib/logger');
+    var media = require('./lib/media');
 
 // if we merge something, `git sync` the changes and start the new version
     events.on('github.pull_request.merged', function () {

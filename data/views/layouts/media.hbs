@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="icon" type="image/ico" href="/favicon.ico?raw=true">
+        <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+        <script src="https://w.soundcloud.com/player/api.js"></script>
+        <script src="/js/lib/soundcloud.js"></script>
+        <script>
+var state = {
+    SCoffsetMilliseconds : 1000 * {{data.time}},
+};
+        </script>
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+        <title>Bot Will Accept Anything</title>
+        <meta name="author" content="Sync Music Video">
+        <link rel="stylesheet" type="text/css" href="/css/media.css" />
+    </head>
+    <body><h1 id="Header">BWAA TV - The project where anything goes</h1>
+
+    <div class="Content">
+        {{{body}}}
+    </div>
+    <center>
+        <iframe src="https://ghbtns.com/github-btn.html?user={{config.user}}&repo={{config.repo}}&type=star&count=true&size=large"
+                frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+    </center>
+    </body>
+</html>
