@@ -1,4 +1,3 @@
 {{body}}
 
-----
-:monkey: @{{user}} - This {{vote}} cannot be counted as you must :star:star the repository.
+> :monkey: @{{user}}, we can't count your vote because you must :star:star the repository.
