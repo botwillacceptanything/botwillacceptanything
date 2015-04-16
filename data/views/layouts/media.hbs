@@ -3,24 +3,11 @@
     <head>
         <link rel="icon" type="image/ico" href="/favicon.ico?raw=true">
         <script src="https://w.soundcloud.com/player/api.js"></script>
+        <script src="/js/lib/soundcloud.js"></script>
         <script>
-
 var state = {
     SCoffsetMilliseconds : 1000 * {{data.time}},
 };
-
-function pageLoaded() {
-    var iframeElement   = document.querySelector('iframe');
-    var widget = SC.Widget(iframeElement);
-    widget.bind(SC.Widget.Events.READY,function(){ //When player is ready, attach an event
-        widget.bind(SC.Widget.Events.PLAY,function(){ //When song starts playing
-            widget.seekTo(state.SCoffsetMilliseconds);
-            widget.unbind(SC.Widget.Events.PLAY); //Remove event, to avoid problems when playing is paused and then restarted
-        });
-    });
-
-}
-        
         </script>
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
         <title>Bot Will Accept Anything</title>
