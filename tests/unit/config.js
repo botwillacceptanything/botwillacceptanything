@@ -4,7 +4,7 @@
     var deps = [
         'assert',
 
-        '../../config.template.js'
+        '../../configs/template.js'
     ];
 
     define(deps, function(assert, config) {

@@ -8,7 +8,7 @@
   var deps = [
     './configs/custom.js',
     'lodash',
-    './config.template.js',
+    './configs/template.js',
   ];
 
   var err;
@@ -22,7 +22,7 @@
 
   // If config.js doesn't exist right now, copy the template.
   if (fs.existsSync('./config.js') === false) {
-    fse.copySync('./config.template.js', './configs/custom.js');
+    fse.copySync('./configs/template.js', './configs/custom.js');
   } else {
     // Otherwise, move the current config into the correct location.
     err = fs.renameSync('./config.js', './configs/custom.js');
