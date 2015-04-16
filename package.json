@@ -50,9 +50,9 @@
   },
   "devDependencies": {
     "gulp": "^3.8.11",
-    "gulp-jshint": "^1.10.0",
+    "gulp-foreach": "^0.1.0",
     "gulp-jsdoc": "^0.1.4",
-    "gulp-mocha": "^2.0.1",
-    "mocha": "^2.2.4"
+    "gulp-jshint": "^1.10.0",
+    "gulp-spawn-mocha": "^2.0.1"
   }
 }
