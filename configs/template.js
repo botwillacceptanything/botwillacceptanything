@@ -16,6 +16,9 @@
         db: {
             sqlite: {
                 name: "database",
+                tables: {
+                    karma: "karma",
+                },
             },
         },
         mocks: {
