@@ -14,7 +14,6 @@
     var voting = require('./lib/voting.js');
     var webserver = require('./lib/webserver.js')(config);
     var talk = require('./lib/talk.js')(config, gh);
-    var mocks = require('./tests/mocks/index.js');
     var integrations = require('./lib/integrations/index.js');
     var Logger = require('./lib/logger');
     var media = require('./lib/media');
@@ -96,8 +95,7 @@
         });
     }
 
-    mocks()
-      .then(integrations)
+    integrations()
       .then(main, function (err) {
         Logger.error(err);
         Logger.error(err.stack);
