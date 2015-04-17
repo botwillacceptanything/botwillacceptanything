@@ -107,7 +107,8 @@
         var mockCreateComment = mock.issues.createComment();
         var testPR = _.merge({}, basePR);
         voting.testing.cachedPRs[testPR.number] = testPR;
-        addComments(testPR, 8, 0);
+        // One less since the ticket creator is already counted.
+        addComments(testPR, voting.minVotes - 1, 0);
         getVoters(testPR).forEach(function (user) {
           voting.testing.cachedStarGazers[user] = true;
         });
@@ -124,7 +125,8 @@
       it('should close failed PRs', function (done) {
         var testPR = _.merge({}, basePR);
         voting.testing.cachedPRs[testPR.number] = testPR;
-        addComments(testPR, 0, 8);
+        // One less since the ticket creator is already counted.
+        addComments(testPR, 0, voting.minVotes - 1);
         getVoters(testPR).forEach(function (user) {
           voting.testing.cachedStarGazers[user] = true;
         });
@@ -146,7 +148,8 @@
         var mockCreateComment = mock.issues.createComment();
         var testPR = _.merge({}, basePR);
         voting.testing.cachedPRs[testPR.number] = testPR;
-        addComments(testPR, 6, 0);
+        // One less since the ticket creator is already counted.
+        addComments(testPR, voting.guaranteedResult - 1, 0);
         getVoters(testPR).forEach(function (user) {
           voting.testing.cachedStarGazers[user] = true;
         });
@@ -165,7 +168,8 @@
         // Ten minutes ago
         testPR.created_at = Date.now() - 1000 * 60 * 10;
         voting.testing.cachedPRs[testPR.number] = testPR;
-        addComments(testPR, 6, 0);
+        // One less since the ticket creator is already counted.
+        addComments(testPR, voting.guaranteedResult - 1, 0);
         getVoters(testPR).forEach(function (user) {
           voting.testing.cachedStarGazers[user] = true;
         });
