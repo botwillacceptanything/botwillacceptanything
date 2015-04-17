@@ -16,6 +16,9 @@
         mocks: {
             twitter: true
         },
+        features: {
+            twitter: false,
+        },
         /*
         irc: {
             host: 'irc.freenode.net',

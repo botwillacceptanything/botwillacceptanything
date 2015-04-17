@@ -3,52 +3,55 @@
 
   var deps = [
     'assert',
+    'nock',
 
-    '../mocks/',
+    '../mocks/twitter.js',
     '../../lib/integrations/twitter.js',
     '../../lib/events.js',
   ];
 
-  define(deps, function (assert, mocks, twitter, events) {
-    var mockList;
-    // Wait for all of the mocks to be loaded.
-    mocks()
-      .then(function (loadedMocks) {
-        mockList = loadedMocks;
-        return twitter();
-      }).then(function () {
-        describe('twitter', function () {
-          var mockEvent = {
-            pull_request: {
-              number: 1,
-              title: 'Test Twitter functionality',
-              html_url: 'http://example.com/',
-            },
-          };
-          it('When a bot.pull_request.vote_started event occurs, it should tweet', function () {
-            events.emit('bot.pull_request.vote_started', mockEvent.pull_request);
-            setTimeout(function () {
-              mockList.twitter.done();
-              mockList.twitter.cleanAll();
-            }, 0);
-          });
+  define(deps, function (assert, nock, mock, twitter, events) {
+    describe('twitter', function () {
+      var mocked;
+      var twitterInstance;
+      beforeEach(function () {
+        mocked = mock();
+        twitterInstance = twitter();
+      });
+      afterEach(function () {
+        twitterInstance.destroy();
+        nock.cleanAll();
+      });
 
-          it('When a github.pull_request.merged event occurs, it should tweet', function () {
-            events.emit('github.pull_request.merged', mockEvent);
-            setTimeout(function () {
-              mockList.twitter.done();
-              mockList.twitter.cleanAll();
-            }, 0);
-          });
+      var mockEvent = {
+        pull_request: {
+          number: 1,
+          title: 'Test Twitter functionality',
+          html_url: 'http://example.com/',
+        },
+      };
 
-          it('When a github.pull_request.closed event occurs, it should tweet', function () {
-            events.emit('github.pull_request.closed', mockEvent);
-            setTimeout(function () {
-              mockList.twitter.done();
-              mockList.twitter.cleanAll();
-            }, 0);
-          });
-        });
+      it('When a bot.pull_request.vote_started event occurs, it should tweet', function (done) {
+        events.emit('bot.pull_request.vote_started', mockEvent.pull_request);
+        setTimeout(function () {
+
+          return mocked.isDone() ? done() : assert.ifError('Mocks not yet satisfied');
+        }, 10);
+      });
+
+      it('When a github.pull_request.merged event occurs, it should tweet', function (done) {
+        events.emit('github.pull_request.merged', mockEvent);
+        setTimeout(function () {
+          return mocked.isDone() ? done() : assert.ifError('Mocks not yet satisfied');
+        }, 10);
+      });
+
+      it('When a github.pull_request.closed event occurs, it should tweet', function (done) {
+        events.emit('github.pull_request.closed', mockEvent);
+        setTimeout(function () {
+          return mocked.isDone() ? done() : assert.ifError('Mocks not yet satisfied');
+        }, 10);
+      });
     });
   });
 }());
