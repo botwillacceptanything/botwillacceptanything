@@ -9,10 +9,11 @@
     'nock',
 
     '../mocks/github.js',
+    '../mocks/thecatapi.js',
     '../../lib/voting.js',
   ];
 
-  define(deps, function (assert, _, nock, mock, voting) {
+  define(deps, function (assert, _, nock, mock, mockingCat, voting) {
     describe('voting', function () {
       var basePR = {
         number: 1,
@@ -105,6 +106,7 @@
         var mockPRGet = mock.pullRequests.get(true);
         var mockPRMerge = mock.pullRequests.merge();
         var mockCreateComment = mock.issues.createComment();
+        var mockCat = mockingCat();
         var testPR = _.merge({}, basePR);
         voting.testing.cachedPRs[testPR.number] = testPR;
         // One less since the ticket creator is already counted.
@@ -118,6 +120,7 @@
           mockCreateComment.done();
           mockPRGet.done();
           mockPRMerge.done();
+          mockCat.done();
           done();
         });
       });
@@ -132,11 +135,13 @@
 
         var mockPRClose = mock.pullRequests.close(testPR);
         var mockCreateComment = mock.issues.createComment();
+        var mockCat = mockingCat();
 
         var result = voting.testing.processPR(testPR, function (err, res) {
           if (err) { throw err; }
           mockCreateComment.done();
           mockPRClose.done();
+          mockCat.done();
           done();
         });
       });
@@ -145,6 +150,7 @@
         var mockPRGet = mock.pullRequests.get(true);
         var mockPRMerge = mock.pullRequests.merge();
         var mockCreateComment = mock.issues.createComment();
+        var mockCat = mockingCat();
         var testPR = _.merge({}, basePR);
         voting.testing.cachedPRs[testPR.number] = testPR;
         // One less since the ticket creator is already counted.
@@ -158,6 +164,7 @@
           mockCreateComment.done();
           mockPRGet.done();
           mockPRMerge.done();
+          mockCat.done();
           done();
         });
       });
@@ -172,11 +179,13 @@
 
         var mockPRClose = mock.pullRequests.close(testPR);
         var mockCreateComment = mock.issues.createComment();
+        var mockCat = mockingCat();
 
         var result = voting.testing.processPR(testPR, function (err, res) {
           if (err) { throw err; }
           mockCreateComment.done();
           mockPRClose.done();
+          mockCat.done();
           done();
         });
       });
