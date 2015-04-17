@@ -6,6 +6,8 @@
             port: 3000
         },
 
+        evil: false,
+
         user: "YOUR_GITHUB_USERNAME",
         repo: "botwillacceptanything",
         githubAuth: {
