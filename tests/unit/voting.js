@@ -23,6 +23,8 @@
           login: 'TestUser',
         },
         comments: [],
+        state: 'open',
+        mergeable: true,
       };
 
       function addComments(pr, positive, negative) {
@@ -31,6 +33,13 @@
           pr.comments.push({
             user: { login: 'positive' + i },
             body: ':+1:',
+            id: 1,
+          });
+        }
+        for (i = 0; i < negative; i++) {
+          pr.comments.push({
+            user: { login: 'negative' + i },
+            body: ':-1:',
             id: 1,
           });
         }
@@ -51,6 +60,7 @@
 
       afterEach(function () {
         resetStargazers();
+        nock.cleanAll();
       });
 
       it("should ignore a PR that hasn't been open for long enough", function (done) {
@@ -58,10 +68,10 @@
         var testPR = _.merge({}, basePR);
         testPR.created_at = Date.now();
 
-        var result = voting.testing.processPR(testPR);
-        if (result === false) {
+        voting.testing.processPR(testPR, function (err, res) {
+          assert.strictEqual(res, false, 'Did not cancel processing of PR');
           done();
-        }
+        });
       });
 
       it("should ignore a PR that doesn't have enough votes", function (done) {
@@ -72,10 +82,10 @@
           voting.testing.cachedStarGazers[user] = true;
         });
 
-        var result = voting.testing.processPR(testPR);
-        if (result === false) {
+        voting.testing.processPR(testPR, function (err, res) {
+          assert.strictEqual(res, false, 'Did not cancel processing of PR');
           done();
-        }
+        });
       });
 
       it("should edit non-stargazers' comments", function (done) {
@@ -86,8 +96,50 @@
           voting.testing.cachedStarGazers[user] = true;
         });
 
-        var result = voting.testing.processPR(testPR);
-        return mockEditComment.isDone() ? done() : assert.ifError('Comment not edited');
+        var result = voting.testing.processPR(testPR, function (err, res) {
+          if (err) { throw err; }
+          mockEditComment.done();
+          done();
+        });
+      });
+
+      it('should merge passed PRs', function (done) {
+        var mockPRGet = mock.pullRequests.get(true);
+        var mockPRMerge = mock.pullRequests.merge();
+        var mockCreateComment = mock.issues.createComment();
+        var testPR = _.merge({}, basePR);
+        voting.testing.cachedPRs[testPR.number] = testPR;
+        addComments(testPR, 8, 0);
+        getVoters(testPR).forEach(function (user) {
+          voting.testing.cachedStarGazers[user] = true;
+        });
+
+        var result = voting.testing.processPR(testPR, function (err, res) {
+          if (err) { throw err; }
+          mockCreateComment.done();
+          mockPRGet.done();
+          mockPRMerge.done();
+          done();
+        });
+      });
+
+      it('should close failed PRs', function (done) {
+        var testPR = _.merge({}, basePR);
+        voting.testing.cachedPRs[testPR.number] = testPR;
+        addComments(testPR, 0, 8);
+        getVoters(testPR).forEach(function (user) {
+          voting.testing.cachedStarGazers[user] = true;
+        });
+
+        var mockPRClose = mock.pullRequests.close(testPR);
+        var mockCreateComment = mock.issues.createComment();
+
+        var result = voting.testing.processPR(testPR, function (err, res) {
+          if (err) { throw err; }
+          mockCreateComment.done();
+          mockPRClose.done();
+          done();
+        });
       });
     });
   });

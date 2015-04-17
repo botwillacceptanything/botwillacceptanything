@@ -32,6 +32,29 @@
             });
         },
       },
+
+      pullRequests: {
+        get: function (mergeable) {
+          if (typeof mergeable === 'undefined') { mergeable = true; }
+          return nock(domain)
+            .get(repo + 'pulls/1?' + token)
+            .reply(200, {
+              mergeable: mergeable,
+            });
+        },
+
+        merge: function () {
+          return nock(domain)
+            .put(repo + 'pulls/1/merge?' + token)
+            .reply(200);
+        },
+
+        close: function (pr) {
+          return nock(domain)
+            .patch(repo + 'pulls/1?' + token, { title: pr.title, state: 'closed' })
+            .reply(200);
+        },
+      },
     };
   });
 }());
