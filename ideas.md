@@ -11,5 +11,5 @@
  - [x] When tweeting, shorten links and include PR title.
  - [x] IRC Bot to post live updates to the IRC chatroom.
  - [x] Write Definition of Done file that all PRs should try to meet
- - [ ] When non-stargazers vote, poke them with a comment immediately.
+ - [x] When non-stargazers vote, poke them with a comment immediately.
  - [ ] IRC Bot updates the title of the IRC chatroom with the GitHub vote status.
