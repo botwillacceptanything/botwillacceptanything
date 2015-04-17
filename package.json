@@ -26,6 +26,7 @@
     "sanitize-html": "^1.6.1",
     "sentiment": "^1.0.2",
     "serve-favicon": "2.2.0",
+    "sqlite3": "^3.0.5",
     "twitter": "^1.2.5"
   },
   "repository": {
