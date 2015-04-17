@@ -11,11 +11,12 @@
         'gulp',
         'gulp-jsdoc',
         'gulp-jshint',
-        'gulp-spawn-mocha',
+        'gulp-mocha',
+        'gulp-istanbul',
         'gulp-foreach',
     ];
 
-    define(deps, function(config, gulp, jsdoc, jshint, mocha, foreach) {
+    define(deps, function(config, gulp, jsdoc, jshint, mocha, istanbul, foreach) {
         var src = [
             'lib/*.js'
         ];
@@ -32,18 +33,23 @@
                 .pipe(jsdoc.generator('data/doc/'));
         });
 
-        gulp.task('mocha', [], function () {
+        gulp.task('mocha', [], function (cb) {
             var ciMode = (process.env.CI === 'true');
-            return gulp.src('tests/unit/**/*.js', {read: false})
-                .pipe(foreach(function (stream, file) {
-                  return stream.pipe(mocha({
-                    debugBrk: (process.env.NODE_ENV === 'debug'),
-                    reporter: ((!ciMode && config.test_reporter) || 'spec'),
-                    env: {
-                      BUILD_ENVIRONMENT: 'test',
-                    },
-                  }));
-                }));
+            process.env.BUILD_ENVIRONMENT = 'test';
+            gulp.src(['./*.js', './lib/**/*.js', './test/mocks/**/*.js'])
+                .pipe(istanbul({
+                  includeUntested: true,
+                  reporters: [ 'lcov' ],
+                }))
+                .pipe(istanbul.hookRequire())
+                .on('finish', function () {
+                return gulp.src('tests/unit/**/*.js', { read: false })
+                    .pipe(mocha({
+                      reporter: ((!ciMode && config.test_reporter) || 'spec'),
+                    }))
+                    .pipe(istanbul.writeReports())
+                    .on('end', cb);
+                });
         });
 
         // Build Task

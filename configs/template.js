@@ -6,6 +6,8 @@
             port: 3000
         },
 
+        evil: false,
+
         user: "YOUR_GITHUB_USERNAME",
         repo: "botwillacceptanything",
         githubAuth: {
@@ -15,6 +17,9 @@
         },
         mocks: {
             twitter: true
+        },
+        features: {
+            twitter: false,
         },
         /*
         irc: {

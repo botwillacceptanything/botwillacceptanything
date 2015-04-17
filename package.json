@@ -50,10 +50,12 @@
     "test": "gulp"
   },
   "devDependencies": {
+    "coveralls": "^2.11.2",
     "gulp": "^3.8.11",
     "gulp-foreach": "^0.1.0",
+    "gulp-istanbul": "^0.8.1",
     "gulp-jsdoc": "^0.1.4",
     "gulp-jshint": "^1.10.0",
-    "gulp-spawn-mocha": "^2.0.1"
+    "gulp-mocha": "^2.0.1"
   }
 }
