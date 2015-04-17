@@ -125,8 +125,7 @@
       it('should close failed PRs', function (done) {
         var testPR = _.merge({}, basePR);
         voting.testing.cachedPRs[testPR.number] = testPR;
-        // One less since the ticket creator is already counted.
-        addComments(testPR, 0, voting.minVotes - 1);
+        addComments(testPR, 0, voting.minVotes);
         getVoters(testPR).forEach(function (user) {
           voting.testing.cachedStarGazers[user] = true;
         });
@@ -142,7 +141,7 @@
         });
       });
 
-      it("should process a PR that has a guaranteed win after the time limit", function (done) {
+      it("should merge a PR that has a guaranteed win after the time limit", function (done) {
         var mockPRGet = mock.pullRequests.get(true);
         var mockPRMerge = mock.pullRequests.merge();
         var mockCreateComment = mock.issues.createComment();
@@ -159,6 +158,25 @@
           mockCreateComment.done();
           mockPRGet.done();
           mockPRMerge.done();
+          done();
+        });
+      });
+
+      it("should close a PR that has a guaranteed lose after the time limit", function (done) {
+        var testPR = _.merge({}, basePR);
+        voting.testing.cachedPRs[testPR.number] = testPR;
+        addComments(testPR, 0, voting.guaranteedResult);
+        getVoters(testPR).forEach(function (user) {
+          voting.testing.cachedStarGazers[user] = true;
+        });
+
+        var mockPRClose = mock.pullRequests.close(testPR);
+        var mockCreateComment = mock.issues.createComment();
+
+        var result = voting.testing.processPR(testPR, function (err, res) {
+          if (err) { throw err; }
+          mockCreateComment.done();
+          mockPRClose.done();
           done();
         });
       });
