@@ -64,7 +64,6 @@
       });
 
       it("should ignore a PR that hasn't been open for long enough", function (done) {
-        var mockCreateComment = mock.issues.createComment();
         var testPR = _.merge({}, basePR);
         testPR.created_at = Date.now();
 
@@ -75,7 +74,6 @@
       });
 
       it("should ignore a PR that doesn't have enough votes", function (done) {
-        var mockCreateComment = mock.issues.createComment();
         var testPR = _.merge({}, basePR);
         addComments(testPR, 3, 0);
         getVoters(testPR).forEach(function (user) {
@@ -138,6 +136,42 @@
           if (err) { throw err; }
           mockCreateComment.done();
           mockPRClose.done();
+          done();
+        });
+      });
+
+      it("should process a PR that has a guaranteed win after the time limit", function (done) {
+        var mockPRGet = mock.pullRequests.get(true);
+        var mockPRMerge = mock.pullRequests.merge();
+        var mockCreateComment = mock.issues.createComment();
+        var testPR = _.merge({}, basePR);
+        voting.testing.cachedPRs[testPR.number] = testPR;
+        addComments(testPR, 6, 0);
+        getVoters(testPR).forEach(function (user) {
+          voting.testing.cachedStarGazers[user] = true;
+        });
+
+        var result = voting.testing.processPR(testPR, function (err, res) {
+          if (err) { throw err; }
+          mockCreateComment.done();
+          mockPRGet.done();
+          mockPRMerge.done();
+          done();
+        });
+      });
+
+      it("should ignore a PR that has a guaranteed win before the time limit", function (done) {
+        var testPR = _.merge({}, basePR);
+        // Ten minutes ago
+        testPR.created_at = Date.now() - 1000 * 60 * 10;
+        voting.testing.cachedPRs[testPR.number] = testPR;
+        addComments(testPR, 6, 0);
+        getVoters(testPR).forEach(function (user) {
+          voting.testing.cachedStarGazers[user] = true;
+        });
+
+        voting.testing.processPR(testPR, function (err, res) {
+          assert.strictEqual(res, false, 'Did not cancel processing of PR');
           done();
         });
       });
