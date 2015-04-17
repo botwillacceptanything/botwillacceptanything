@@ -37,7 +37,10 @@
             var ciMode = (process.env.CI === 'true');
             process.env.BUILD_ENVIRONMENT = 'test';
             gulp.src(['./*.js', './lib/**/*.js', './test/mocks/**/*.js'])
-                .pipe(istanbul())
+                .pipe(istanbul({
+                  includeUntested: true,
+                  reporters: [ 'lcov' ],
+                }))
                 .pipe(istanbul.hookRequire())
                 .on('finish', function () {
                 return gulp.src('tests/unit/**/*.js', { read: false })
