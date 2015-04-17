@@ -11,5 +11,8 @@
  - [x] When tweeting, shorten links and include PR title.
  - [x] IRC Bot to post live updates to the IRC chatroom.
  - [x] Write Definition of Done file that all PRs should try to meet
- - [ ] When non-stargazers vote, poke them with a comment immediately.
- - [ ] IRC Bot updates the title of the IRC chatroom with the GitHub vote status.
+ - [ ] When non-stargazers vote, poke them with a comment immediately
+ - [ ] IRC Bot updates the title of the IRC chatroom with the GitHub vote status
+ - [ ] Add the idea of karma
+ - [ ] Create a page `/votes/user/USER` that lists the open votes that a user should vote on.
+ - [ ] Over IRC, `/msg anythingbot info $GITHUBUSER` lists the open votes for a user
