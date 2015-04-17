@@ -1,0 +1,106 @@
+body {
+    margin: 5px;
+    padding: 5px;
+    background-repeat: no-repeat;
+    background-position: top right;
+    background-color: black;
+    color: black;
+}
+
+#Header {
+    margin: 85px 100px 0px 100px;
+    padding: 5px;
+}
+
+.Content {
+    margin: 0px 100px 50px;
+    padding: 10px;
+    color: black;
+    background-color: #eee;
+    border: 1px dashed black;
+}
+
+p {
+    font-size: 11px;
+    line-height: 20px;
+    font-family: verdana, arial, helvetica, sans-serif;
+    margin: 3px 3px 12px 3px;
+}
+
+#Content > p {
+    margin: 0px;
+}
+
+#Content > p + p {
+    text-indent: 30px;
+}
+
+a {
+    color: #09C;
+    font-size: 11px;
+    text-decoration: none;
+    font-weight: 600;
+    font-family: verdana, arial, helvetica, sans-serif;
+}
+
+a:link {
+    color: #09c;
+}
+
+a:visited {
+    color: #07a;
+}
+
+a:hover {
+    background-color: white;
+}
+
+h1 {
+    color: #333;
+    font: 24px/24px verdana, arial, helvetica, sans-serif;
+    font-weight: 900;
+}
+
+h2 {
+    color: #333;
+    font: 12px verdana, arial, helvetica, sans-serif;
+    font-weight: 700;
+    margin: 18px 0px 3px 0px;
+}
+
+h3 {
+    color: #666;
+    font-size: 11px;
+    font-weight: 800;
+    margin: 6px 0px 3px 0px;
+}
+
+img {
+    border-width: 0px;
+}
+
+img.thumb {
+    margin: 10px 1px;
+}
+
+#Copyright {
+    clear: both;
+    padding: 50px 0px 100px 0px;
+    text-align: center;
+    font-weight: 800;
+    color: #999;
+}
+
+#copyrightText {
+    position: relative;
+    left: -17px;
+}
+
+.first {
+    margin-top: 0px;
+    padding-top: 0px;
+}
+
+.boxed {
+    border: 1px solid black;
+}
