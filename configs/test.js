@@ -1,5 +1,5 @@
 module.exports = {
-  mocks: {
+  features: {
     twitter: true,
   },
   irc: {
