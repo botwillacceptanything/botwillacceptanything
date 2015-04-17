@@ -26,7 +26,9 @@
     "sanitize-html": "^1.6.1",
     "sentiment": "^1.0.2",
     "serve-favicon": "2.2.0",
-    "twitter": "^1.2.5"
+    "sqlite3": "^3.0.5",
+    "twitter": "^1.2.5",
+    "underscore": "^1.8.3"
   },
   "repository": {
     "type": "git",
