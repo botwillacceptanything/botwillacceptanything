@@ -50,6 +50,7 @@
     "test": "gulp"
   },
   "devDependencies": {
+    "coveralls": "^2.11.2",
     "gulp": "^3.8.11",
     "gulp-foreach": "^0.1.0",
     "gulp-istanbul": "^0.8.1",
