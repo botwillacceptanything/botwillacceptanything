@@ -8,9 +8,9 @@
     'lodash',
     'nock',
 
-    '../mocks/github.js',
-    '../mocks/thecatapi.js',
-    '../../lib/voting.js',
+    '../mocks/github',
+    '../mocks/thecatapi',
+    '../../lib/voting',
   ];
 
   define(deps, function (assert, _, nock, mock, mockingCat, voting) {
