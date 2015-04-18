@@ -1,6 +1,6 @@
 body {
-	background: #ffa9e1;
-	color: #fff;
+	background: #eee;
+	color: black;
 }
 
 .navbar-default .navbar-brand,
@@ -10,19 +10,19 @@ body {
 
 .navbar-default {
 	color: #fff;
-	background: -webkit-linear-gradient(#ff0bb6, #ff53d4);
-	background: -moz-linear-gradient(#ff0bb6, #ff53d4);
-	background: -o-linear-gradient(#ff0bb6, #ff53d4);
-	background: linear-gradient(#ff0bb6, #ff53d4);
+	background: -webkit-linear-gradient(#FF0000, #E82C0C);
+	background: -moz-linear-gradient(#FF0000, #E82C0C);
+	background: -o-linear-gradient(#FF0000, #E82C0C);
+	background: linear-gradient(#FF0000, #E82C0C);
 	border: none;
 }
 
 .container {
-	color: #fff;
+	color: black;
 }
 
 h1, a {
-	color: #ff0bb6;
+	color: #E82C0C;
 }
 
 .jumbotron {
