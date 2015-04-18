@@ -1,0 +1,57 @@
+Slurp : botwillaccepanything, github, and social networks
+
+https://www.youtube.com/watch?v=9ZVKSTcPeqA
+
+The github auth tokens allow the bots to authenticate each other with a
+challenge, "post this random number I just made up to the message board
+(issue 192 on github) under your user's name". This proves a bot holds a
+github auth token. It is possible to create a social network this way.
+You have your photos sitting on your bot in data/local and you tell your
+bot who you want to share which photos with (github users) [1]. The photo
+viewer is a very simple browser (for example a clone of the Mac OS finder
+or Windows explorer, just server name, file path, and the associated file
+data (is it music, photo, document, &c.). Here "Volume" means "Server".
+GUI is a left sidebar, a logo on the top, and a menu underneath the logo:
+
++---------------------------------------+
+|RijisaNet                              |
++---------------------------------------+
+|Home Photo Video Doc Trix              |
++------+--------------------------------+
+|Volume|Preview                         |
+|- ... |                                |
+|  ... |                                |
+|+ ... |                                |
+|+ ... |                                |
+|+ ... |                                |
+|+ ... |                                |
+|- ... |                                |
+|  ... |                                |
+|      |                                |
+|      |                                |
+|      |                                |
++------+--------------------------------+
+
+Page layout is a clone of:
+
+http://www.w3schools.com/tags/tag_select.asp
+
+The GUI controls let you specify: the remote server (the name of your
+friend's bot) and the path to the photo/music/data you want to access (a
+file sitting on your friend's bot). User puts photos and other private
+files in data/local. Now the bot is a NAS (in the cloud | on private
+network) that shares data with other bots that use "github 192
+authentication". The user may request the bot fetch social data from other
+bots: status updates, events, etc..., cache it, and display it to the user
+in a news feed / social calendar / whatever. Slurp, cache, display.
+
+The user has control over the visual experience of the social network
+because the bot will accept anything, for example "window managers" that
+give the experience a different look and feel. This gives the user the
+opportunity to define the visual experience of social data. By giving the
+bot a social network auth token, it should be possible for it to slurp up
+all of the data a user has access to through an online social network.
+
+Trix is the name of the google docs spreadsheet.
+
+[1] organized with "users" and "user groups".
