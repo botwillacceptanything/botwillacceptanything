@@ -72,8 +72,10 @@ $ cat configs/custom.js
 
 ```
 1. (Optional) Set up GitHub Webhooks by following the next section.
+1. (Optional) Install foreman  with `gem install foreman`
 1. Run `npm install` to install dependencies.
-1. Run `node main.js` to start the bot.
+1. Run `node main.js` to start the bot. Alternatively, if you installed foreman earlier, `foreman start` will also 
+start the bot as well as giving slightly prettier console output.
 
 ## Setting up GitHub Webhooks
 
