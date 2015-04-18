@@ -4,13 +4,14 @@
   var deps = [
     'assert',
     'nock',
+    'underscore',
 
     '../mocks/twitter.js',
     '../../lib/integrations/twitter.js',
     '../../lib/events.js',
   ];
 
-  define(deps, function (assert, nock, mock, twitter, events) {
+  define(deps, function (assert, nock, _, mock, twitter, events) {
     describe('twitter', function () {
       var mocked;
       var twitterInstance;
@@ -31,14 +32,11 @@
         },
       };
 
-      var mockMergeEvent = {
-        pull_request: {
-          number: 1,
-          title: 'Test Twitter functionality',
-          html_url: 'http://example.com/',
-          merged_at: '2011-01-26T19:01:12Z',
-        },
-      };
+      var mockMergeEvent =
+        _.extend(
+          {},
+          mockEvent,
+          { merged_at: '2011-01-26T19:01:12Z' });
 
       it('When a bot.pull_request.vote_started event occurs, it should tweet', function (done) {
         events.emit('bot.pull_request.vote_started', mockEvent.pull_request);
