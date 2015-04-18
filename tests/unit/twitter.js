@@ -4,13 +4,14 @@
   var deps = [
     'assert',
     'nock',
+    'underscore',
 
     '../mocks/twitter.js',
     '../../lib/integrations/twitter.js',
     '../../lib/events.js',
   ];
 
-  define(deps, function (assert, nock, mock, twitter, events) {
+  define(deps, function (assert, nock, _, mock, twitter, events) {
     describe('twitter', function () {
       var mocked;
       var twitterInstance;
@@ -31,6 +32,12 @@
         },
       };
 
+      var mockMergeEvent =
+        _.extend(
+          {},
+          mockEvent,
+          { merged_at: '2011-01-26T19:01:12Z' });
+
       it('When a bot.pull_request.vote_started event occurs, it should tweet', function (done) {
         events.emit('bot.pull_request.vote_started', mockEvent.pull_request);
         setTimeout(function () {
@@ -40,7 +47,7 @@
       });
 
       it('When a github.pull_request.merged event occurs, it should tweet', function (done) {
-        events.emit('github.pull_request.merged', mockEvent);
+        events.emit('github.pull_request.merged', mockMergeEvent);
         setTimeout(function () {
           return mocked.isDone() ? done() : assert.ifError('Mocks not yet satisfied');
         }, 10);
