@@ -3,7 +3,7 @@ language: node_js
 node_js:
   - "0.12"
   - "0.11"
-after_success: ./node_modules/bin/coveralls --verbose < coverage/lcov.info
+after_success: ./node_modules/.bin/coveralls --verbose < coverage/lcov.info
 
 notifications:
   irc: "chat.freenode.net#botwillacceptanything"

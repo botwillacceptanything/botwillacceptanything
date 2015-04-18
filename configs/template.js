@@ -15,8 +15,13 @@
             token: "YOUR_OAUTH_TOKEN",
             webhookSecret: 'SECRET'
         },
+        db: {
+            sqlite: {
+                name: "database",
+            },
+        },
         mocks: {
-            twitter: true
+            twitter: true,
         },
         features: {
             twitter: false,
