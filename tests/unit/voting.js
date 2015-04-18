@@ -206,6 +206,16 @@
           done();
         });
       });
+
+      it("should decide result", function() {
+        var res = null;
+
+        res = voting.voting.decideVoteResult(4, 4);
+        assert.strictEqual(res, false);
+
+        res = voting.voting.decideVoteResult(8, 0);
+        assert.strictEqual(res, true);
+      });
     });
   });
 }());
