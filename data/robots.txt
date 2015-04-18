@@ -9,6 +9,4 @@ Disallow: /views/
 Disallow: /img/
 Disallow: /.gitignore
 Disallow: /favicon.ico
-Disallow: /rainbow.png
-Disallow: /rainbow_dash.png
 Disallow: /under-construction-flashing-barracade.gif

@@ -47,36 +47,6 @@
         .boxed {
             border: 1px solid black;
         }
-
-        .rainbow {
-            background: url('/rainbow.png');
-            height: 353px;
-            width: 400px;
-            position: fixed;
-            left: 0;
-            bottom: 0;
-            z-index: -1;
-            opacity: 0.25;
-        }
-        .rainbow_dash_container {
-            width: 100%;
-            height: 87px;
-            position: relative;
-            overflow: hidden;
-        }
-        .rainbow_dash_container .rainbow_dash {
-            background: url('/rainbow_dash.png');
-            height: 87px;
-            width: 225px;
-            position: absolute;
-            z-index: 2000;
-            left: 0%;
-            top: 0;
-            transition: left 1s linear;
-        }
-        .rainbow_dash_container:hover .rainbow_dash {
-            left: 100%;
-        }
         #name {
             width: 100%;
             text-align: center;
@@ -84,6 +54,9 @@
         .under_construction img {
             position: relative;
             z-index: -2;
+        }
+        #content {
+            padding-top: 50px;
         }
         </style>
         <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/smore-inc/clippy.js/8bfd1f92c725c6bc3a435d538a77c3302b327c08/build/clippy.css" />
@@ -120,29 +93,26 @@
                 </div>
             </div>
         </nav>
-        <div class="rainbow_dash_container">
-            <div class="rainbow_dash"></div>
-        </div>
-        <div class="container" >
-            <div class="starter-template">
-                <h1>{{name}}</h1>
-                <p class="lead">Bot Will Accept Anything - The project where anything goes, as long as the code allows it </h1>
-                {{{body}}}
-                <center>
-                    <iframe src="https://ghbtns.com/github-btn.html?user={{config.user}}&repo={{config.repo}}&type=star&count=true&size=large"
-                    frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
-                    <div class="jumbotron">
-                        <div class="container">
-                            <marquee class="under_construction">
-                                <img src="/under-construction-flashing-barracade-animation.gif" alt="Under construction" />
-                            </marquee>
+        <div id="content">
+            <div class="container" >
+                <div class="starter-template">
+                    <h1>{{name}}</h1>
+                    <p class="lead">Bot Will Accept Anything - The project where anything goes, as long as the code allows it </p>
+                    {{{body}}}
+                    <center>
+                        <iframe src="https://ghbtns.com/github-btn.html?user={{config.user}}&repo={{config.repo}}&type=star&count=true&size=large"
+                        frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+                        <div class="jumbotron">
+                            <div class="container">
+                                <marquee class="under_construction">
+                                    <img src="/under-construction-flashing-barracade-animation.gif" alt="Under construction" />
+                                </marquee>
+                            </div>
                         </div>
-                    </div>
-                </center>
+                    </center>
+                </div>
             </div>
         </div>
-        <div class="rainbow"></div>
         <a href="https://github.com/{{config.user}}/{{config.repo}}"><img style="position: absolute; top: 0; right: 0; border: 0; z-index:2050;" src="https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67" alt="Fork {{config.repo}} on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png"></a>
-	<audio controls="controls"><source src="/song.mp3" type="audio/mpeg"></audio>
     </body>
 </html>
