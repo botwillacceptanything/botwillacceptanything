@@ -1,1 +1,1 @@
-bot: npm run main
+bot: node launcher.js
