@@ -4,7 +4,7 @@
   var deps = [
     'assert',
     'nock',
-    'underscore',
+    'lodash',
 
     '../mocks/twitter.js',
     '../../lib/integrations/twitter.js',
