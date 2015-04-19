@@ -44,3 +44,4 @@ tmp
 secrets.yml
 name.txt
 
+*.sublime-project
