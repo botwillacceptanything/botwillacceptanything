@@ -9,23 +9,19 @@
         <meta name="author" content="GitHub Commitors">
         <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
         <link rel="stylesheet" type="text/css" href="/css/bootstrap-theme.min.css" />
-        <link rel="stylesheet" type="text/css" href="/css/bootstrap-theme-bot.css" />
+        <link id="theme" rel="stylesheet" type="text/css" href="/css/themes/pony.css" />
         <style type="text/css" media="all">
         body {
             margin: 0px;
             padding: 0px;
             color: black;
         }
-
-
         img {
             border-width: 0px;
         }
-
         img.thumb {
             margin: 10px 1px;
         }
-
         #Copyright {
             clear: both;
             padding: 50px 0px 100px 0px;
@@ -33,49 +29,16 @@
             font-weight: 800;
             color: #999;
         }
-
         #copyrightText {
             position: relative;
             left: -17px;
         }
-
         .first {
             margin-top: 0px;
             padding-top: 0px;
         }
-
         .boxed {
             border: 1px solid black;
-        }
-
-        .rainbow {
-            background: url('/rainbow.png');
-            height: 353px;
-            width: 400px;
-            position: fixed;
-            left: 0;
-            bottom: 0;
-            z-index: -1;
-            opacity: 0.25;
-        }
-        .rainbow_dash_container {
-            width: 100%;
-            height: 87px;
-            position: relative;
-            overflow: hidden;
-        }
-        .rainbow_dash_container .rainbow_dash {
-            background: url('/rainbow_dash.png');
-            height: 87px;
-            width: 225px;
-            position: absolute;
-            z-index: 2000;
-            left: 0%;
-            top: 0;
-            transition: left 1s linear;
-        }
-        .rainbow_dash_container:hover .rainbow_dash {
-            left: 100%;
         }
         #name {
             width: 100%;
@@ -91,20 +54,47 @@
         <script src="/js/lib/bootstrap.min.js"></script>
         <script src="https://cdn.rawgit.com/smore-inc/clippy.js/8bfd1f92c725c6bc3a435d538a77c3302b327c08/build/clippy.min.js"></script>
         <script type="text/javascript">
-          clippy.load('Clippy', function(agent) {
-            agent.show();
-          });
+            clippy.load('Clippy', function(agent) {
+                agent.show();
+            });
+            function themeLoad() {
+                cookie = getCookie("theme");
+                if (cookie != "") {
+                    changeTheme(cookie)
+                }
+            }
+            
+            function changeTheme(theme) {
+                $("#theme").attr("href", "/css/themes/" + theme + ".css");
+                setCookie("theme", theme, 7)
+            }
+            function setCookie(cname, cvalue, exdays) {
+                var d = new Date();
+                d.setTime(d.getTime() + (exdays*24*60*60*1000));
+                var expires = "expires="+d.toUTCString();
+                document.cookie = cname + "=" + cvalue + "; " + expires;
+            }
+            function getCookie(cname) {
+                var name = cname + "=";
+                var ca = document.cookie.split(';');
+                for(var i=0; i<ca.length; i++) {
+                    var c = ca[i];
+                    while (c.charAt(0)==' ') c = c.substring(1);
+                    if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+                }
+                return "";
+            }
         </script>
     </head>
-    <body>
+    <body onload="javascript:themeLoad()">
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href="#">{{name}}</a>
                 </div>
@@ -117,32 +107,43 @@
                         <li><a href="/video/">Video</a></li>
                         <li><a href="/votes">Current Votes</a></li>
                     </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Choose Theme<span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="javascript:changeTheme('red')">Red</a></li>
+                                <li><a href="javascript:changeTheme('blue')">Blue</a></li>
+                                <li><a href="javascript:changeTheme('pony')">My Little Pony</a></li>
+                            </ul>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </nav>
-        <div class="rainbow_dash_container">
-            <div class="rainbow_dash"></div>
+        <div class="logo_container">
+            <div class="logo"></div>
         </div>
         <div class="container" >
             <div class="starter-template">
                 <h1>{{name}}</h1>
                 <p class="lead">Bot Will Accept Anything - The project where anything goes, as long as the code allows it </h1>
-                {{{body}}}
-                <center>
+                    {{{body}}}
+                    <center>
                     <iframe src="https://ghbtns.com/github-btn.html?user={{config.user}}&repo={{config.repo}}&type=star&count=true&size=large"
                     frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
                     <div class="jumbotron">
                         <div class="container">
                             <marquee class="under_construction">
-                                <img src="/under-construction-flashing-barracade-animation.gif" alt="Under construction" />
+                            <img src="/under-construction-flashing-barracade-animation.gif" alt="Under construction" />
                             </marquee>
                         </div>
                     </div>
-                </center>
+                    </center>
+                </div>
             </div>
-        </div>
-        <div class="rainbow"></div>
-        <a href="https://github.com/{{config.user}}/{{config.repo}}"><img style="position: absolute; top: 0; right: 0; border: 0; z-index:2050;" src="https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67" alt="Fork {{config.repo}} on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png"></a>
-	<audio controls="controls"><source src="/song.mp3" type="audio/mpeg"></audio>
+            <div class="corner"></div>
+            <a href="https://github.com/{{config.user}}/{{config.repo}}"><img style="position: absolute; top: 0; right: 0; border: 0; z-index:2050;" src="https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67" alt="Fork {{config.repo}} on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png"></a>
+            
+        <audio controls="controls"><source src="/song.mp3" type="audio/mpeg"></audio>
     </body>
 </html>

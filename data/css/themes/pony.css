@@ -1,0 +1,59 @@
+body {
+	background: #ffa9e1;
+	color: #fff;
+}
+
+.navbar-default .navbar-brand,
+.navbar-default .navbar-nav>li>a {
+	color: #fff;
+}
+
+.navbar-default {
+	color: #fff;
+	background: -webkit-linear-gradient(#ff0bb6, #ff53d4);
+	background: -moz-linear-gradient(#ff0bb6, #ff53d4);
+	background: -o-linear-gradient(#ff0bb6, #ff53d4);
+	background: linear-gradient(#ff0bb6, #ff53d4);
+	border: none;
+}
+
+.container {
+	color: #fff;
+}
+
+h1, a {
+	color: #ff0bb6;
+}
+
+.jumbotron {
+	background: #fff;
+}
+.logo_container {
+    width: 100%;
+    height: 87px;
+    position: relative;
+    overflow: hidden;
+}
+.logo_container .logo {
+    background: url('/rainbow_dash.png');
+    height: 87px;
+    width: 225px;
+    position: absolute;
+    z-index: 2000;
+    left: 0%;
+    top: 0;
+    transition: left 1s linear;
+}
+.logo_container:hover .logo {
+    left: 100%;
+}
+.corner {
+        background: url('/rainbow.png');
+        height: 353px;
+        width: 400px;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        z-index: -1;
+        opacity: 0.25;
+}
