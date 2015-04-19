@@ -41,7 +41,12 @@
         }
 
         // if we merge something, `git sync` the changes and start the new version
-        events.on('github.pull_request.merged', function () {
+        events.on('github.pull_request.merged', function (data) {
+            // Only trigger a restart if this is for the bot's repository.
+            if (data.repository.name !== config.repo || data.repository.owner.login !== config.user) {
+                return;
+            }
+
             sync(function (err) {
                 if (err) { return console.error('error pulling from origin/master:', err); }
 
