@@ -1,0 +1,1 @@
+bot: node launcher.js
