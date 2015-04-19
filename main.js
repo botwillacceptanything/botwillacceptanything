@@ -7,6 +7,7 @@
         'lodash',
 
         './config.loader',
+        './lib/repositories.js',
         './lib/events.js',
         './lib/github.js',
         './lib/integrations',
@@ -23,6 +24,7 @@
         _,
 
         config,
+        repositories,
         events,
         gh,
         integrations,
@@ -94,24 +96,9 @@
             //talk.speak();
 
             // Allow the voting system to bootstrap and begin monitoring PRs.
-            new voting({
-              repo: config.repo,
-              user: config.user,
-            }, config.voting);
-
-            if (typeof config.additionalRepos !== 'undefined') {
-              config.additionalRepos.forEach(function (repo) {
-                var votingConfig = _.merge({}, config.voting);
-                // Merge in repo-specific voting configurations.
-                if (typeof repo.voting !== 'undefined') {
-                  _.merge(votingConfig, repo.voting);
-                }
-                new voting({
-                  repo: repo.repo,
-                  user: repo.user,
-                }, votingConfig);
-              });
-            }
+            repositories.forEach(function (repo) {
+                new voting(repo);
+            });
         }
 
         function main() {

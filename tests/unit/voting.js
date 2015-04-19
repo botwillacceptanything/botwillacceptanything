@@ -66,7 +66,8 @@
         voting = new Voting({
           user: config.user,
           repo: config.repo,
-        }, config.voting);
+          votingConfig: config.voting,
+        });
       });
 
       afterEach(function () {
