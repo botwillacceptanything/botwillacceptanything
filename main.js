@@ -4,6 +4,7 @@
     var deps = [
         'child_process',
         'gift',
+        'lodash',
 
         './config.loader',
         './lib/events.js',
@@ -19,6 +20,7 @@
     define(deps, function(
         Spawn,
         git,
+        _,
 
         config,
         events,
@@ -84,10 +86,27 @@
             considerExistence();
 
             // greet the other bots
-            talk.speak();
+            //talk.speak();
 
             // Allow the voting system to bootstrap and begin monitoring PRs.
-            voting.initialize();
+            new voting({
+              repo: config.repo,
+              user: config.user,
+            }, config.voting);
+
+            if (typeof config.additionalRepos !== 'undefined') {
+              config.additionalRepos.forEach(function (repo) {
+                var votingConfig = _.merge({}, config.voting);
+                // Merge in repo-specific voting configurations.
+                if (typeof repo.voting !== 'undefined') {
+                  _.merge(votingConfig, repo.voting);
+                }
+                new voting({
+                  repo: repo.repo,
+                  user: repo.user,
+                }, votingConfig);
+              });
+            }
         }
 
         function main() {

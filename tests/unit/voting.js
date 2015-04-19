@@ -8,12 +8,13 @@
     'lodash',
     'nock',
 
+    '../../config.js',
     '../mocks/github',
     '../mocks/thecatapi',
     '../../lib/voting',
   ];
 
-  define(deps, function (assert, _, nock, mock, mockingCat, voting) {
+  define(deps, function (assert, _, nock, config, mock, mockingCat, voting) {
     describe('voting', function () {
       var basePR = {
         number: 1,
@@ -58,6 +59,13 @@
         });
         voting.testing.cachedStarGazers[basePR.user.login] = true;
       }
+
+      beforeEach(function () {
+        voting.testing.setRepo({
+          user: config.user,
+          repo: config.repo,
+        });
+      });
 
       afterEach(function () {
         resetStargazers();
