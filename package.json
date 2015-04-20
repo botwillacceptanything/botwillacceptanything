@@ -5,7 +5,9 @@
   "main": "main.js",
   "dependencies": {
     "amdefine": "^0.1.0",
+    "biwascheme": "^0.6.2",
     "body-parser": "^1.12.2",
+    "cline": "^0.8.2",
     "color-scheme": "0.0.5",
     "deferred": "^0.7.2",
     "eliza": "0.0.1-2",
