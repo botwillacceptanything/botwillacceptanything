@@ -1,4 +1,4 @@
-# Bot will accept anything
+# Bot Will Accept Anything
 
 ## Status
 
@@ -24,7 +24,8 @@ Anyone can create a pull request, and it is greatly appreciated by the community
 
 ## Community
 
-Hang out with us in IRC: [**#botwillacceptanything** on Freenode.](http://kiwiirc.com/client/irc.freenode.net/botwillacceptanything)
+[![Visit our IRC channel](https://kiwiirc.com/buttons/irc.freenode.net/botwillacceptanything.png)](https://kiwiirc.com/client/irc.freenode.net/#botwillacceptanything)
+
 The bot is [**@anythingbot** on Twitter.](https://twitter.com/anythingbot/)
 
 ## Running Servers
@@ -39,6 +40,7 @@ The bot has a built-in webserver for monitoring its current state.
 * [Recent Commits](http://botwillacceptanything.com/commits)
 * [Stdout Log](http://botwillacceptanything.com/stdout)
 * [Statistics](http://botwillacceptanything.com/statistics)
+* [Current Voting](http://botwillacceptanything.com/votes)
 
 ## Running the bot locally to test changes
 
