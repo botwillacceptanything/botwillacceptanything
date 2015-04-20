@@ -1,3 +1,16 @@
+<table style="border: 1px solid black">
+    {{#each voteMap}}
+        <tr>
+        {{#each this}}
+        <td style="border: 1px solid black">
+            {{this}}
+        </td>
+        {{/each}}
+        </tr>
+    {{/each}}
+<tr></tr>
+</table>
+
 <ul style="display: inline-block">
     {{#each votes}}
         <li>
