@@ -11,7 +11,7 @@
     '../../config.js',
     '../mocks/github',
     '../mocks/thecatapi',
-    '../../lib/voting',
+    '../../lib/voting/voting.js',
   ];
 
   define(deps, function (assert, _, nock, config, mock, mockingCat, Voting) {
