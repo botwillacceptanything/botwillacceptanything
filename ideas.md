@@ -1,6 +1,6 @@
 # Ideas
 
-## Completed
+### Completed
  - [x] Integrate Travis CI testing.
  - [x] Auto-label each PR 'winning'/'losing' after a vote
  - [x] When tweeting, shorten links and include PR title.
@@ -8,7 +8,7 @@
  - [x] Write Definition of Done file that all PRs should try to meet
  - [x] When non-stargazers vote, poke them with a comment immediately.
  
-## To-Do
+### To-Do
  - [ ] Run self tests before restarting bot
  - [ ] Add an HTTP interface to report current status, display logs, per-user voting stats, etc.
  - [ ] Create a bitcoin wallet to receive donations
