@@ -93,7 +93,7 @@
             considerExistence();
 
             // greet the other bots
-            //talk.speak();
+            talk.speak();
 
             // Allow the voting system to bootstrap and begin monitoring PRs.
             repositories.forEach(voting.setup);
