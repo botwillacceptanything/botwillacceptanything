@@ -96,9 +96,7 @@
             //talk.speak();
 
             // Allow the voting system to bootstrap and begin monitoring PRs.
-            repositories.forEach(function (repo) {
-                new voting(repo);
-            });
+            repositories.forEach(voting.setup);
         }
 
         function main() {
