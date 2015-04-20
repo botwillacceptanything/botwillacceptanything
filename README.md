@@ -24,8 +24,8 @@ Anyone can create a pull request, and it is greatly appreciated by the community
 
 ## Community
 
-Hang out with us in IRC: [**#botwillacceptanything** on Freenode.](http://kiwiirc.com/client/irc.freenode.net/botwillacceptanything)
-The bot is [**@anythingbot** on Twitter.](https://twitter.com/anythingbot/)
+[![Visit our IRC channel](https://kiwiirc.com/buttons/irc.freenode.net/botwillacceptanything.png)](https://kiwiirc.com/client/irc.freenode.net/#botwillacceptanything) <a href="https://twitter.com/anythingbot" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @anythingbot</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 
 ## Running Servers
 
