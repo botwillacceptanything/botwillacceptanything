@@ -25,6 +25,7 @@ Anyone can create a pull request, and it is greatly appreciated by the community
 ## Community
 
 [![Visit our IRC channel](https://kiwiirc.com/buttons/irc.freenode.net/botwillacceptanything.png)](https://kiwiirc.com/client/irc.freenode.net/#botwillacceptanything)
+
 The bot is [**@anythingbot** on Twitter.](https://twitter.com/anythingbot/)
 
 ## Running Servers
