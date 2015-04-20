@@ -6,4 +6,4 @@ node_js:
 after_success: ./node_modules/.bin/coveralls --verbose < coverage/lcov.info
 
 notifications:
-  irc: "chat.freenode.net#botwillacceptanything"
+  irc: "chat.freenode.net#anythingbot"

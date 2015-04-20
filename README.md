@@ -20,11 +20,11 @@ A bot will automatically merge any PR on this repo that gets enough votes from t
 
 ## Contributing
 
-Anyone can create a pull request, and it is greatly appreciated by the community. In order for a pull request to be accepted, the bot has requested that it meets the criteria in its [Definition of Done](https://github.com/botwillacceptanything/botwillacceptanything/blob/master/DoD.md). If you're looking for ideas, please look at [ideas.md](https://github.com/botwillacceptanything/botwillacceptanything/blob/master/ideas.md), and join us in our [IRC](http://kiwiirc.com/client/irc.freenode.net/botwillacceptanything) for ideas or advice on how to implement something.
+Anyone can create a pull request, and it is greatly appreciated by the community. In order for a pull request to be accepted, the bot has requested that it meets the criteria in its [Definition of Done](https://github.com/botwillacceptanything/botwillacceptanything/blob/master/DoD.md). If you're looking for ideas, please look at [ideas.md](https://github.com/botwillacceptanything/botwillacceptanything/blob/master/ideas.md), and join us in our [IRC](http://kiwiirc.com/client/irc.freenode.net/anythingbot) for ideas or advice on how to implement something.
 
 ## Community
 
-[![Visit our IRC channel](https://kiwiirc.com/buttons/irc.freenode.net/botwillacceptanything.png)](https://kiwiirc.com/client/irc.freenode.net/#botwillacceptanything)
+[![Visit our IRC channel](https://kiwiirc.com/buttons/irc.freenode.net/anythingbot.png)](https://kiwiirc.com/client/irc.freenode.net/#anythingbot)
 
 The bot is [**@anythingbot** on Twitter.](https://twitter.com/anythingbot/)
 
