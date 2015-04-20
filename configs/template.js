@@ -30,7 +30,7 @@
         irc: {
             host: 'irc.freenode.net',
             user: 'UnconfiguredBot',
-            channel: '#botwillacceptanything',
+            channel: '#anythingbot',
         },
         */
        voting: {
