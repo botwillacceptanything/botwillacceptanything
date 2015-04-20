@@ -31,6 +31,7 @@
             host: 'irc.freenode.net',
             user: 'UnconfiguredBot',
             channel: '#anythingbot',
+            password: 'yourNickservPassword',
         },
         */
        voting: {
