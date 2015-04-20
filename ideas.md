@@ -6,7 +6,8 @@
  - [ ] Create a bitcoin wallet to receive donations
  - [ ] Have bot check for bad and malicious code in pull requests.
  - [x] Integrate Travis CI testing.
- - [ ] Don't start voting until Travis CI tests pass.
+ - [ ] Don't start voting until Travis CI tests pass using [the webhooks](http://docs.travis-ci.com/user/notifications/#Webhook-notification)
+ - [ ] Have the bot post post Travis CI notifications using webhooks instead of Travis CI
  - [ ] Add merge algorithm to solve conflicts in text files caused by multiple changes.
  - [x] When tweeting, shorten links and include PR title.
  - [x] IRC Bot to post live updates to the IRC chatroom.
