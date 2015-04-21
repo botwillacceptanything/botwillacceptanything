@@ -6,7 +6,7 @@
     var define = require('amdefine')(module);
 
     var deps = [
-        './config.loader.js',
+        './config.js',
 
         'gulp',
         'gulp-jsdoc',
