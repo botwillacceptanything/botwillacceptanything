@@ -17,3 +17,4 @@
  - [ ] Have the bot post post Travis CI notifications using webhooks instead of Travis CI.
  - [ ] Add merge algorithm to solve conflicts in text files caused by multiple changes.
  - [ ] IRC Bot updates the title of the IRC chatroom with the GitHub vote status.
+ - [ ] Use [CloudFlare](https://www.cloudflare.com/) to integrate SSL into the website for free.
