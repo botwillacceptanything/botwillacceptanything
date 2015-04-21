@@ -57,12 +57,12 @@
             clippy.load('Clippy', function(agent) {
                 agent.show();
             });
-            function themeLoad() {
+            jQuery(document).ready(function () {
                 cookie = getCookie("theme");
                 if (cookie != "") {
                     changeTheme(cookie)
                 }
-            }
+            });
             
             function changeTheme(theme) {
                 $("#theme").attr("href", "/css/themes/" + theme + ".css");
@@ -86,7 +86,7 @@
             }
         </script>
     </head>
-    <body onload="javascript:themeLoad()">
+    <body>
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
