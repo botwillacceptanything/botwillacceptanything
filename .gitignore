@@ -44,4 +44,7 @@ tmp
 secrets.yml
 name.txt
 
+# Editor configs
 *.sublime-project
+*.swp
+.idea
