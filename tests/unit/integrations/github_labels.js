@@ -19,6 +19,7 @@
 
       var mockPR = {
         number: 1,
+        merged_at: null,
         head: {
           repo: {
             name: config.repo,
@@ -59,6 +60,28 @@
         var mockGetIssueLabels = mock.issues.labels();
         var mockUpdateIssueLabels = mock.issues.updateLabels([labels.voting]);
         events.emit('bot.pull_request.vote_started', mockPR);
+        setTimeout(function () {
+          mockGetIssueLabels.done();
+          mockUpdateIssueLabels.done();
+          done();
+        }, 10);
+      });
+
+      it('should mark a failed PR as "Rejected"', function (done) {
+        var mockGetIssueLabels = mock.issues.labels();
+        var mockUpdateIssueLabels = mock.issues.updateLabels([labels.rejected]);
+        events.emit('github.pull_request.closed', { pull_request: mockPR });
+        setTimeout(function () {
+          mockGetIssueLabels.done();
+          mockUpdateIssueLabels.done();
+          done();
+        }, 10);
+      });
+
+      it('should mark a merged PR as "Merged"', function (done) {
+        var mockGetIssueLabels = mock.issues.labels();
+        var mockUpdateIssueLabels = mock.issues.updateLabels([labels.merged]);
+        events.emit('github.pull_request.merged', { pull_request: mockPR });
         setTimeout(function () {
           mockGetIssueLabels.done();
           mockUpdateIssueLabels.done();
