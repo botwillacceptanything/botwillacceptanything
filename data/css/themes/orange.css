@@ -1,0 +1,46 @@
+body {
+        background: #eee;
+        color: black;
+}
+
+.navbar-default .navbar-brand,
+.navbar-default .navbar-nav>li>a {
+        color: #fff;
+}
+
+.navbar-default {
+        color: #fff;
+        background: -webkit-linear-gradient(#FFA500, #FFB732);
+        background: -moz-linear-gradient(#FFA500, #FFB732);
+        background: -o-linear-gradient(#FFA500, #FFB732);
+        background: linear-gradient(#FFA500, #FFB732);
+        border: none;
+}
+
+.container {
+        color: black;
+}
+
+h1, a {
+        color: #FFA500;
+}
+
+.jumbotron {
+        background: #fff;
+}
+.logo_container {
+    width: 100%;
+    height: 87px;
+    position: relative;
+    overflow: hidden;
+}
+.logo_container .logo {
+    background: url('/logo_todo.png');
+    height: 87px;
+    width: 225px;
+    position: absolute;
+    z-index: 2000;
+    left: 0%;
+    top: 0;
+    transition: left 1s linear;
+}
