@@ -30,7 +30,11 @@
         irc: {
             host: 'irc.freenode.net',
             user: 'UnconfiguredBot',
-            channel: '#anythingbot',
+            channel: '#botwillacceptanything',
+            realname: 'http://botwillacceptanything.com - #anythingbot',
+            username: 'botwillacceptanything',
+            port: 6697,
+            secure: true,
             password: 'yourNickservPassword',
         },
         */
