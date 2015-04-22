@@ -31,8 +31,6 @@
             host: 'irc.freenode.net',
             user: 'UnconfiguredBot',
             channel: '#botwillacceptanything',
-            realname: 'http://botwillacceptanything.com - #anythingbot',
-            username: 'botwillacceptanything',
             port: 6697,
             secure: true,
             password: 'yourNickservPassword',
