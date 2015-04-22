@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://botwillacceptanything.com/sitemap.xml"
+      xmlns:xsi="http://botwillacceptanything.com/sitemap.xml"
+      xsi:schemaLocation="http://botwillacceptanything.com/sitemap.xml
+      http://botwillacceptanything.com/sitemap.xml">
+
+<url>
+  <loc>http://botwillacceptanything.com/</loc>
+  <changefreq>always</changefreq>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>http://botwillacceptanything.com/stdout/</loc>
+  <changefreq>always</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://botwillacceptanything.com/commits/</loc>
+  <changefreq>always</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://botwillacceptanything.com/statistics/</loc>
+  <changefreq>always</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://botwillacceptanything.com/video/</loc>
+  <changefreq>always</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://botwillacceptanything.com/votes/</loc>
+  <changefreq>always</changefreq>
+  <priority>0.80</priority>
+</url>
+</urlset>
