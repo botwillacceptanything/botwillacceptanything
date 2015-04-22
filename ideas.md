@@ -18,3 +18,5 @@
  - [ ] Add merge algorithm to solve conflicts in text files caused by multiple changes.
  - [ ] IRC Bot updates the title of the IRC chatroom with the GitHub vote status.
  - [ ] Use the [uptimerobot.com API](http://uptimerobot.com/api) (not the npm package (outdated)) to fetch statistics about average ping time and bot uptime (API Key: m776770188-f669ffb04faa51274eb730b2 | Monitor ID: 776770188)
+ - [ ] add "master repo name" and "self repo name" to configs; when master is set, bot operates in "slave mode" and keeps the repositories in sync
+ - [ ] keep anythingbot/anythingbot in sync with original botwillacceptanything
