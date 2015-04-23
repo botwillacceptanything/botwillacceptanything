@@ -4,7 +4,6 @@
       xmlns:xsi="http://botwillacceptanything.com/sitemap.xml"
       xsi:schemaLocation="http://botwillacceptanything.com/sitemap.xml
       http://botwillacceptanything.com/sitemap.xml">
-
 <url>
   <loc>http://botwillacceptanything.com/</loc>
   <changefreq>always</changefreq>
