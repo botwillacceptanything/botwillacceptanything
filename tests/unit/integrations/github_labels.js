@@ -13,7 +13,7 @@
   ];
 
   define(deps, function (_, config, events, mock, setupGitHubLabels) {
-    describe('integrations/gitHub_labels', function () {
+    describe('integrations/github_labels', function () {
       var destroyGitHubLabels, mockRepoIssueList;
       var labels = {};
 
