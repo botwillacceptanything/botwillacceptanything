@@ -31,6 +31,35 @@
               id: 1,
             });
         },
+
+        labels: function (labels) {
+          if (typeof labels === 'undefined') { labels = []; }
+          return nock(domain)
+            .get(repo + 'issues/1/labels?' + token)
+            .reply(200, labels);
+        },
+
+        updateLabels: function (labels) {
+          return nock(domain)
+            .patch(repo + 'issues/1?' + token, { labels: labels })
+            .reply(200);
+        },
+      },
+
+      labels: {
+        list: function (labels) {
+          return nock(domain)
+            .get(repo + 'labels?' + token)
+            .reply(200, labels);
+        },
+
+        create: function () {
+          return nock(domain)
+            .post(repo + 'labels?' + token)
+            .thrice() // We create three repo labels when testing.
+            .reply(200, [
+            ]);
+        },
       },
 
       pullRequests: {
