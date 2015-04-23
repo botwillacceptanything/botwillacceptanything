@@ -55,13 +55,6 @@
         });
       }
 
-      function resetStargazers() {
-        Object.keys(voting.starGazers).forEach(function (name) {
-          delete voting.starGazers[name];
-        });
-        voting.starGazers[basePR.user.login] = true;
-      }
-
       beforeEach(function () {
         voting = new Voting({
           user: config.user,
@@ -71,7 +64,7 @@
       });
 
       afterEach(function () {
-        resetStargazers();
+        voting.destroy();
         nock.cleanAll();
       });
 
