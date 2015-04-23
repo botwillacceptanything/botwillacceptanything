@@ -3,7 +3,7 @@
   <ul style="display: inline-block">
     {{#each this.votesPerPR}}
       <li>
-        #{{this.pr.number}} - {{this.pr.title}} by <strong>{{this.pr.user.login}}</strong> -
+        #{{this.pr.number}} - {{this.pr.title}} by <strong><a href="https://github.com/{{this.pr.user.login}}">{{this.pr.user.login}}</a></strong> -
         Yes: {{this.votes.positive}}, No: {{this.votes.negative}} -
         <a href="{{this.pr.html_url}}" target="_blank">Pull Request</a>
       </li>
