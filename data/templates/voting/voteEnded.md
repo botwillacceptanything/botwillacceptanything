@@ -8,12 +8,12 @@
 
 {{#nonStarGazers}}
     {{#first}}
-These following {{nonStarGazers.length}} voter(s) were not stargazers, so their votes were not counted:
+These following {{nonStarGazers.length}} voter(s) were not _stargazers_, so their votes were not counted:
     {{/first}}
 
 - :monkey: @{{name}}
 
     {{#last}}
-Be sure to :star:star the repository if you want to have your say!
+*Non-stargazers*: Be sure to :star:star the repository if you want to have your say!
     {{/last}}
 {{/nonStarGazers}}
