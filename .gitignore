@@ -1,5 +1,4 @@
 # config
-config.js
 configs/custom.js
 
 # Logs
@@ -44,4 +43,7 @@ tmp
 secrets.yml
 name.txt
 
+# Editor configs
 *.sublime-project
+*.swp
+.idea

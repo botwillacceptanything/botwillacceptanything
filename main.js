@@ -6,7 +6,7 @@
         'gift',
         'lodash',
 
-        './config.loader',
+        './config.js',
         './lib/repositories.js',
         './lib/events.js',
         './lib/github.js',
