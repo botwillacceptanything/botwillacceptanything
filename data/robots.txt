@@ -1,4 +1,6 @@
-# Simple page that tells robots what not to search in.
+# This is a robots.txt file. It tells web crawlers like Google or Bing what and what not to search in.
+
+Sitemap: http://botwillacceptanything.com/sitemap.xml
 
 User-agent: *
 Disallow: /css/
