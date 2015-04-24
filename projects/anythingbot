@@ -1,0 +1,5 @@
+A shorter name means fewer keystrokes to type. There are three steps:
+
+1. move to anythingbot/anythingbot repository
+2. give the bot at anythingbot.org the github token for anythingbot/anythingbot
+3. set up the webhook secret
