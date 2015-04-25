@@ -115,7 +115,7 @@
         var testPR = _.merge({}, basePR);
         voting.pullRequests[testPR.number] = testPR;
         // One less since the ticket creator is already counted.
-        addComments(testPR, voting.minVotes - 1, 0);
+        addComments(testPR, voting.votingParams.minVotes - 1, 0);
         getVoters(testPR).forEach(function (user) {
           voting.starGazers[user] = true;
         });
@@ -133,7 +133,7 @@
       it('should close failed PRs', function (done) {
         var testPR = _.merge({}, basePR);
         voting.pullRequests[testPR.number] = testPR;
-        addComments(testPR, 0, voting.minVotes);
+        addComments(testPR, 0, voting.votingParams.minVotes);
         getVoters(testPR).forEach(function (user) {
           voting.starGazers[user] = true;
         });
