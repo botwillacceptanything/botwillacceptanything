@@ -9,12 +9,13 @@
     'nock',
 
     '../../config.js',
+    '../../params.js',
     '../mocks/github',
     '../mocks/thecatapi',
     '../../lib/voting/voting.js',
   ];
 
-  define(deps, function (assert, _, nock, config, mock, mockingCat, Voting) {
+  define(deps, function (assert, _, nock, config, params, mock, mockingCat, Voting) {
     describe('voting', function () {
       var basePR = {
         number: 1,
@@ -59,7 +60,7 @@
         voting = new Voting({
           user: config.user,
           repo: config.repo,
-          votingConfig: config.voting,
+          votingParams: params.voting,
         });
       });
 
@@ -114,7 +115,7 @@
         var testPR = _.merge({}, basePR);
         voting.pullRequests[testPR.number] = testPR;
         // One less since the ticket creator is already counted.
-        addComments(testPR, voting.votingConfig.minVotes - 1, 0);
+        addComments(testPR, voting.minVotes - 1, 0);
         getVoters(testPR).forEach(function (user) {
           voting.starGazers[user] = true;
         });
@@ -132,7 +133,7 @@
       it('should close failed PRs', function (done) {
         var testPR = _.merge({}, basePR);
         voting.pullRequests[testPR.number] = testPR;
-        addComments(testPR, 0, voting.votingConfig.minVotes);
+        addComments(testPR, 0, voting.minVotes);
         getVoters(testPR).forEach(function (user) {
           voting.starGazers[user] = true;
         });
@@ -158,7 +159,7 @@
         var testPR = _.merge({}, basePR);
         voting.pullRequests[testPR.number] = testPR;
         // One less since the ticket creator is already counted.
-        addComments(testPR, voting.votingConfig.guaranteedResult - 1, 0);
+        addComments(testPR, voting.votingParams.guaranteedResult - 1, 0);
         getVoters(testPR).forEach(function (user) {
           voting.starGazers[user] = true;
         });
@@ -176,7 +177,7 @@
       it("should close a PR that has a guaranteed lose after the time limit", function (done) {
         var testPR = _.merge({}, basePR);
         voting.pullRequests[testPR.number] = testPR;
-        addComments(testPR, 0, voting.votingConfig.guaranteedResult);
+        addComments(testPR, 0, voting.votingParams.guaranteedResult);
         getVoters(testPR).forEach(function (user) {
           voting.starGazers[user] = true;
         });
@@ -200,7 +201,7 @@
         testPR.created_at = Date.now() - 1000 * 60 * 10;
         voting.pullRequests[testPR.number] = testPR;
         // One less since the ticket creator is already counted.
-        addComments(testPR, voting.votingConfig.guaranteedResult - 1, 0);
+        addComments(testPR, voting.votingParams.guaranteedResult - 1, 0);
         getVoters(testPR).forEach(function (user) {
           voting.starGazers[user] = true;
         });

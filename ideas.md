@@ -18,3 +18,4 @@
  - [ ] Add merge algorithm to solve conflicts in text files caused by multiple changes.
  - [ ] IRC Bot updates the title of the IRC chatroom with the GitHub vote status.
  - [ ] Use the [uptimerobot.com API](http://uptimerobot.com/api) (not the npm package (outdated)) to fetch statistics about average ping time and bot uptime (API Key: m776770188-f669ffb04faa51274eb730b2 | Monitor ID: 776770188)
+ - [ ] Put instructions for how to run the unit tests in README.md
