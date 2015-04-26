@@ -1,33 +1,42 @@
+<!-- view time readouts: setCookie("clock","yes",7) in the js console + reload -->
+
 <div>
 
 <span style="float:right">
   <canvas id="canvas" width="80" height="80"></canvas>
 </span>
 
-<span>
-  <p>Bot local time: {{now}} (+{{secondsPastMidnight}})</p>
-  <p>Bot UTC time: {{now_utc}} (+{{secondsPastMidnightUTC}})</p>
-  <p>Client local time: <span id="clientLocalTime"></span>
-  <p>Client UTC time: <span id="clientUTCTime"></span>
-  <script>
-  var secondsPastMidnight = function (d) {
-    return d.getSeconds() + 60 * d.getMinutes() + 60 * 60 * d.getHours();
-  }
-  var now = new Date();
-  var now_utc = new Date(now.getUTCFullYear(),
-      now.getUTCMonth(), now.getUTCDate(),
-      now.getUTCHours(), now.getUTCMinutes(),
-      now.getUTCSeconds());
-  var clientLocalTimeElt = document.getElementById("clientLocalTime");
-  clientLocalTimeElt.innerHTML = now+' (+'+secondsPastMidnight(now)+')';
-  var clientUTCTimeElt = document.getElementById("clientUTCTime");
-  clientUTCTimeElt.innerHTML = now_utc+' (+'+secondsPastMidnight(now_utc)+')';
-  </script>
-</span>
-
-</div>
+<div id="timeContainer">
+  <span id="timeReadout">
+    <p>Bot local time: {{now}} (+{{secondsPastMidnight}})</p>
+    <p>Bot UTC time: {{now_utc}} (+{{secondsPastMidnightUTC}})</p>
+    <p>Client local time: <span id="clientLocalTime"></span>
+    <p>Client UTC time: <span id="clientUTCTime"></span>
+    <script>
+    var secondsPastMidnight = function (d) {
+      return d.getSeconds() + 60 * d.getMinutes() + 60 * 60 * d.getHours();
+    }
+    var now = new Date();
+    var now_utc = new Date(now.getUTCFullYear(),
+        now.getUTCMonth(), now.getUTCDate(),
+        now.getUTCHours(), now.getUTCMinutes(),
+        now.getUTCSeconds());
+    var clientLocalTimeElt = document.getElementById("clientLocalTime");
+    clientLocalTimeElt.innerHTML = now+' (+'+secondsPastMidnight(now)+')';
+    var clientUTCTimeElt = document.getElementById("clientUTCTime");
+    clientUTCTimeElt.innerHTML = now_utc+' (+'+secondsPastMidnight(now_utc)+')';
+    </script>
+  </span> <!-- timeReadout -->
+</div> <!-- timeContainer -->
 
 <script>
+var clockCookie = getCookie("clock");
+if (clockCookie == "") {
+    var timeContainer = document.getElementById("timeContainer");
+    var timeReadout = document.getElementById("timeReadout");
+    timeContainer.removeChild(timeReadout);
+}
+
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 var radius = canvas.height / 2;
