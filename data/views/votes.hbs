@@ -5,8 +5,24 @@
 </span>
 
 <span>
-  <p>Local time: {{now}} (+{{secondsPastMidnight}})</p>
-  <p>UTC time: {{now_utc}} (+{{secondsPastMidnightUTC}})</p>
+  <p>Bot local time: {{now}} (+{{secondsPastMidnight}})</p>
+  <p>Bot UTC time: {{now_utc}} (+{{secondsPastMidnightUTC}})</p>
+  <p>Client local time: <span id="clientLocalTime"></span>
+  <p>Client UTC time: <span id="clientUTCTime"></span>
+  <script>
+  var secondsPastMidnight = function (d) {
+    return d.getSeconds() + 60 * d.getMinutes() + 60 * 60 * d.getHours();
+  }
+  var now = new Date();
+  var now_utc = new Date(now.getUTCFullYear(),
+      now.getUTCMonth(), now.getUTCDate(),
+      now.getUTCHours(), now.getUTCMinutes(),
+      now.getUTCSeconds());
+  var clientLocalTimeElt = document.getElementById("clientLocalTime");
+  clientLocalTimeElt.innerHTML = now+' (+'+secondsPastMidnight(now)+')';
+  var clientUTCTimeElt = document.getElementById("clientUTCTime");
+  clientUTCTimeElt.innerHTML = now_utc+' (+'+secondsPastMidnight(now_utc)+')';
+  </script>
 </span>
 
 </div>
@@ -62,10 +78,15 @@ function drawNumbers(ctx, radius) {
 }
 
 function drawTime(ctx, radius){
-    var now = new Date("{{now_utc}}");
-    var hour = now.getHours();
-    var minute = now.getMinutes();
-    var second = now.getSeconds();
+    var now = new Date();
+    var now_utc = new Date(now.getUTCFullYear(),
+        now.getUTCMonth(), now.getUTCDate(),
+        now.getUTCHours(), now.getUTCMinutes(),
+        now.getUTCSeconds());
+
+    var hour = now_utc.getHours();
+    var minute = now_utc.getMinutes();
+    var second = now_utc.getSeconds();
     //hour
     hour=hour%12;
     hour=(hour*Math.PI/6)+
