@@ -1,0 +1,41 @@
+Definition. A "project directory" is a subdirectory of the projects/ top-level
+directory. Any path in the repo starting with projects/PROJECTNAME/ is associated
+with the project.
+
+Definition. The "modified paths" of a PR is the set of pathnames of files changed.
+
+The rosters/ directory is added to the top-level of the repo. A "roster" is a text
+file with path rosters/ROSTERNAME containing one github username per line.
+
+A project may or may not be associated with a roster.
+
+If there is a directory projects/FOO/ and a file rosters/FOO, then the bot
+determines that the members of team FOO are working on the FOO project and
+associates the two. The github users on the roster are the members of project FOO.
+
+If there is a project directory projects/BAR but no corresponding roster, then the
+bot concludes that the project is not associated with any roster.
+
+The roster names and project names must match for there to be an association. A
+project without a corresponding roster is "rosterless".
+
+There are two types of PR:
+ - project PR : all of the modified paths are in the directory of a single project
+   (the bot will not count votes of non-members on project PRs)
+ - regular PR : all of the modified paths are either (a) ouside projects/ or (b)
+   in a rosterless project dirctory.
+
+All PRs are subject to the following new rule:
+ - If any modified path starts with projects/BAZ/ and BAZ has a roster
+   rosters/BAZ, then all of modified paths must start with projects/BAZ/.
+
+PRs not following this rule are automatically rejected.
+
+Rosterless projects receive no special treatment. The roster files themselves
+receive no special treatment.
+
+Project PRs are treated specially: the bot does not count votes of non-members.
+The bot adds a comment when a non-member votes on a project PR for QUX. "Your vote
+will not be counted because your github username was not found in rosters/QUX."
+
+FOO, BAR, BAZ, and QUX are http://en.wikipedia.org/wiki/Metasyntactic_variable
