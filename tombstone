@@ -1,0 +1,115 @@
+>>> look
+You are at the tombstone arrived at by going to the 47th row and walking to the
+236th place east. In front of you, you see a large oblong smooth black obelisk.
+>>> describe tombstone
+The tombstone reads,
+
+    +----------------------------------------------------------------------+
+    |                                                                      |
+    |   Here lies the anythingbot,                                         |
+    |                                                                      |
+    |   Still functional, perfectly alive, yet frozen in time              |
+    |                                                                      |
+    |   On it is written the names of the following authors:               |
+    |                                                                      |
+    |   Spenser Jones Tomas Korcak AlphaTech Frederick Gnodtke Sebastian   |
+    |   Krzyszkowiak Matt Bell David Brooks Pokorny Shale Craig Tim        |
+    |   Weightman Blecki AlphaT3ch Samuel Hodgkins Rickard Norlander ᴍᴀᴛᴛ  |
+    |   ʙᴇʟʟ OLef1air FangedTerror802 sparky222b Anthony Van de Gejuchte   |
+    |   Kenneth Endfinger Josh Free Nomic Rob Speer Koen Schmeets          |
+    |   thenightwassave nomic-io Matthew Werner Bobby Jack Jan Minar Josh  |
+    |   Lubaway OliverCole Aristid Breitkreuz Bradley Buda Chris Silvia    |
+    |   Edward Hotchkiss Eric Ryan Harrison Gaelan Gavin Persons James     |
+    |   Costian Justin Godesky Luke Heath Mitar A Coleman Sam Sharp Sam    |
+    |   Stern clay-to-n gpersons shalecraig                                |
+    |                                                                      |
+    +----------------------------------------------------------------------+
+
+>>> push over tombstone
+With great effort, you manage to topple the obelisk-like tombstone
+>>> examine tombstone
+It has a certain resemblance to the obelisk of 2001: A Space Odyssey
+>>> examine hole where tombstone was
+The hole where the tombstone used to be is dirt; there is a small wodden box, 3"
+x 4" x 1 1/2" with a lid.
+>>> take wooden box
+You pick up the box
+>>> open box lid
+You lift the cover of the box up revealing a ring
+>>> put on ring
+You put the ring on your finger :zardoz.jpg:
+>>> anythingbot, wake up
+The smooth face of the obelisk begins to liquify and deform. The tombstone
+transforms into a miniature civilization...
+
+    The meryons were everywhere in motion, tireless microengineers, wee masters
+    of bricolage. A mayonnaise jar, shaded by three oak leaves stitched into a
+    conical roof, held a reservoir of water, and a system of soda straws was
+    being devised to pipe that water into every hidden house and den in the
+    hamlet.
+
+    Jane was entranced.
+
+    She watched them until the light failed and there was naught to be seen but
+    the occasional glowworm spark of a lantern carried in the invisible fist of
+    a border guard and the ghostly light from a prototype methane gas production
+    plant. For all their lack of individual complexity, meryon society taken as
+    a whole was as intricate and inherently fascinating as a crystal
+    pocketwatch.
+
+                                               -- The Iron Dragon's Daughter
+
+>>> ask meryons to start the anythingbot
+The meryons stop for a minute, take a look at you, then go back to their work.
+>>> ask meryons to start the anythingbot
+The meryons stop for a minute, take a look at you, and then go back to their
+work. The head meryon cracks the whip a few extra times.
+>>> ask meryons to start the anythingbot
+The meryons stop for a minute, take a look at you, but they go back to work much
+more slowly than before. Work stoppages and slow-downs like this can, when
+prolonged, lead to severe economic damage. The head meryon asks you to cease
+engaging in disruptive activity.
+>>> ask the meryons whether or not their society allows an individual to take
+... the role of being a single point of failure
+The meryons laugh nervously. An old meryon walks slowly toward you. Her face is
+full of wrinkles, she looks to be in constant pain. She says,
+
+ "[32] But I must explain to you how all this mistaken idea of denouncing of a
+  pleasure and praising pain was born and I will give you a complete account of
+  the system, and expound the actual teachings of the great explorer of the
+  truth, the master-builder of human happiness. No one rejects, dislikes, or
+  avoids pleasure itself, because it is pleasure, but because those who do not
+  know how to pursue pleasure rationally encounter consequences that are
+  extremely painful. Nor again is there anyone who loves or pursues or desires
+  to obtain pain of itself, because it is pain, but occasionally circumstances
+  occur in which toil and pain can procure him some great pleasure. To take a
+  trivial example, which of us ever undertakes laborious physical exercise,
+  except to obtain some advantage from it? But who has any right to find fault
+  with a man who chooses to enjoy a pleasure that has no annoying consequences,
+  or one who avoids a pain that produces no resultant pleasure?
+
+  [33] On the other hand, we denounce with righteous indignation and dislike
+  men who are so beguiled and demoralized by the charms of pleasure of the
+  moment, so blinded by desire, that they cannot foresee the pain and trouble
+  that are bound to ensue; and equal blame belongs to those who fail in their
+  duty through weakness of will, which is the same as saying through shrinking
+  from toil and pain. These cases are perfectly simple and easy to
+  distinguish. In a free hour, when our power of choice is untrammeled and
+  when nothing prevents our being able to do what we like best, every pleasure
+  is to be welcomed and every pain avoided. But in certain circumstances and
+  owing to the claims of duty or the obligations of business it will
+  frequently occur that pleasures have to be repudiated and annoyances
+  accepted. The wise man therefore always holds in these matters to this
+  principle of selection: he rejects pleasures to secure other greater
+  pleasures, or else he endures pains to avoid worse pains."
+
+                                                              -- lorem ipsum
+
+>>> ask her if she would please turn on the anythingbot
+She turns it on. It starts playing the background video feed.
+>>> anythingbot, would you please play me a video for me?
+anythingbot: sure, what do you want to see?
+>>> anythingbot, play me ?v=QOOsNLke6rc "Titanic - Full Soundtrack"
+anythingbot: ok, playing a video for the next 1:12:33
+>>> thanks anythingbot
+anythingbot: :-)
