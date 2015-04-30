@@ -1,0 +1,32 @@
+new action: from irc, ask bot to play a media item, identified by YouTube video ID
+or SoundCloud track ID.
+
+ - if the background track is playing, then create a video queue, append the
+   requested video to it, and start playing the queue on the video feed
+
+ - if the queue is currently playing, then this action appends the video to the
+   queue; the currently queued video continues to play
+
+ - it is possible to ask the bot in irc what is playing on the video feed: the
+   background loop or the queue
+
+ - if the queue is playing, then it is possible to ask the queue position and the
+   bot replies in HH:MM:SS
+
+ - after queue ends, the background loop track resumes
+
+update the video feed (http endpoint /video):
+
+ - if the background track is playing, no change; actually I regret not including
+   "Bill Haley & His Comets - Rock Around The Clock (1955) HD" in the weekend
+   playlist, as well as "Hard Dance, High Nrg, Freeform EDM Rave Mix - October
+   2014 - New Music". And "Cypress Hill - Insane In The Membrane" and
+   https://soundcloud.com/brentborel/the-whoop-project, and I really wanted to
+   figure out how to get mp3s to work with offsets and autoplay...
+   http://mp3.hardnrg.com/ChrisC-The_Zurich_Mix-June_2003.mp3
+
+ - if the queue is playing, then the video feed must determine (based on the
+   seconds elapsed since the background loop was interrupted to start playing the
+   queue) what track is currently playing as well as the offset in seconds into
+   the current track.
+
