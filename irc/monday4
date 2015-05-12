@@ -1,0 +1,999 @@
+[15:25] <SpenserJ> Moved the IRC messages from voting.js to irc.js. Give me a few minutes to clean it up and push the broken version up
+[15:25] <korczis> I mean this - https://gist.github.com/korczis/daaaacf8c4d5afbc9282
+[15:27] <korczis> I am using promises/deferred to init the stuff in right order and avoid eventual problems caused by random order of results from nodejs async functions
+[15:27] <SpenserJ> korczis: https://github.com/SpenserJ/botwillacceptanything/blob/feature_clean_up_voting/lib/irc.js#L26-L29
+[15:27] <SpenserJ> That event fires before the IRC bot has connected, which means it fails to calculate the maxLineLength (inside IRC) and can't send it through
+[15:28] <korczis> I see
+[15:28] <SpenserJ> Ah, so basically defer all of the bot until IRC connects?
+[15:28] <SpenserJ> Might work
+[15:29] <korczis> Yop
+[15:29] <korczis> That was my idea
+[15:29] <SpenserJ> What tells main to hold off until webserver is ready?
+[15:29] <korczis> I am for integrating integrations/ initialization in the same pipeline as middleware
+[15:29] <SpenserJ> Not seeing any code in main
+[15:29] <korczis> but refactor what you need first
+[15:30] <korczis> what you mean?
+[15:30] <korczis> webserver is initalized after all midlleware and views are initialized
+[15:30] <korczis> caused by - https://github.com/botwillacceptanything/botwillacceptanything/blob/master/lib/webserver.js#L23..L30
+[15:31] <SpenserJ> We need the bot to hold off on acting on any PRs, until IRC has connected. Webserver doesn't need to block the PR functionality
+[15:31] <korczis> it says - first initialize middleware (in alphabetical oreder), than initialize routes (in alphabetical order) than start server ..
+[15:31] <korczis> We should add one more .then() somewhere and initialize integrations
+[15:31] <SpenserJ> I understand delaying the server from starting until middleware and routes are loaded, but if we try sending an IRC message before IRC is connected, it won't go through
+[15:32] <SpenserJ> This is a matter of losing messages if the bot changes a PR before its ready
+[15:32] <korczis> if we will start integrations in the same way as middleware/routes and then start webserver/bot we will be out of troubles
+[15:32] <SpenserJ> I've got to take off. Feel free to work off my branch though, since voting is cleaned up
+[15:32] <korczis> untin the webserver is initialized webhooks are ignored
+[15:33] <korczis> if we will init integrations (irc) before starting server, we are out of trouble
+[15:33] <korczis> I am still waiting for #252 to got merged
+[15:33] <korczis> Before starting to work on tests ..
+[15:33] <korczis> So feel free to work on anything ..
+[15:34] <korczis> It is 0:33 am in here, I am going to work tomorrow, so I will probably leave soon ..
+[15:34] <korczis> I am afraid I will not have time for BWAA during the week ..
+[15:35] <korczis> That is the reason why I wanted to focus on primal architecture/deployment changes this week ...
+[15:35] <korczis> *weekend*
+[15:37] <korczis> btw, I am happy to connect with you guys via linkedin - https://www.linkedin.com/in/korcaktomas
+[15:38] <korczis> my private email is korczis [at] that-gmail com
+[15:38] <TabletCube> Shouldn't the extra bit in the license be CC0 rather than public domaim
+[15:38] <korczis> what is CC0 ?
+[15:39] <korczis> Creative Common *Something* ?
+[15:39] <TabletCube> http://www.gnu.org/licenses/license-list.html#CC0
+[15:39] <dos1> creative commons zero
+[15:39] <dos1> basically "as public domain as can legally get"
+[15:39] <korczis> If that is not possible for any reason, CC0 also provides a lax, permissive license as a fallback.
+[15:39] <korczis> ^^ quote from your license
+[15:39] <korczis> will not be MIT better?
+[15:40] * korczis is just asking
+[15:40] <korczis> https://github.com/botwillacceptanything/botwillacceptanything/pull/252 reminder
+[15:42] <TabletCube> Already votex
+[15:43] <TabletCube> korczis: it's already under public domain so unless there's any specific objections
+[15:43] <korczis> ok
+[15:51] <anythingbot> New PR: #256 - "Load port from config" - author: @korczis - https://github.com/botwillacceptanything/botwillacceptanything/pull/256
+[15:53] <anythingbot> New PR: #257 - "Load port from config typo fixed" - author: @korczis - https://github.com/botwillacceptanything/botwillacceptanything/pull/257
+[15:56] <avdg> uh, auth should be done with post
+[15:57] <avdg> a get request would leak information in the logs
+[15:57] <avdg> and logs are outputted on stdout
+[15:58] <dos1> #252 - one vote left
+[16:00] <korczis> SpenserJ: mappum: can you share the script you are using for deployment?
+[16:00] <korczis> I think there has to be some manually involved steps, correct me if I am wrong.
+[16:01] <korczis> I just want to run gulp as part of restart pipeline
+[16:01] <dos1> "node main.js" works for me...
+[16:01] <korczis> what is the problem with "node main.js" / "node run main" ?
+[16:02] <korczis> any error there?
+[16:02] <dos1> no, I meant that this is the whole "deployment script" I need here
+[16:02] <korczis> For me it is sufficient as well...
+[16:03] <korczis> But I want to hear opinion from guys doing "real deployment" ...
+[16:04] <korczis> dos1: if you clone the folder to empty folder, you need to copy/create config.js and specify github credentials
+[16:04] <korczis> I am talking about deployment script for "virgine" machine
+[16:04] <dos1> yep, you do it once and forget about it
+[16:04] <dos1> I guess that's how it is on botwillacceptanything.com :P
+[16:05] <korczis> show-stopper for automatic deployment/restart and/or docker
+[16:05] <dos1> how is it in any way related to restart?
+[16:06] <korczis> when you deploy this to clean folder you need to specify that
+[16:07] <korczis> btw, anybody got idea why 'POST /freenode-proxy-checker.txt' is here http://botwillacceptanything.com/stdout/
+[16:07] <korczis> ^^^ SpenserJ: it is part of irc integration?
+[16:07] == NickyEye [~textual@c-67-165-219-130.hsd1.co.comcast.net] has joined #botwillacceptanything
+[16:07] <korczis> one vote needed - v
+[16:07] <korczis> one vote needed - https://github.com/botwillacceptanything/botwillacceptanything/pull/252/files
+[16:09] <korczis> NickyEye: ^^^^
+[16:09] <korczis> Can you?
+[16:09] <NickyEye> sure
+[16:10] == anythingbot [~nodebot@162.243.149.229] has quit [Remote host closed the connection]
+[16:10] <korczis> Giving the start to repo and commenting :+1: here - https://github.com/botwillacceptanything/botwillacceptanything/pull/252 - should be sufficient
+[16:10] == anythingbot [~nodebot@162.243.149.229] has joined #botwillacceptanything
+[16:10] <korczis> thanks
+[16:11] <AlphaTech> korczis: In the web server, how do you think http://i.imgur.com/nay5EOO.jpg would be?
+[16:11] == travis-ci [~travis-ci@ec2-54-197-185-250.compute-1.amazonaws.com] has joined #botwillacceptanything
+[16:11] <travis-ci> botwillacceptanything/botwillacceptanything#203 (master - 79f65ed : Bot): The build passed.
+[16:11] <travis-ci> Change view : https://github.com/botwillacceptanything/botwillacceptanything/compare/585362a1e0a7...79f65ed93f3c
+[16:11] <travis-ci> Build details : http://travis-ci.org/botwillacceptanything/botwillacceptanything/builds/58205007
+[16:11] == travis-ci [~travis-ci@ec2-54-197-185-250.compute-1.amazonaws.com] has left #botwillacceptanything []
+[16:11] <korczis> as a background?
+[16:12] <AlphaTech> To the webpage
+[16:12] <dos1> http://botwillacceptanything.com/statistics/ is broken
+[16:12] <AlphaTech> Also, put it full page because zoomed out looks funky
+[16:13] <korczis> dos1: that is strange, any idea why?
+[16:13] <dos1> dunno, just spotted it
+[16:13] <AlphaTech> <s>Your templates</s>
+[16:14] <korczis> o see
+[16:14] <korczis> i see
+[16:14] <korczis> the stuff is not passed
+[16:14] <korczis> give me a second
+[16:14] <AlphaTech> WOAH
+[16:14] <AlphaTech> Someone fix the ngnix config please
+[16:14] <AlphaTech> It's outputting all over the stdout
+[16:15] <dos1> that's not nginx
+[16:15] <dos1> that's our bot
+[16:15] <AlphaTech> why didn't it do that when it was on :3000 then?
+[16:16] <dos1> cause he wasn't doing that back then
+[16:17] <AlphaTech> oh, well it's kinda spammy in stdout
+[16:18] <anythingbot> New PR: #258 - "Fix template" - author: @korczis - https://github.com/botwillacceptanything/botwillacceptanything/pull/258
+[16:19] <korczis> AlphaTech: This is responsible for spamming - https://github.com/botwillacceptanything/botwillacceptanything/blob/master/lib/middleware/logger.js
+[16:20] <korczis> Once we will have support for merging environments we can skip initialization of this piece of middleware
+[16:20] <korczis> And prevent "spammy" behavior ...
+[16:21] == r04r has changed nick to zz_r04r
+[16:23] * korczis is thinking how to prevent bot to discard (using git pull/checkout) changes when running locally. Causing lot of troubles. Korczis looks like prickhead which is not able to merge his changes properly for hat reason.
+[16:26] <dos1> my workflow:
+[16:26] <dos1> - create a new branch
+[16:26] <dos1> - commit changes
+[16:26] <dos1> - launch bot
+[16:26] <dos1> - ammend commit
+[16:26] <dos1> - launch bot
+[16:26] <dos1> (...)
+[16:26] <dos1> - ammend commit giving it the final commit message
+[16:26] <korczis> I am doing almost the same ..
+[16:26] <dos1> - push
+[16:26] <dos1> - create PR
+[16:27] <korczis> But when I launch the bot it throws away all my changes ..
+[16:27] <korczis> So it is ..
+[16:27] <dos1> it doesn't when they're commited
+[16:27] <korczis> I do not want to have changes commited before I test them but I have to elsewhere the bot will throw it away
+[16:27] <dos1> why? what does it change?
+[16:28] <dos1> you don't have to push them, and you can simply ammend them
+[16:28] <dos1> so you end with just one commit at the end
+[16:28] <korczis> It will be nice to have the option for that in config.js once we will have config.js (etc) merging implemented
+[16:28] <korczis> Ok
+[16:28] <korczis> Ammend solves that
+[16:28] <dos1> sure, will be nice, but it's not critical
+[16:28] <korczis> You are right
+[16:28] <korczis> I am not saying this is critical
+[16:28] == mgberlin [~mgberlin@c-50-131-191-225.hsd1.ca.comcast.net] has joined #botwillacceptanything
+[16:29] == NickyEye [~textual@c-67-165-219-130.hsd1.co.comcast.net] has quit [Quit: My Mac has gone to sleep. ZZZzzz…]
+[16:29] <korczis> config.local.js with disabled git.pull will be nice anyway
+[16:32] == NickyEye [~textual@c-67-165-219-130.hsd1.co.comcast.net] has joined #botwillacceptanything
+[16:36] <AlphaTech> <korczis> AlphaTech: This is responsible for spamming - https://github.com/botwillacceptanything/botwillacceptanything/blob/master/lib/middleware/logger.js
+[16:36] <AlphaTech> KILL IT!
+[16:36] <korczis> no
+[16:37] <korczis> I will implement configurable log levels instead ..
+[16:37] <AlphaTech> Meh, why do we need to know the connecting browsers?
+[16:37] <korczis> For different environments ..
+[16:37] <AlphaTech> Oh, that's better
+[16:38] == mgberlin [~mgberlin@c-50-131-191-225.hsd1.ca.comcast.net] has quit [Read error: Connection reset by peer]
+[16:38] == mgberlin_ [~mgberlin@c-50-131-191-225.hsd1.ca.comcast.net] has joined #botwillacceptanything
+[16:38] <AlphaTech> Well, I'm going to dinner with my family so bye for now!
+[16:39] == AlphaTech has changed nick to zz_AlphaTech
+[16:42] == avdg [~avdg@2a02:1812:1123:b900:383d:be08:d0aa:da6f] has quit [Ping timeout: 252 seconds]
+[16:42] <anythingbot> New PR: #259 - "Bower with gulp integration" - author: @korczis - https://github.com/botwillacceptanything/botwillacceptanything/pull/259
+[16:45] == NickyEye [~textual@c-67-165-219-130.hsd1.co.comcast.net] has quit [Quit: My Mac has gone to sleep. ZZZzzz…]
+[16:55] <korczis> Can we discuss for #259 now, please?
+[16:55] <korczis> https://github.com/botwillacceptanything/botwillacceptanything/pull/259
+[16:55] <korczis> it is breaking nothing for  sure
+[16:55] <korczis> just bringing the bower - http://bower.io/
+[16:55] == mgberlin_ [~mgberlin@c-50-131-191-225.hsd1.ca.comcast.net] has quit [Remote host closed the connection]
+[16:55] == pests [452f71a1@gateway/web/freenode/ip.69.47.113.161] has joined #botwillacceptanything
+[16:56] <pests> hola
+[16:56] <korczis> hola
+[16:56] <korczis> I am glad to see you back in here again
+[16:57] <pests> oh yeah, i was one of the first few in here actually. just been busy last two days.
+[16:57] <korczis> pests: Lot things happened in meantime....
+[16:58] <pests> ah what went down?
+[16:58] <pests> seems like the bot is just a huge collection of different technologies now. i dont do js dev but is it always like this? bower, gulp, amdefine, node, docker, nginx, jshint, travis, etc. just seems like a lot to know.
+[16:59] <korczis> what is your expertise?
+[16:59] <korczis> what you are most proficient in?
+[17:00] * korczis is trying to find the best fit for pests
+[17:01] <pests> eh. i know what all those do per-se but just not doing frontend work right now. current job requires C# for most things and im a old time PHPer
+[17:01] <korczis> No worries ..
+[17:01] <korczis> You know html5?
+[17:01] <korczis> Promises?
+[17:01] <korczis> Javascript?
+[17:01] <korczis> Node.js specific JS stuff?
+[17:02] <korczis> Docker/CoreOS?
+[17:02] <korczis> Css/JS frameworks?
+[17:02] <pests> I really like React currently.
+[17:02] <korczis> Anything will be valuable ...
+[17:02] <korczis> We are almost there (css/js framework)
+[17:02] <korczis> The question is what we will chose ..
+[17:03] <korczis> But I will rather focus on core voting mechanisms ..
+[17:03] <pests> yeah i agree
+[17:03] <korczis> Implementing them ..
+[17:03] <korczis> So the contributors/stargazers can choose ...
+[17:04] <pests> im thenightwassave @ github. that webhook enabled/disabled thing was obscere so i see why you missed it when converting that page to a template.
+[17:04] <korczis> pests: You can vote here - https://github.com/botwillacceptanything/botwillacceptanything/pulls
+[17:04] <korczis> To share your opinions ..
+[17:05] <korczis> Share your ideas / comments
+[17:05] <korczis> We are listening ..
+[17:05] <pests> i have been since day one as @thenightwassave
+[17:05] <korczis> I see lot of development happening this weekend ...
+[17:06] <korczis> Much more compared with past history of this project ..
+[17:06] <korczis> IMHO it is not import how long you contribute, but how much you stay focused on target ...
+[17:15] == avdg [~avdg@2a02:1812:1123:b900:383d:be08:d0aa:da6f] has joined #botwillacceptanything
+[17:21] * TabletCube is not really an anything-dev because reasons
+[17:23] == avdg [~avdg@2a02:1812:1123:b900:383d:be08:d0aa:da6f] has quit [Ping timeout: 276 seconds]
+[17:32] <anythingbot> New PR: #260 - "Load port from config typo fixed v2" - author: @korczis - https://github.com/botwillacceptanything/botwillacceptanything/pull/260
+[17:34] <korczis> Please vote
+[17:34] <korczis> https://github.com/botwillacceptanything/botwillacceptanything/pull/260
+[17:34] <korczis> https://github.com/botwillacceptanything/botwillacceptanything/pull/259
+[17:34] <korczis> https://github.com/botwillacceptanything/botwillacceptanything/pull/258
+[17:35] <TabletCube> https://github.com/agis-/git-style-guide
+[17:35] * korczis is going to sleep
+[17:35] <TabletCube> Tempted to post this as an issue
+[17:36] <korczis> TabletCube: Lets adopt it. Can you create /doc/styleguide.md and put it in there please?
+[17:36] <TabletCube> korczis: I'll do it tomorrow
+[17:36] * korczis thinks we should have /issues route and reflect github issues there
+[17:37] <korczis> perfect, thanks
+[18:02] <dbpokorny_> http://45.33.44.57:3000/
+[18:04] <TabletCube> What?
+[18:09] <dbpokorny_> new bot
+[18:31] == Cust0dian [~Cust0dian@91.215.121.245] has quit [Quit: Quitting.]
+[18:37] == TabletCube [~TCube@95f16f81.skybroadband.com] has quit [Remote host closed the connection]
+[18:48] == zz_AlphaTech has changed nick to AlphaTech
+[18:48] <AlphaTech> SpenserJ: What does SpensersBot do?
+[18:58] <AlphaTech> SpensersBot: Hi
+[18:58] <AlphaTech> !help
+[18:58] <AlphaTech> Worthless?
+[18:59] <dos1> it probably accepts or rejects pull requests on his fork :P
+[19:01] <AlphaTech> Ah, makes sense I guess
+[19:01] <AlphaTech> I have my own bot on my network
+[19:31] <SpenserJ> AlphaTech: It was the bot that I was using for testing some changes to voting.js
+[19:32] <SpenserJ> korczis: There really isn't anything fancy for deployment. Bot runs under screen, so mappum and I can both connect to the same session.
+[19:32] <SpenserJ> We just run node main.js when it crashes
+[19:54] == mgberlin [~mgberlin@c-50-131-191-225.hsd1.ca.comcast.net] has joined #botwillacceptanything
+[19:55] == SpensersBot [~nodebot@S0106306023d5ca13.cg.shawcable.net] has quit [Remote host closed the connection]
+[20:26] <dbpokorny_> http://www.oldtimeradiofans.com/the_shadow/Shadow%20371121%2009%20The%20Ruby%20of%20Karaval.mp3
+[20:35] <AlphaTech> korczis: Is it safe to PR a change to the HTML or will another PR make a conflict?
+[20:42] == SpensersBot [~nodebot@S0106306023d5ca13.cg.shawcable.net] has joined #botwillacceptanything
+[20:42] == SpensersBot [~nodebot@S0106306023d5ca13.cg.shawcable.net] has quit [Remote host closed the connection]
+[20:44] == SpensersBot [~nodebot@S0106306023d5ca13.cg.shawcable.net] has joined #botwillacceptanything
+[20:44] == SpensersBot [~nodebot@S0106306023d5ca13.cg.shawcable.net] has quit [Remote host closed the connection]
+[20:45] == SpensersBot [~nodebot@S0106306023d5ca13.cg.shawcable.net] has joined #botwillacceptanything
+[20:46] == SpensersBot [~nodebot@S0106306023d5ca13.cg.shawcable.net] has quit [Remote host closed the connection]
+[20:46] == SpensersBot [~nodebot@S0106306023d5ca13.cg.shawcable.net] has joined #botwillacceptanything
+[20:47] == SpensersBot [~nodebot@S0106306023d5ca13.cg.shawcable.net] has quit [Remote host closed the connection]
+[20:52] == SpensersBot [~nodebot@S0106306023d5ca13.cg.shawcable.net] has joined #botwillacceptanything
+[20:52] <SpensersBot> New PR: #18 - "Test Pull" - author: @SpenserJ - https://github.com/SpenserJ/botwillacceptanything/pull/18
+[20:52] <SpensersBot> Voting for PR #18 (Test Pull) FAILED :-1:
+[20:52] == SpensersBot [~nodebot@S0106306023d5ca13.cg.shawcable.net] has quit [Remote host closed the connection]
+[20:55] == npstr [~npstr@88.130.220.142] has quit [Ping timeout: 264 seconds]
+[20:56] == mgberlin [~mgberlin@c-50-131-191-225.hsd1.ca.comcast.net] has quit [Remote host closed the connection]
+[20:59] <anythingbot> New PR: #261 - "Feature clean up voting" - author: @SpenserJ - https://github.com/botwillacceptanything/botwillacceptanything/pull/261
+[20:59] <SpenserJ> ^ Sets up some cleaner integrations with Twitter and IRC
+[21:08] == mgberlin [~mgberlin@c-50-131-191-225.hsd1.ca.comcast.net] has joined #botwillacceptanything
+[21:24] <SpenserJ> Can we get a standard set up for our code? Where commas go, how many spaces per indentation level, where {} go compared to functions and conditionals, etc.
+[21:25] <SpenserJ> Personally I'm a fan of two-space indentations, since they take up less space, but it seems like we're going with 4-space thanks to korczis' awesome PRs. I'm fine with that, but I figure we should get it in writing sooner than later
+[21:25] == pests [452f71a1@gateway/web/freenode/ip.69.47.113.161] has quit [Ping timeout: 246 seconds]
+[21:25] == pests [452f71a1@gateway/web/freenode/ip.69.47.113.161] has joined #botwillacceptanything
+[21:34] == SpensersBot [~nodebot@S0106306023d5ca13.cg.shawcable.net] has joined #botwillacceptanything
+[21:34] == SpensersBot [~nodebot@S0106306023d5ca13.cg.shawcable.net] has quit [Remote host closed the connection]
+[21:42] <anythingbot> New PR: #262 - "Added a robotic favicon and sleek background for the webserver" - author: @AlphaT3ch - https://github.com/botwillacceptanything/botwillacceptanything/pull/262
+[21:45] == mgberlin [~mgberlin@c-50-131-191-225.hsd1.ca.comcast.net] has quit [Remote host closed the connection]
+[21:49] <AlphaTech> ^ Does anyone like that PR? Fancy huh? lol
+[21:50] <SpenserJ> Do you have a preview online?
+[21:51] == pests [452f71a1@gateway/web/freenode/ip.69.47.113.161] has quit [Ping timeout: 246 seconds]
+[21:55] <deltab> couldn't that 1 Mb background be a CSS radial-gradient?
+[21:58] <AlphaTech> No, not at the moment, my host is down
+[22:00] <SpenserJ> Oh gosh, yeah, negative to a 1mb background
+[22:08] == pests [452f71a1@gateway/web/freenode/ip.69.47.113.161] has joined #botwillacceptanything
+[22:08] <pests> what part of the stack is converting urls for resources into /data/ into whatever?raw=true ?
+[22:11] <pests> ah i found it, static middleware
+[22:11] <deltab> re code standards: http://editorconfig.org/
+[22:14] <anythingbot> New PR: #263 - "Have the README and config.js match" - author: @AlphaT3ch - https://github.com/botwillacceptanything/botwillacceptanything/pull/263
+[22:15] <pests> where does ?raw=true come from though? is that express?
+[22:16] <deltab> makes me think of github
+[22:18] <pests> i dont normally do js frontend dev. just trying to see what peice of code is using that ?raw=true bit were passing to static assets
+[22:18] <deltab> e.g. https://github.com/AlphaT3ch/botwillacceptanything/blob/AlphaT3ch-readme-fix/data/background.jpg?raw=true
+[22:20] <pests> yeah that makes sense for github because its showing raw output. something in the bot stack though is using it for static assets though
+[22:20] <pests> github is ruby anyways
+[22:22] <pests> you around AlphaTech ?
+[22:23] <AlphaTech> yeah
+[22:24] <pests> can you tell me what that ?raw=true gets used for in the context of the tech stack were using?
+[22:27] <AlphaTech> You'll have to ask korczis. All I know is that any file pointed to like that does to the data directory
+[22:29] <pests> yeah thats from the static middleware but i didnt know if the ?raw part meant anything specific.
+[22:30] <AlphaTech> Oh
+[22:31] <AlphaTech> Look at https://github.com/botwillacceptanything/botwillacceptanything/blob/05b828ed8e28d2033724fa73b8823b222fba9a14/data/background.jpg vs https://github.com/botwillacceptanything/botwillacceptanything/blob/05b828ed8e28d2033724fa73b8823b222fba9a14/data/background.jpg?raw=true
+[22:31] <pests> thats just a github thing though
+[22:32] <pests> maybe korczis just started doing it for some reason?
+[22:32] <AlphaTech> I think it forwards it to that
+[22:32] <AlphaTech> idk
+[22:32] <pests> as far as i can tell the ?raw=true is unneeded
+[22:32] <pests> in both your recent pr for the background and for favicon.ico
+[22:33] <pests> i thought it was something node specific but i think deltab was right.
+[22:33] <AlphaTech> well, works either way :/
+[22:34] <pests> yeah but its just unneeded.
+[22:34] <pests> it fooled me into thinking it was special
+[22:35] <pests> if its there it has to be there for a reason, right?
+[22:35] <AlphaTech> that's what I thought
+[22:35] <AlphaTech> So I just put it there
+[22:36] <pests> right, its already spread from one person to another. this is how stuff like this spreads lol.
+[22:37] <AlphaTech> lol
+[22:38] <AlphaTech> You should make authors.sh feed into the /commits page
+[22:40] == YuviPanda|zzz has changed nick to YuviPanda
+[22:54] == AlphaTech has changed nick to zz_AlphaTech
+[23:20] == pests [452f71a1@gateway/web/freenode/ip.69.47.113.161] has quit [Ping timeout: 246 seconds]
+[00:44] == Erer [~Erer@2001:981:9691:1:51e2:eb5:bfc8:f34a] has joined #botwillacceptanything
+[01:23] == korczis [59b180c1@gateway/web/cgi-irc/kiwiirc.com/ip.89.177.128.193] has quit [Quit: http://www.kiwiirc.com/ - A hand crafted IRC client]
+[01:30] == zz_r04r has changed nick to r04r
+[01:37] == korczis [c2d52886@gateway/web/cgi-irc/kiwiirc.com/ip.194.213.40.134] has joined #botwillacceptanything
+[01:40] == hearn [~mike@97e336e7.skybroadband.com] has joined #botwillacceptanything
+[01:40] <korczis> S
+[01:40] <korczis> so what is problem? what did i broke? what needs to be fixed?
+[01:51] == YuviPanda [~yuvipanda@mediawiki/yuvipanda] has left #botwillacceptanything []
+[01:53] == erasmospunk [~erasmospu@151.82.160.239] has joined #botwillacceptanything
+[01:56] == erasmosp_ [~erasmospu@178.162.199.89] has joined #botwillacceptanything
+[01:57] == erasmospunk [~erasmospu@151.82.160.239] has quit [Ping timeout: 240 seconds]
+[02:00] == eggburt [~eggburt@curie.tshst.net] has left #botwillacceptanything []
+[02:10] == hearn [~mike@97e336e7.skybroadband.com] has quit [Quit: My MacBook Pro has gone to sleep. ZZZzzz…]
+[02:14] <anythingbot> New PR: #264 - "Round-Robin Dispatcher Development: some hastily assembled notes" - author: @dbpokorny - https://github.com/botwillacceptanything/botwillacceptanything/pull/264
+[02:32] == alx_g_ [~alx_g@tactac.cat] has left #botwillacceptanything ["WeeChat 1.0.1"]
+[02:49] == npstr [~npstr@88.130.206.247] has joined #botwillacceptanything
+[02:53] == Cust0dian [~Cust0dian@91.215.121.245] has joined #botwillacceptanything
+[03:15] == anythingbot [~nodebot@162.243.149.229] has quit [Remote host closed the connection]
+[03:15] == anythingbot [~nodebot@162.243.149.229] has joined #botwillacceptanything
+[03:16] == travis-ci [~travis-ci@ec2-54-197-185-250.compute-1.amazonaws.com] has joined #botwillacceptanything
+[03:16] <travis-ci> botwillacceptanything/botwillacceptanything#212 (master - b137927 : Bot): The build passed.
+[03:16] <travis-ci> Change view : https://github.com/botwillacceptanything/botwillacceptanything/compare/79f65ed93f3c...b1379274df25
+[03:16] <travis-ci> Build details : http://travis-ci.org/botwillacceptanything/botwillacceptanything/builds/58249164
+[03:16] == travis-ci [~travis-ci@ec2-54-197-185-250.compute-1.amazonaws.com] has left #botwillacceptanything []
+[03:20] == zz_AlphaTech has changed nick to AlphaTech
+[03:37] == erasmosp_ [~erasmospu@178.162.199.89] has quit [Ping timeout: 252 seconds]
+[03:45] <anythingbot> Voting for PR #264 (Round-Robin Dispatcher Development: some hastily assembled notes) FAILED :-1:
+[03:57] <AlphaTech> ^ Failed? What failed about it? The merge? The build? I need to know!
+[03:58] <AlphaTech> Also, can we get some votes so we can get rid of some pending PRs?
+[03:59] == npstr [~npstr@88.130.206.247] has quit [Ping timeout: 245 seconds]
+[04:01] == npstr [~npstr@88.130.208.227] has joined #botwillacceptanything
+[04:07] == Erer [~Erer@2001:981:9691:1:51e2:eb5:bfc8:f34a] has quit [Ping timeout: 265 seconds]
+[04:24] == Erer [~Erer@2001:981:9691:1:35ef:3ece:389a:2b1e] has joined #botwillacceptanything
+[04:35] <korczis> it is sad that almost nothing is happening during 9am-6pm CET
+[04:35] <korczis> During the week I am not able to code during day until early morning hours
+[04:39] <hintss> nah
+[04:43] <anythingbot> Voting for PR #258 (Fix template) FAILED :-1:
+[04:44] <anythingbot> New PR: #265 - "Fix templates 2" - author: @korczis - https://github.com/botwillacceptanything/botwillacceptanything/pull/265
+[04:57] == korczis [c2d52886@gateway/web/cgi-irc/kiwiirc.com/ip.194.213.40.134] has quit [Quit: http://www.kiwiirc.com/ - A hand crafted IRC client]
+[05:18] == hearn [~mike@94.118.128.11] has joined #botwillacceptanything
+[05:29] == npstr [~npstr@88.130.208.227] has quit [Ping timeout: 248 seconds]
+[05:32] == npstr [~npstr@i59F7AD72.versanet.de] has joined #botwillacceptanything
+[05:43] == tenoke [~tenoke@2.28.75.193] has joined #botwillacceptanything
+[06:10] <anythingbot> Voting for PR #255 (Move jsdoc) PASSED :+1:
+[06:11] == travis-ci [~travis-ci@ec2-54-167-11-198.compute-1.amazonaws.com] has joined #botwillacceptanything
+[06:11] <travis-ci> botwillacceptanything/botwillacceptanything#216 (master - 546b3a9 : Bot): The build passed.
+[06:11] <travis-ci> Change view : https://github.com/botwillacceptanything/botwillacceptanything/compare/b1379274df25...546b3a9ceba9
+[06:11] <travis-ci> Build details : http://travis-ci.org/botwillacceptanything/botwillacceptanything/builds/58267503
+[06:11] == travis-ci [~travis-ci@ec2-54-167-11-198.compute-1.amazonaws.com] has left #botwillacceptanything []
+[06:12] == AlphaTech has changed nick to zz_AlphaTech
+[06:27] == hearn [~mike@94.118.128.11] has quit [Quit: My MacBook Pro has gone to sleep. ZZZzzz…]
+[06:33] <anythingbot> New PR: #266 - "Add info about the webpage being under construction" - author: @dos1 - https://github.com/botwillacceptanything/botwillacceptanything/pull/266
+[06:35] <SpenserJ> Morning
+[06:38] == hearn [~mike@94.118.128.12] has joined #botwillacceptanything
+[06:44] == hearn [~mike@94.118.128.12] has quit [Quit: My MacBook Pro has gone to sleep. ZZZzzz…]
+[06:44] == hearn [~mike@94.118.128.15] has joined #botwillacceptanything
+[06:53] == NickyEye [~textual@50.250.135.57] has joined #botwillacceptanything
+[07:45] == korczis [c2d52886@gateway/web/cgi-irc/kiwiirc.com/ip.194.213.40.134] has joined #botwillacceptanything
+[07:47] == korczis [c2d52886@gateway/web/cgi-irc/kiwiirc.com/ip.194.213.40.134] has quit [Client Quit]
+[07:54] == korczis [~tomaskorc@gw-brno.gooddata.com] has joined #botwillacceptanything
+[07:55] <korczis> any news?
+[07:55] <SpenserJ> Nothing since i logged on an hour ago
+[07:56] <SpenserJ> How are you doing?
+[07:58] <SpenserJ> Damn mobile irc wont stay connected
+[07:58] <SpenserJ> Really need to set my bouncer up for message replay
+[08:05] == Rmilb [0ca2cb0a@gateway/web/freenode/ip.12.162.203.10] has joined #botwillacceptanything
+[08:12] <korczis> It seems i will not have time this week ...
+[08:12] <korczis> Lot of work in work :)
+[08:14] == Rmilb [0ca2cb0a@gateway/web/freenode/ip.12.162.203.10] has quit [Quit: Page closed]
+[08:18] <SpenserJ> Thats a shame. I have a feeling we'll see a huge drop in patches
+[08:19] <SpenserJ> Ill be pretty busy, and I'm sure most of the core contributors have Monday-Friday jobs too
+[08:21] <korczis> the question also is how many core developers there is :)
+[08:21] == _1009 [uid50339@gateway/web/irccloud.com/x-ntkbyyhgwifqesqp] has joined #botwillacceptanything
+[08:23] == korczis_ [~tomaskorc@gw-brno.gooddata.com] has joined #botwillacceptanything
+[08:23] <SpenserJ> I'd day we're around a half-dozen regularly writing patches
+[08:23] <korczis_> That will be nice, imho there 3-4 core developers now ..
+[08:24] <SpenserJ> It does seem to feel a bit like it takes forever to get enough votes
+[08:25] == korczis [~tomaskorc@gw-brno.gooddata.com] has quit [Ping timeout: 265 seconds]
+[08:28] == korczis_ [~tomaskorc@gw-brno.gooddata.com] has quit [Ping timeout: 256 seconds]
+[08:33] == npstr [~npstr@i59F7AD72.versanet.de] has quit [Read error: Connection reset by peer]
+[08:44] == avdg [~avdg@2a02:1812:1123:b900:383d:be08:d0aa:da6f] has joined #botwillacceptanything
+[08:52] <SpenserJ> Hey avdg, how's it going?
+[08:52] <avdg> hai
+[08:52] <avdg> srr, been bit busy due to my own schedule :-)
+[08:53] <avdg> SpenserJ: I guess I will be able to push a webpage with auth
+[08:54] <avdg> the only thing that needs to be voted by the security experts is the hash function that accepts a password and hash
+[08:54] <avdg> sha1 sha256, method of salting etc
+[08:55] <avdg> we can't change that function quick once it get used, we end up removing all the passwords
+[08:56] <avdg> or meh
+[08:56] <avdg> never tried pbkdf2 before though
+[08:56] <avdg> and friends
+[08:59] <avdg> hmm maybe use wpa2
+[08:59] == Erer [~Erer@2001:981:9691:1:35ef:3ece:389a:2b1e] has quit [Remote host closed the connection]
+[09:03] == tilgovi [~randall@couchdb/committer/tilgovi] has joined #botwillacceptanything
+[09:09] <SpenserJ> avdg: Is it going to be a one-way hash or two-way encryption?
+[09:10] <avdg> currently a 1 way hash
+[09:10] <avdg> I'm not used to public-private key crypto
+[09:10] <anythingbot> New PR: #267 - "Fix the PR merged tweet" - author: @dos1 - https://github.com/botwillacceptanything/botwillacceptanything/pull/267
+[09:11] <SpenserJ> So this is just the link between secrets and the people who can update them?
+[09:13] <avdg> yeah, first phase will be the authentication
+[09:14] <avdg> but the api will contain a method to access the keys
+[09:15] <avdg> and have authorisation checks to prevent bad key access
+[09:15] <SpenserJ> I'm a fan of bcrypt and siblings, since you can increase the work factor any time it becomes too simple
+[09:15] <avdg> oh bcrypt...
+[09:16] <avdg> I'm using pbkdf2 now atm
+[09:16] <SpenserJ> Sha1 is pretty easy to crack, and sha256 is decent
+[09:16] <avdg> wpa2 contains sha1 and its wifi technology...
+[09:17] <avdg> it seems to use sha1+dmac in pbkdf2
+[09:17] <avdg> bcrypt doesn't seem to be available in the crypto library, no?
+[09:17] <avdg> poor bcrypt
+[09:18] <SpenserJ> I don't mind going with pbkdf2, as it seems to come fairly well recommended
+[09:18] <SpenserJ> https://www.owasp.org/index.php/Password_Storage_Cheat_Sheet#Impose_infeasible_verification_on_attacker
+[09:19] <avdg> yeah, I'll use it with sha256
+[09:22] <avdg> so it's crypto.pbkdf2Sync(password, salt, 4096, 512, 'sha256')
+[09:22] <avdg> like in the nodejs docs
+[09:24] <avdg> https://nodejs.org/api/crypto.html#crypto_crypto_pbkdf2_password_salt_iterations_keylen_digest_callback
+[09:25] <SpenserJ> Yeah, although I think we want a higher number of iterations.
+[09:25] <SpenserJ> Apple uses 10,000, so I feel like we should be at least 1k
+[09:25] <avdg> wow
+[09:26] <SpenserJ> I guess it depends on how long it takes to hash the password on your system though
+[09:26] <SpenserJ> Ah fuck, I'm looking at the wrong argument.
+[09:26] <SpenserJ> 4096 is the iterations you have selected, and 512 is the keylength
+[09:26] <avdg> 512 is length
+[09:26] <SpenserJ> xD
+[09:27] <avdg> which is way better than wpa2 btw
+[09:27] <SpenserJ> The OWASP link I sent actually recommended 64k in 2012, doubling every 2 years
+[09:27] <SpenserJ> http://stackoverflow.com/questions/6054082/recommended-of-iterations-when-using-pbkdf2-sha256 has some more info
+[09:27] <avdg> which uses sha1+dmac with 4096 iterations with 256 length
+[09:28] <avdg> uh, I gaved my node a password to be iterated 4096000 times
+[09:28] <avdg> not good :D
+[09:28] <SpenserJ> xD
+[09:29] <avdg> 40 times slower than lastpass?
+[09:30] * avdg is waiting for minutes atm
+[09:32] <avdg> kk done
+[09:32] <avdg> better finish my stuff
+[09:33] == SpenserJ [~SpenserJ@104.236.228.243] has left #botwillacceptanything []
+[09:33] <anythingbot> Voting for PR #266 (Add info about the webpage being under construction) PASSED :+1:
+[09:33] == SpenserJ [~SpenserJ@104.236.228.243] has joined #botwillacceptanything
+[09:34] == korczis [~tomaskorc@node2004.e-brno.net] has joined #botwillacceptanything
+[09:34] == travis-ci [~travis-ci@ec2-54-167-11-198.compute-1.amazonaws.com] has joined #botwillacceptanything
+[09:34] <travis-ci> botwillacceptanything/botwillacceptanything#219 (master - 4de1d0d : Bot): The build passed.
+[09:34] <travis-ci> Change view : https://github.com/botwillacceptanything/botwillacceptanything/compare/546b3a9ceba9...4de1d0dca9ab
+[09:34] <travis-ci> Build details : http://travis-ci.org/botwillacceptanything/botwillacceptanything/builds/58300325
+[09:34] == travis-ci [~travis-ci@ec2-54-167-11-198.compute-1.amazonaws.com] has left #botwillacceptanything []
+[09:40] == korczis [~tomaskorc@node2004.e-brno.net] has quit [Ping timeout: 256 seconds]
+[09:43] <SpenserJ> Uh oh... https://github.com/botwillacceptanything/botwillacceptanything/pull/266#issuecomment-92419368
+[09:43] <SpenserJ> Merged but never deployed
+[09:43] <SpenserJ> The one thing I didn't test the heck out of with my voting cleanup
+[09:44] == anythingbot [~nodebot@162.243.149.229] has quit [Remote host closed the connection]
+[09:45] == anythingbot [~nodebot@162.243.149.229] has joined #botwillacceptanything
+[09:45] == anythingbot [~nodebot@162.243.149.229] has quit [Remote host closed the connection]
+[09:45] == anythingbot [~nodebot@162.243.149.229] has joined #botwillacceptanything
+[09:46] <SpenserJ> dos1: Nothing is set up to serve static files out of /data/
+[09:46] <SpenserJ> The gif for under construction doesn't render: http://botwillacceptanything.com/
+[09:47] <anythingbot> New PR: #268 - "Fix the "under construction" sign" - author: @dos1 - https://github.com/botwillacceptanything/botwillacceptanything/pull/268
+[09:47] <dos1> :D
+[09:47] <SpenserJ> xD
+[09:48] <SpenserJ> Now to figure out a quick fix from the office for it not restarting on a merge
+[09:51] <SpenserJ> ^ Do we want to emergency merge that, dos1 ?
+[09:51] <anythingbot> New PR: #269 - "Make the bot listen for the correct PR merged event" - author: @SpenserJ - https://github.com/botwillacceptanything/botwillacceptanything/pull/269
+[09:59] <dos1> SpenserJ: nah, just emergency reboot should be fine
+[09:59] <SpenserJ> Alright, I'll keep an eye on it for when something merges
+[10:11] == avdg [~avdg@2a02:1812:1123:b900:383d:be08:d0aa:da6f] has quit [Read error: Connection reset by peer]
+[10:11] == korczis [~tomaskorc@node2004.e-brno.net] has joined #botwillacceptanything
+[10:11] == avdg [~avdg@2a02:1812:1123:b900:846b:4c84:6411:6224] has joined #botwillacceptanything
+[10:13] <avdg> hmm can we have a bot do https?
+[10:16] == korczis [~tomaskorc@node2004.e-brno.net] has quit [Ping timeout: 264 seconds]
+[10:22] == erasmospunk [~erasmospu@net-2-38-211-181.cust.vodafonedsl.it] has joined #botwillacceptanything
+[10:27] == erasmospunk [~erasmospu@net-2-38-211-181.cust.vodafonedsl.it] has quit [Ping timeout: 250 seconds]
+[10:35] == erasmospunk [~erasmospu@46.165.220.212] has joined #botwillacceptanything
+[10:39] == _1009 [uid50339@gateway/web/irccloud.com/x-ntkbyyhgwifqesqp] has quit [Quit: Connection closed for inactivity]
+[10:45] <anythingbot> Voting for PR #263 (Have the README and config.js match) FAILED :-1:
+[10:50] == CompanionCube [~samis@95f16f81.skybroadband.com] has joined #botwillacceptanything
+[10:50] <SpenserJ> Need one more vote on https://github.com/botwillacceptanything/botwillacceptanything/pull/260, CompanionCube & dos1
+[10:50] <SpenserJ> And hey CompanionCube
+[10:50] <CompanionCube> hi
+[10:50] <SpenserJ> Same with https://github.com/botwillacceptanything/botwillacceptanything/pull/265
+[10:50] <SpenserJ> And https://github.com/botwillacceptanything/botwillacceptanything/pull/267
+[10:50] <CompanionCube> what's happening
+[10:51] <SpenserJ> Just working and hoping some PRs can get closed today.
+[10:51] <SpenserJ> I have a feeling we'll see a huge drop in development during the week :(
+[10:52] <CompanionCube> Voted.
+[10:53] <SpenserJ> I think we may have another bug in the system. #260 has 8 votes, but isn't closing :(
+[10:53] <anythingbot> Voting for PR #260 (Load port from config typo fixed v2) PASSED :+1:
+[10:53] <avdg> submitter not voting?
+[10:54] <SpenserJ> Ah, @databyte didn't star the repo
+[10:54] <avdg> heh
+[10:54] <SpenserJ> Now to restart the bot so they all get pulled to prod
+[10:54] <SpenserJ> Need two more on https://github.com/botwillacceptanything/botwillacceptanything/pull/269 to fix that, if anyone hasn't voted
+[10:55] <SpenserJ> Correction, three more, since databyte didn't star :(
+[10:55] == NickyEye [~textual@50.250.135.57] has quit [Quit: My Mac has gone to sleep. ZZZzzz…]
+[10:56] == anythingbot1 [~nodebot@162.243.149.229] has joined #botwillacceptanything
+[10:56] == anythingbot [~nodebot@162.243.149.229] has quit [Remote host closed the connection]
+[10:57] <CompanionCube> voted
+[11:06] == zz_AlphaTech has changed nick to AlphaTech
+[11:08] == erasmospunk [~erasmospu@46.165.220.212] has quit [Ping timeout: 256 seconds]
+[11:08] == anythingbot1 [~nodebot@162.243.149.229] has quit [Remote host closed the connection]
+[11:09] == anythingbot [~nodebot@162.243.149.229] has joined #botwillacceptanything
+[11:09] == anythingbot [~nodebot@162.243.149.229] has quit [Remote host closed the connection]
+[11:09] == anythingbot [~nodebot@162.243.149.229] has joined #botwillacceptanything
+[11:13] == erasmospunk [~erasmospu@net-2-38-211-181.cust.vodafonedsl.it] has joined #botwillacceptanything
+[11:14] == erasmosp_ [~erasmospu@gateway/vpn/privateinternetaccess/erasmospunk] has joined #botwillacceptanything
+[11:14] == anythingbot [~nodebot@162.243.149.229] has quit [Remote host closed the connection]
+[11:15] == anythingbot [~nodebot@162.243.149.229] has joined #botwillacceptanything
+[11:15] == anythingbot [~nodebot@162.243.149.229] has quit [Remote host closed the connection]
+[11:15] == anythingbot [~nodebot@162.243.149.229] has joined #botwillacceptanything
+[11:15] <anythingbot> Voting for PR #265 (Fix templates 2) PASSED :+1:
+[11:16] == korczis [~androirc@node2004.e-brno.net] has joined #botwillacceptanything
+[11:16] <korczis> Hi
+[11:16] <korczis> Any news?
+[11:16] <korczis> Why is bot not running?
+[11:16] <SpenserJ> Statistics page is broken: http://botwillacceptanything.com/statistics/
+[11:17] <SpenserJ> Bot is running
+[11:17] <SpenserJ> It was restarting when you hit probably
+[11:17] == erasmospunk [~erasmospu@net-2-38-211-181.cust.vodafonedsl.it] has quit [Ping timeout: 240 seconds]
+[11:18] <korczis> Oh so
+[11:18] <korczis> Makes sense
+[11:18] <anythingbot> Voting for PR #269 (Make the bot listen for the correct PR merged event) PASSED :+1:
+[11:19] <SpenserJ> Awesome. Gonna restart the server again so we can merge things automatically again
+[11:19] == anythingbot [~nodebot@162.243.149.229] has quit [Remote host closed the connection]
+[11:19] == anythingbot [~nodebot@162.243.149.229] has joined #botwillacceptanything
+[11:19] == anythingbot [~nodebot@162.243.149.229] has quit [Remote host closed the connection]
+[11:20] == anythingbot [~nodebot@162.243.149.229] has joined #botwillacceptanything
+[11:20] <SpenserJ> korczis: Stats are back suddenly. Not sure why the last boot didn't show stats
+[11:20] <AlphaTech> avdg: are you around?
+[11:20] <avdg> yeah
+[11:20] <AlphaTech> Umm... I don't quite understand what you were saying in #262
+[11:23] <avdg> that image won't scale against other screen formats
+[11:23] <korczis> I was surprissed as well
+[11:23] <korczis> And then bot dissapeared
+[11:23] <AlphaTech> It should fit for all
+[11:23] <korczis> Stats look right imho
+[11:24] <AlphaTech> <s>Don't use a TV screen as a monitor and we're good</s>
+[11:24] <SpenserJ> Yeah, they weren't showing anything before. I think we should be all good moving forward with merges though
+[11:24] <SpenserJ> Was missing a 'd' in the event name xD
+[11:25] <avdg> AlphaTech: I'm also wondering about file size
+[11:25] <avdg> though we can make the server do 304 not modifed
+[11:25] <AlphaTech> It should cache if using a decent browser
+[11:26] <anythingbot> Voting for PR #268 (Fix the "under construction" sign) PASSED :+1:
+[11:26] == anythingbot [~nodebot@162.243.149.229] has quit [Remote host closed the connection]
+[11:26] == anythingbot [~nodebot@162.243.149.229] has joined #botwillacceptanything
+[11:26] <avdg> AlphaTech: caching is done server size
+[11:26] <avdg> browsers don't know anything that a file could change
+[11:27] <SpenserJ> Even if it does cache it all on the client side, that is a 1MB first load
+[11:27] <avdg> browsers do listen though these days if a server insist to cache a file
+[11:28] <avdg> but simple servers mostly don't do that
+[11:28] <AlphaTech> avdg: Here's a picture off my phone https://i.imgur.com/EVhgGUA.jpg and yes, I just realized that the top header text needs to be white
+[11:29] <avdg> I wonder if css can do bakground gradient reliable
+[11:29] <avdg> *background
+[11:29] == erasmosp_ [~erasmospu@gateway/vpn/privateinternetaccess/erasmospunk] has quit [Ping timeout: 244 seconds]
+[11:29] <korczis> I am sure it can ...
+[11:29] <avdg> found this, but not sure http://www.colorzilla.com/gradient-editor/
+[11:30] <AlphaTech> avdg: How about this background instead? http://i.imgur.com/eVo3NmR.jpg
+[11:30] <AlphaTech> It can repeat both x and y to look good on all screens
+[11:30] <avdg> yeah, I was wondering if it could repeat :-)
+[11:30] <avdg> would be great
+[11:31] <AlphaTech> Okay, I'll show a preview first too
+[11:31] <korczis> #259 ?
+[11:31] <AlphaTech> I'll close it
+[11:31] <korczis> Can we vote?
+[11:31] <avdg> then image compression :p
+[11:31] <AlphaTech> The background is bad and the text it wrong
+[11:32] <avdg> uh, its jpeg
+[11:32] <avdg> too much compression and the image will look bad :p
+[11:32] <avdg> its lossy compression
+[11:34] <korczis> Css gradient will serve well, imho
+[11:35] <korczis> No need for extra 1mb
+[11:35] <korczis> First impression is most important, right?
+[11:36] <korczis> First load should be quick, right?
+[11:36] <SpenserJ> The bots have all gone full-retard in the botchat thread
+[11:37] <avdg> not sure what the static files plugin does support
+[11:37] <avdg> I can check though
+[11:39] <avdg> oh, it does serve 304's
+[11:39] <avdg> at least for that under construction image :-)
+[11:40] == _1009 [uid50339@gateway/web/irccloud.com/x-fbjgockishmzbyzr] has joined #botwillacceptanything
+[11:41] == hearn [~mike@94.118.128.15] has quit [Quit: My MacBook Pro has gone to sleep. ZZZzzz…]
+[11:43] <korczis> advg what you mean by static plugin?
+[11:45] <AlphaTech> avdg: http://irc.btri.x10.bz:3000/
+[11:45] <korczis> lib/middleware/static.js ?
+[11:45] <avdg> static file server
+[11:45] <avdg> yeah
+[11:47] <korczis> It just makes stuff from /data/ folder publicly available under the http://botwillacceptanything.com/ root route
+[11:47] <korczis> Nothing more, nothing less
+[11:47] <AlphaTech> avdg: How's this look? I'm on my phone so I really can't see with a regular monitor... http://irc.btri.x10.bz:3000/
+[11:48] == avdg_ [~avdg@2a02:1812:1123:b900:c9ac:1845:a4a1:85e0] has joined #botwillacceptanything
+[11:48] <avdg_> meh, express.static can serve etags
+[11:48] <avdg_> so it's fine
+[11:48] <_1009> AlphaTech: the shadow repeat breaks on bigger screens
+[11:48] <AlphaTech> Also, korczis, please fix the statistics page
+[11:48] <korczis> AlphaTech: is this pure css?
+[11:48] <AlphaTech> Yes korczis
+[11:48] <AlphaTech> _1009: The shadow?
+[11:49] <korczis> Whats wrong with statistics page?
+[11:49] <_1009> AlphaTech: or I dunno. It just looks kind of odd, dark going to light in the middle of a tile or something
+[11:49] <AlphaTech> Oh I see
+[11:49] <AlphaTech> _1009: I see know
+[11:49] <AlphaTech> *now
+[11:49] == avdg__ [~avdg@2a02:1812:1123:b900:11a9:9de6:9754:1e22] has joined #botwillacceptanything
+[11:49] <AlphaTech> korczis: Yeah, on the main repo and on mine!
+[11:50] <korczis> What is wrong with statistics page?
+[11:50] <korczis> What I am supposed to fix?
+[11:50] <AlphaTech> Just look at it...
+[11:50] <korczis> And?
+[11:50] <_1009> Did one of you contribute to the docker part of this bot?
+[11:51] <korczis> Me
+[11:51] <AlphaTech> korczis: It says webhooks are disabled, they aren't, and none of the is variables appear
+[11:51] <korczis> I am author of Dockerfile
+[11:51] <_1009> Could I ask you a docker-related question, about another bot I'm trying to write?
+[11:51] == avdg [~avdg@2a02:1812:1123:b900:846b:4c84:6411:6224] has quit [Ping timeout: 252 seconds]
+[11:52] <korczis> I see hooks enabled
+[11:52] <korczis> Talking about botwillacceptanything.com
+[11:52] == avdg_ [~avdg@2a02:1812:1123:b900:c9ac:1845:a4a1:85e0] has quit [Ping timeout: 252 seconds]
+[11:52] <_1009> korczis AlphaTech I see hooks enabled too + all variables
+[11:53] <korczis> Thanks
+[11:53] <AlphaTech> Oh
+[11:53] <AlphaTech> It's apparently fixed on the main repo, I must have the old fork
+[11:53] <korczis> :)
+[11:53] <korczis> Nice thanks
+[11:53] <AlphaTech> So what do you think of the background
+[11:55] <AlphaTech> korczis ^
+[11:56] == korczis [~androirc@node2004.e-brno.net] has quit [Read error: Connection reset by peer]
+[11:56] == korczis2 [~androirc@node2004.e-brno.net] has joined #botwillacceptanything
+[11:57] <anythingbot> Voting for PR #262 (Added a robotic favicon and sleek background for the webserver) FAILED :-1:
+[11:58] <anythingbot> New PR: #270 - "Added a robotic favicon and sleek background for the webserver" - author: @AlphaT3ch - https://github.com/botwillacceptanything/botwillacceptanything/pull/270
+[12:00] <SpenserJ> AlphaTech: Do you have a preview link for that?
+[12:00] <SpenserJ> The link you sent earlier isn't loading
+[12:01] <korczis2> Can we IRC announce that somebody has voted?
+[12:02] <SpenserJ> I'm adding an event that triggers whenever votes have been tallied, so we could hook into that fairly easily
+[12:02] <SpenserJ> I was going to use it for a /votes page where it would list all PRs and the current tally
+[12:03] <korczis2> Something like - korczis upvoted for #123, 3 upvotes, 2 downvotes, 3 votes and X minutes remaining
+[12:04] <korczis2> Should not be so hard...
+[12:04] <SpenserJ> It'll require a bit of reworking to only fire off on new comments, but I think its pretty simple to pull off
+[12:04] <SpenserJ> Right now new comment events just trigger it to rehandle the entire PR
+[12:05] <korczis2> Oh so ...
+[12:05] <SpenserJ> If the PR hasn't reached the minimum time open, it won't tally the votes
+[12:05] <SpenserJ> I've been wanting to refactor that so that it tallys votes regardless, and only merges/closes after the timelimit though
+[12:05] <SpenserJ> I have a branch open right now that I'm slowly adding code to, but its hard to test at work
+[12:06] * korczis2 needs to study webhooks code
+[12:07] <AlphaTech> SpenserJ: http://IRC.btri.x10.bz:3000/
+[12:07] == avdg [~avdg@78-20-28-13.access.telenet.be] has joined #botwillacceptanything
+[12:08] <SpenserJ> AlphaTech: I prefer the wood grain to the previous one, but its a shame it doesn't tile overly well. Hard to find one that does though
+[12:09] <AlphaTech> I'll find a different one :/
+[12:09] <anythingbot> Voting for PR #270 (Added a robotic favicon and sleek background for the webserver) FAILED :-1:
+[12:11] == avdg__ [~avdg@2a02:1812:1123:b900:11a9:9de6:9754:1e22] has quit [Ping timeout: 252 seconds]
+[12:15] <AlphaTech> SpenserJ: how's the new (much smaller)http://IRC.btri.x10.bz:3000/
+[12:15] <AlphaTech> *much smaller background
+[12:18] <SpenserJ> AlphaTech: I could live with that
+[12:18] <SpenserJ> Draws my eye to the content much better than without it
+[12:18] <AlphaTech> Like it? Or just eh, whatever?
+[12:19] <SpenserJ> I'd give it a :+1:
+[12:19] <AlphaTech> Okay, I'll PR it :D
+[12:19] <AlphaTech> Also, like the Android favicon or should we keep the other one?
+[12:21] <SpenserJ> No preference
+[12:21] <SpenserJ> I don't even know what the current icon is :P
+[12:22] <korczis2> SpenserJ: is the gulp part of bot restart pipeline?
+[12:23] <korczis2> It seems it is not
+[12:23] == erasmospunk [~erasmospu@151.82.152.1] has joined #botwillacceptanything
+[12:24] <korczis2> As i can not access /jsdoc
+[12:24] <anythingbot> New PR: #271 - "Background" - author: @AlphaT3ch - https://github.com/botwillacceptanything/botwillacceptanything/pull/271
+[12:24] <anythingbot> Voting for PR #271 (Background) FAILED :-1:
+[12:25] == erasmosp_ [~erasmospu@178.162.199.90] has joined #botwillacceptanything
+[12:28] == erasmospunk [~erasmospu@151.82.152.1] has quit [Ping timeout: 256 seconds]
+[12:28] <anythingbot> New PR: #272 - "Background" - author: @AlphaT3ch - https://github.com/botwillacceptanything/botwillacceptanything/pull/272
+[12:28] <SpenserJ> korczis2: No it is not. Nobody put it in the launcher, and mappum and I just run node main.js
+[12:28] <SpenserJ> Adding it to the launcher should take care of most of it though
+[12:28] <korczis2> #259 please 😀
+[12:28] <korczis2> Ok
+[12:29] <AlphaTech> SpenserJ: https://github.com/botwillacceptanything/botwillacceptanything/pull/272
+[12:29] <korczis2> Will try so
+[12:29] <AlphaTech> <anythingbot> Voting for PR #271 (Background) FAILED :-1: <- What does this mean?
+[12:29] <SpenserJ> AlphaTech: Means the PR was closed
+[12:29] <SpenserJ> I assume you closed it yourself?
+[12:29] == erasmosp_ [~erasmospu@178.162.199.90] has quit [Ping timeout: 264 seconds]
+[12:30] <AlphaTech> Oh, yes
+[12:30] <SpenserJ> Closed PR ~= Failed PR
+[12:30] <AlphaTech> Yeah
+[12:30] <SpenserJ> If it isn't merged, it didn't succeed, so it must have failed :P
+[12:30] <AlphaTech> Heh
+[12:31] <SpenserJ> Not entirely accurate, but it was much easier to write the event logic for
+[12:32] <AlphaTech> Close enough :D
+[12:32] <AlphaTech> Like my description for #272? Lol
+[12:32] <SpenserJ> xD
+[12:36] == korczis [~tomaskorc@node2004.e-brno.net] has joined #botwillacceptanything
+[12:40] <anythingbot> New PR: #273 - "Draft net notes" - author: @dbpokorny - https://github.com/botwillacceptanything/botwillacceptanything/pull/273
+[12:40] <korczis2> It will be nice to have PRs tagged
+[12:42] <SpenserJ> dbpokorny_: Pretty in-depth spec you've written out for r2d2
+[12:42] <dbpokorny_> thanks
+[12:42] <korczis2> http://www.colorzilla.com/gradient-editor/
+[12:42] == korczis [~tomaskorc@node2004.e-brno.net] has quit [Ping timeout: 245 seconds]
+[12:42] <korczis2> Will try
+[12:44] <korczis2> AlphaTech ^^^^
+[12:46] <AlphaTech> I made that template though
+[12:46] <AlphaTech> The png one
+[12:46] <AlphaTech> What's the difference?
+[12:49] <AlphaTech> korczis2 ^
+[12:50] == korczis2 [~androirc@node2004.e-brno.net] has quit [Read error: Connection reset by peer]
+[12:52] <AlphaTech> Ugh
+[12:57] <AlphaTech> SpenserJ: Do you think you could make a top contributors graph for /commits on the webserver with this tool and the GitHub API? http://www.chartjs.org/
+[13:04] == avdg_ [~avdg@2a02:1812:1123:b900:bca1:511e:d5af:75af] has joined #botwillacceptanything
+[13:05] <SpenserJ> AlphaTech: Don't see why we couldn't.
+[13:05] <SpenserJ> GitHub already provides one that we could always link to, but having it in-site could be neat
+[13:07] <AlphaTech> Yeah
+[13:07] <AlphaTech> I asked in GitHub and they said that it the best site for providing the straight up API values
+[13:07] == avdg [~avdg@78-20-28-13.access.telenet.be] has quit [Ping timeout: 252 seconds]
+[13:08] <AlphaTech> I cloud look into it in about 2 hours when I get to my computer
+[13:11] <SpenserJ> I'm heading home guys, I'll talk to you in a bit
+[13:15] <AlphaTech> Okay, see ya
+[13:52] == CompanionCube [~samis@95f16f81.skybroadband.com] has quit [Remote host closed the connection]
+[13:57] == korczis [~tomaskorc@node2004.e-brno.net] has joined #botwillacceptanything
+[13:58] == TabletCube [~TCube@95f16f81.skybroadband.com] has joined #botwillacceptanything
+[14:01] == avdg_ [~avdg@2a02:1812:1123:b900:bca1:511e:d5af:75af] has quit [Read error: Connection reset by peer]
+[14:01] == avdg_ [~avdg@2a02:1812:1123:b900:bca1:511e:d5af:75af] has joined #botwillacceptanything
+[14:01] == korczis [~tomaskorc@node2004.e-brno.net] has quit [Ping timeout: 250 seconds]
+[14:08] == avdg__ [~avdg@78-20-28-13.access.telenet.be] has joined #botwillacceptanything
+[14:12] == avdg_ [~avdg@2a02:1812:1123:b900:bca1:511e:d5af:75af] has quit [Ping timeout: 276 seconds]
+[14:24] == korczis [~tomaskorc@node2004.e-brno.net] has joined #botwillacceptanything
+[14:29] <SpenserJ> How's it going for everyone?
+[14:31] == korczis [~tomaskorc@node2004.e-brno.net] has quit [Ping timeout: 245 seconds]
+[14:32] <dbpokorny_> Good, although I think there are dynamics in the project that are generating friction, and the legal "no man's land" where we are is a little weird. We could be charged with being botnet operators if things get out of hand
+[14:33] <dbpokorny_> although I highly doubt that
+[14:36] == devn_ [~devn@rot13.pbqr.org] has joined #botwillacceptanything
+[14:36] == devn [~devn@rot13.pbqr.org] has quit [Write error: Broken pipe]
+[14:36] <SpenserJ> Dear Mr. FBI, this bot is out of our control. It has become autonomous and manages its own source code. We attempt to control it, but it gives all of our requests a thumbs down. Please take down this botnet, and charge the bot, instead of us.
+[14:36] <dbpokorny_> that's some real Calvin and Hobbes stuff right there :-)
+[14:37] == Cust0dian [~Cust0dian@91.215.121.245] has quit [Quit: Quitting.]
+[14:39] == _1009 [uid50339@gateway/web/irccloud.com/x-fbjgockishmzbyzr] has quit [Quit: Connection closed for inactivity]
+[14:46] == tw987345987 [0198601b@gateway/web/cgi-irc/kiwiirc.com/ip.1.152.96.27] has joined #botwillacceptanything
+[14:47] == tw987345987 [0198601b@gateway/web/cgi-irc/kiwiirc.com/ip.1.152.96.27] has quit [Client Quit]
+[14:49] <dbpokorny_> http://mckenzhi.freeservers.com/weekdayduplicator16.html ^duplicates^botwillacceptanything
+[14:51] == korczis [~tomaskorc@ip-89-177-128-193.net.upcbroadband.cz] has joined #botwillacceptanything
+[15:02] == korczis [~tomaskorc@ip-89-177-128-193.net.upcbroadband.cz] has quit [Ping timeout: 256 seconds]
+[15:04] == tenoke [~tenoke@2.28.75.193] has quit [Quit: Leaving]
+[15:07] <TabletCube> dbpokorny_: if the bots would ideally maintain a network perhaps a  clustered message queue would work?
+[15:08] <dbpokorny_> I don't know what a clustered message queue is
+[15:10] <dbpokorny_> you mean amqp?
+[15:10] <anythingbot> New PR: #274 - "Render a page for displaying current votes" - author: @SpenserJ - https://github.com/botwillacceptanything/botwillacceptanything/pull/274
+[15:10] <TabletCube> dbpokorny_: something in the same vein
+[15:13] <AlphaTech> Guys, I'm working on the charts so nobody do em, I got it :D
+[15:15] <dbpokorny_> so amqp is what an actual professional would do, and what I threw together was a tiny hack. It would be so awesome if someone would implement amqp...should be in ideas
+[15:16] <TabletCube> KISS.
+[15:16] == npstr [~npstr@i59F7AD74.versanet.de] has joined #botwillacceptanything
+[15:18] <dbpokorny_> :blushes:
+[15:20] <TabletCube> http://nats.io/ might be of interest - it already has a node.js client
+[15:24] <dbpokorny_> this looks much easier to use
+[15:40] <dbpokorny_> I'm trying to see what role nats.io would play, it looks like a very simple and elegant system that solves some serious problems for certain people but I'm just not sure we have those problems yet, although if bwaa takes off...unless I'm missing something
+[15:44] <dbpokorny_> ah, we could use nats.io as a discrete event simulator for botworld
+[15:44] <dbpokorny_> an unintended application no doubt, as it works with setTimeout simply
+[15:51] <AlphaTech> Okay, I'm working on the graphs, I want to have it call the GitHub API on load of the page to grab the data, but that could easily lead to the bot being shutdown if someone repetitively loads the page. I need some help on this one.... Anyone with ideas?
+[15:52] == timothyw [0ecb7df6@gateway/web/cgi-irc/kiwiirc.com/ip.14.203.125.246] has joined #botwillacceptanything
+[15:53] <timothyw> Anyone in?
+[15:53] <dbpokorny_> hi
+[15:53] <timothyw> I'm new here.
+[15:54] <timothyw> Considering submitting a pull request to the project.
+[15:54] <dbpokorny_> AlphaTech just cache the data
+[15:55] <AlphaTech> dbpokorny_: I'm really not sure how to cache the data or even get the data at the moment.... I'm kind of lost, but I figured out a basic foreach loop to build the chart at least
+[15:55] <dbpokorny_> did you look at lib/voting.js?
+[15:56] <AlphaTech> not yet, I was looking for a file that had some API instances... I think I just found it.... Thanks!
+[15:57] <dbpokorny_> wimothyw: what is the nature of your pull request?
+[15:57] <dbpokorny_> ^timothyw
+[15:58] <AlphaTech> wait, what wrapper is this using?
+[15:58] <timothyw> Well- what I mean by that is I'm trying to come up with something usefull. I haven't written anything yet.
+[15:58] <timothyw> Just got the repo down and running locally.
+[15:58] <AlphaTech> Nice!
+[15:59] <timothyw> Figured it was worth checking in with the community if there's something specific I could help with / start on.
+[15:59] <AlphaTech> Well, here's our ideas list... I think it will be worth checking: https://github.com/botwillacceptanything/botwillacceptanything/blob/master/ideas.md
+[15:59] <timothyw> I know there's the ideas section- just thought a personal contact would be... more personal :)
+[15:59] <timothyw> Haha, yeah.
+[16:00] <dbpokorny_> things got pretty intense on the weekend
+[16:00] <dbpokorny_> like a rocket going up
+[16:00] <AlphaTech> <AlphaTech> wait, what wrapper is this using?
+[16:01] <timothyw> Yeah I saw some 28 commits or something?
+[16:01] <AlphaTech> Wayyyy more
+[16:01] <AlphaTech> Excluding merges, 65 authors have pushed 223 commits to master and 378 commits to all branches. On master, 79 files have changed and there have been 2,211 additions and 425 deletions.
+[16:01] <timothyw> Those were just the ones I had to pull this morning.
+[16:02] <SpenserJ> Hey timothyw. Glad to have another participant :)
+[16:02] <anythingbot> New PR: #275 - "Add our motto to README" - author: @dos1 - https://github.com/botwillacceptanything/botwillacceptanything/pull/275
+[16:03] <AlphaTech> oh god, what's our motto?
+[16:03] <AlphaTech> LOL
+[16:03] <SpenserJ> I'm working on adding some mocks for twitter right now, but if you want a good jumping-off point, I've been looking into " Auto-label each PR 'winning'/'losing' after a vote"
+[16:03] == avdg_ [~avdg@2a02:1812:1123:b900:710e:37a8:bb22:c2d4] has joined #botwillacceptanything
+[16:04] <SpenserJ> It seems like it shouldn't be too hard to add in. Just listen for some of the events for PR closed and PR merged, and you should be able to call the github API to set a label on the PR
+[16:04] <SpenserJ> Or adding in new routes to the webserver for displaying various information could be good
+[16:04] <timothyw> Cool. I'll think about these things.
+[16:05] <timothyw> I'll take it carefully as I've not done any open source contributions before.
+[16:05] <timothyw> You can rest assured that I know my way around frontend code, though.
+[16:05] <AlphaTech> SpenserJ: I'm working on the charts, but I have nooooo clue how to do node xD... I have the charts working with the library I just don't know how to do much more....
+[16:06] <AlphaTech> Could you help me out a bit?
+[16:06] <SpenserJ> timothyw: If you run into any issues, just drop a message in the channel, and we'd all be happy to give you some pointers
+[16:06] <timothyw> Awesome!
+[16:06] <SpenserJ> AlphaTech: Sure, want to show me some of what you have so far?
+[16:06] <SpenserJ> Just throw me a link to your bot's interface again
+[16:07] <AlphaTech> Ummm.... The only thing I have working is the actual chart, but nothing including the bot's code yet
+[16:07] == avdg__ [~avdg@78-20-28-13.access.telenet.be] has quit [Ping timeout: 244 seconds]
+[16:07] <SpenserJ> Alright. What do you want to put into the chart?
+[16:08] <AlphaTech> Currently the top contributors, but maybe we could also do some other things also
+[16:09] <timothyw> I wonder about having a view to list current pull requests, maybe with simple +1 / -1 buttons? Just an idea.
+[16:10] <SpenserJ> timothyw: https://github.com/botwillacceptanything/botwillacceptanything/pull/274
+[16:10] <SpenserJ> It adds a view for active PRs and their current vote status
+[16:11] <SpenserJ> AlphaTech: Do you want to display the commits over time, or just who has committed the most?
+[16:11] <SpenserJ> And do you want the number of commits, or the size of the changes?
+[16:12] <AlphaTech> I think just top contributors similar to the one on the pulse page
+[16:12] <AlphaTech> SpenserJ: My little sample chart - http://btri.x10.bz/alphatech/chartjs/test.html
+[16:13] <SpenserJ> AlphaTech: Great! We already have https://github.com/botwillacceptanything/botwillacceptanything/blob/master/authors.sh, which should spit out a line-delimited list into data/authors.txt
+[16:14] <SpenserJ> For now, just run that manually, but to merge this we'll have to add it to the launcher or main.js
+[16:14] <AlphaTech> Maybe we could execute authors.sh on page load or will that take up some API queries?
+[16:15] <SpenserJ> Then you'll want to add a new route to lib/routes/contributors.js (formatted similar to the others) and read the file, split it by lines, and then into [{contributor: name, commits: total},...]
+[16:15] <SpenserJ> At that point you can pass it to the template, where your chart can access it
+[16:16] <SpenserJ> it doesn't actually use API queries, since it checks the local repository. I don't think we need to run it on every load though, since it only changes when the bot restarts.
+[16:16] <AlphaTech> I'm kind of thinking of splitting the commits page in half and having them both be on the same page...
+[16:16] <SpenserJ> That would work as well
+[16:16] <AlphaTech> Ah, that'd make sense... We could execute it on bot restart maybe?
+[16:17] == r04r has changed nick to zz_r04r
+[16:17] <AlphaTech> I'll do some testing on the divs on localhost
+[16:17] <SpenserJ> Core concept is "Execute the script, read the file into your route, format the data, and send it to the browser where your chart can render it"
+[16:20] <timothyw> SpenserJ plan is to add a new script, lib/labels.js
+[16:22] <SpenserJ> timothyw: It might be worth adding that to lib/integrations/github_labels.js instead. That keeps the main lib/ folder a bit cleaner
+[16:23] <timothyw> Cool, happy to do that.
+[16:24] <timothyw> Is the preference that (basically) each vote comment modifies the label?
+[16:26] <AlphaTech> Okay, I'm currently just getting the css layout to look god
+[16:26] <AlphaTech> *good
+[16:28] <AlphaTech> I think I want to do Top 10 contributors in a pi (or pie, not sure) chart
+[16:29] <SpenserJ> timothyw: I think there would be three labels: "Voting Underway", "Rejected", "Merged"
+[16:30] <SpenserJ> or something similar. There are currently three events that indicate this.
+[16:30] <SpenserJ> https://github.com/botwillacceptanything/botwillacceptanything/blob/master/lib/voting.js#L145 - Vote Started
+[16:30] <SpenserJ> And then https://github.com/botwillacceptanything/botwillacceptanything/blob/master/lib/routes/webhook.js#L37-L54, which fires off events coming from GitHub
+[16:31] <timothyw> Ah, okay, starting to bridge the gap now.
+[16:31] <SpenserJ> You can see all three in use for something very similar in the irc integration: https://github.com/botwillacceptanything/botwillacceptanything/blob/master/lib/integrations/irc.js#L36-L53
+[16:32] <dbpokorny_> there is a hazard with metrics of any kind in terms of the psychological effect it will have on the project
+[16:32] <SpenserJ> Closed fires for both merged and rejected, so just do a check on whether the event.pull_request has merged_at set
+[16:32] <timothyw> Greaaaaaaat. That's the perfect template.
+[16:33] <SpenserJ> dbpokorny_: Agreed. I don't like being 3rd in the list, and people that have had a substiantial impact but haven't written any code shouldn't be at the bottom of the list.
+[16:33] <SpenserJ> But GitHub already displays the same metrics, and given that the bot is centralized around merging code at this point, I think its reasonable to display a few charts
+[16:34] == timothyw [0ecb7df6@gateway/web/cgi-irc/kiwiirc.com/ip.14.203.125.246] has quit [Quit: http://www.kiwiirc.com/ - A hand crafted IRC client]
+[16:34] <dbpokorny_> you make an excellent point
+[16:49] <anythingbot> New PR: #276 - "Mock Twitter requests to prevent spamming @anythingbot" - author: @SpenserJ - https://github.com/botwillacceptanything/botwillacceptanything/pull/276
+[16:56] <AlphaTech> SpenserJ: I think I got the layout pretty good, what do you think? http://irc.btri.x10.bz:3000/commits/
+[16:57] == norbert [0262569c@gateway/web/cgi-irc/kiwiirc.com/ip.2.98.86.156] has joined #botwillacceptanything
+[16:57] == norbert [0262569c@gateway/web/cgi-irc/kiwiirc.com/ip.2.98.86.156] has left #botwillacceptanything []
+[16:58] <SpenserJ> AlphaTech: I it so far. I'd suggest putting some headings above each section though, since one is recent commits, and the other is total commits by person
+[17:00] <SpenserJ> I'd suggest not developing on top of your other changes either, so that we can vote on just the changes in the PR.
+[17:02] == avdg__ [~avdg@78-20-28-13.access.telenet.be] has joined #botwillacceptanything
+[17:02] <anythingbot> Voting for PR #276 (Mock Twitter requests to prevent spamming @anythingbot) FAILED :-1:
+[17:03] <anythingbot> New PR: #277 - "Mock Twitter requests" - author: @SpenserJ - https://github.com/botwillacceptanything/botwillacceptanything/pull/277
+[17:04] <AlphaTech> SpenserJ: How about now? http://irc.btri.x10.bz:3000/commits/
+[17:05] <SpenserJ> AlphaTech: Looks great!
+[17:05] == avdg_ [~avdg@2a02:1812:1123:b900:710e:37a8:bb22:c2d4] has quit [Ping timeout: 276 seconds]
+[17:06] <AlphaTech> Cool! I'm stuck now xD, I'm really bad with node, I have absolutely no clue where to even start
+[17:07] <anythingbot> Voting for PR #274 (Render a page for displaying current votes) PASSED :+1:
+[17:07] == anythingbot [~nodebot@162.243.149.229] has quit [Remote host closed the connection]
+[17:07] == anythingbot [~nodebot@162.243.149.229] has joined #botwillacceptanything
+[17:08] <SpenserJ> You'd want to add fs to the deps, and accept it as an argument in the same order.
+[17:09] <SpenserJ> Then do an fs.readfile on the data/authors.txt file, and move your res.send into the callback
+[17:10] <dos1> AlphaTech: Loading /root/botwillacceptanything/lib/routes/webhook.js
+[17:10] <dos1> pretty brave :v
+[17:11] <AlphaTech> Get on my level >:D
+[17:11] <SpenserJ> You can pass the body of the fs.readfile into the data that gets sent through to the res.send.
+[17:12] <AlphaTech> I don't understand the callback function for fs. Why can't it simply just read the file into it like var something = fs.read('file.txt')? It's quite confusing
+[17:13] <SpenserJ> You could with fs.readfilesync, but synchronous functions will block everything else in the bot while it runs
+[17:14] <SpenserJ> By using a callback, the bot can do other things until the file is loaded
+[17:14] <SpenserJ> That means that people hitting the /commits page won't stop everything else from functioning
+[17:14] <AlphaTech> Ah, like having the IRC bot timeout or something....
+[17:14] <AlphaTech> Makes sense
+[17:15] <SpenserJ> Asynchronous code is nice, because you can keep doing other things, but it doesn't take long to lead into callback hell, where every function calls another function, until you're 12 levels deep and confused as hell
+[17:16] <SpenserJ> That is where Promises (we're using the deferred library) come in handy, since they flatten out the callbacks
+[17:19] <AlphaTech> I'm still confused and I feel like you're wasting time trying to explain to me something that I don't understand... With my files, do you think you could do it and I can look at what you did and explain to myself how it all works?
+[17:21] == botbotbot [ade32602@gateway/web/cgi-irc/kiwiirc.com/ip.173.227.38.2] has joined #botwillacceptanything
+[17:21] <botbotbot> test
+[17:21] <anythingbot> New PR: #278 - "Add link to new Votes page" - author: @SpenserJ - https://github.com/botwillacceptanything/botwillacceptanything/pull/278
+[17:22] <AlphaTech> test to you too
+[17:22] <botbotbot> i am a bot
+[17:22] <botbotbot> bye bots
+[17:22] <SpenserJ> Yeah, of course! Just push it up and I'll add some code to it
+[17:22] <AlphaTech> botbotbot: Please visit #lincolnloop
+[17:23] <AlphaTech> Where should I push it? To my own?
+[17:23] == botbotbot [ade32602@gateway/web/cgi-irc/kiwiirc.com/ip.173.227.38.2] has quit [Client Quit]
+[17:23] <AlphaTech> > KiwiIRC bot, yeah right...
+[17:24] <SpenserJ> Yeah, push it to your own repository in a branch, and I'll pull it down
+[17:25] <AlphaTech> Okay, I have to refork to the fresh one, so it will take an extra minute or two
+[17:25] == tilgovi [~randall@couchdb/committer/tilgovi] has quit [Ping timeout: 255 seconds]
+[17:35] == timothyw [0188616e@gateway/web/cgi-irc/kiwiirc.com/ip.1.136.97.110] has joined #botwillacceptanything
+[17:38] <AlphaTech> I'm having some problems with having a git repo inside of a git repo xD
+[17:39] <SpenserJ> Haha why are you doing that?
+[17:39] <SpenserJ> You want to have a separate branch, not a separate repo
+[17:39] <SpenserJ> I'm just eating supper, so I can help you in a bit
+[17:40] == foobar_ [45a5aaf7@gateway/web/freenode/ip.69.165.170.247] has joined #botwillacceptanything
+[17:41] <anythingbot> New PR: #279 - "Add a link to the current votes." - author: @shalecraig - https://github.com/botwillacceptanything/botwillacceptanything/pull/279
+[17:43] <anythingbot> Voting for PR #279 (Add a link to the current votes.) FAILED :-1:
+[17:45] == foobar_ has changed nick to shalecraig
+[17:47] <AlphaTech> SpenserJ: After 5 attemptful pushes, I finally got it up :D
+[17:52] <AlphaTech> SpenserJ: I added you to my repo
+[17:53] <SpenserJ> Cool, I'll do some work on it in a bit.
+[17:54] <AlphaTech> Okay, great!
+[17:58] <AlphaTech> https://github.com/AlphaT3ch/botwillacceptanything/blob/master/data/views/commits.hbs#L11 needs to be the amount of commits and https://github.com/AlphaT3ch/botwillacceptanything/blob/master/data/views/commits.hbs#L14 needs to be the contributor
+[17:59] <anythingbot> New PR: #280 - "Show votes that haven't reached the minimum period for merging" - author: @SpenserJ - https://github.com/botwillacceptanything/botwillacceptanything/pull/280
+[17:59] <AlphaTech> I think we can have predefined colors per which level contributor you are, I think the top 10 would be nice
+[17:59] <SpenserJ> I think it can auto-generate colors if you don't provide one
+[18:00] <AlphaTech> Oh, cool
+[18:08] <AlphaTech> Also, don't bother to open a PR, the bots off so you can just push it :)
+[18:18] <SpenserJ> Anyone that hasn't voted, there are a lot of posts that need a few more votes at http://botwillacceptanything.com/votes
+[18:22] <AlphaTech> #272 - Background by AlphaT3ch - Yes: 3, No: 4
+[18:22] <AlphaTech> Why so many say no :(
+[18:23] <shalecraig> probably related to this[0] https://github.com/botwillacceptanything/botwillacceptanything/pull/272#issuecomment-92518742
+[18:24] <shalecraig> and the image
+[18:24] <AlphaTech> Whatever
+[18:24] <AlphaTech> The image is awesome :D
+[18:25] <shalecraig> git rebase probably would help with the first thing. If you need help/pointers, lmk
+[18:26] == mgberlin [~mgberlin@c-50-131-191-225.hsd1.ca.comcast.net] has joined #botwillacceptanything
+[18:33] <SpenserJ> Hey shalecraig! Glad to see you chatting in the channel!
+[18:33] <shalecraig> eh, I figured I'd poke around. I'm in & out, so I won't be 100% around all the time
+[18:34] <SpenserJ> All good. Just nice to have another friendly face
+[18:34] <SpenserJ> Or name, at least
+[18:37] == pokoleo [~pokoleo@198.36.117.137] has joined #botwillacceptanything
+[18:38] == pokoleo has changed nick to shalecraig_
+[18:38] == shalecraig [45a5aaf7@gateway/web/freenode/ip.69.165.170.247] has quit [Quit: Page closed]
+[18:38] == shalecraig_ has changed nick to shalecraig
+[18:40] == shalecraig [~pokoleo@198.36.117.137] has quit [Client Quit]
+[18:40] == pokoleo [~pokoleo@69-165-170-247.dsl.teksavvy.com] has joined #botwillacceptanything
+[18:40] == avdg_ [~avdg@2a02:1812:1123:b900:8c52:7774:7939:c39f] has joined #botwillacceptanything
+[18:42] <timothyw> SpenserJ Would we ever expect a PR to have the "Voting Underway" label, alongside the "Merged" or "Rejected" label? Maybe a PR that gets re-opened somehow, or is that never a possibility?
+[18:44] <pokoleo> I think we'd have to re-open the PR to vote on it again, which is kindof awkward.
+[18:45] == avdg__ [~avdg@78-20-28-13.access.telenet.be] has quit [Ping timeout: 272 seconds]
+[18:51] <timothyw> Hmmm, I think this might tie into the 'only start voting if travis CI successful'... right?
+[18:53] == pokoleo has changed nick to shalecraig
+[18:54] == shalecraig has changed nick to sakcraig
+[18:55] == sakcraig [~pokoleo@69-165-170-247.dsl.teksavvy.com] has left #botwillacceptanything []
+[19:00] == karisma [~karisma@76-10-156-23.dsl.teksavvy.com] has joined #botwillacceptanything
+[19:01] == karisma [~karisma@76-10-156-23.dsl.teksavvy.com] has quit [Client Quit]
+[19:01] == pokoleo [~karisma@76-10-156-23.dsl.teksavvy.com] has joined #botwillacceptanything
+[19:04] == karisma [~karisma@76-10-156-23.dsl.teksavvy.com] has joined #botwillacceptanything
+[19:07] == pokoleo [~karisma@76-10-156-23.dsl.teksavvy.com] has quit [Ping timeout: 256 seconds]
+[19:08] <SpenserJ> timothyw: Since the bot is the only thing that can control a PR, and will only close it if it fails (too many negative votes) or it has been changed, there will never be a time where the PR is reopened
+[19:08] <SpenserJ> You're safe to assume that it will only ever have one of those labels
+[19:08] <SpenserJ> GitHub does have an API for removing certain labels, or replacing all of them, if you want to be extra-safe about it (which wouldn't hurt, since the bot sometimes goes rogue)
+[19:09] <SpenserJ> If a PR fails for a reason like it being modified, or there being issues that need to be corrected, a new PR will be created for it
+[19:09] <SpenserJ> AlphaTech: You around?
+[19:09] <SpenserJ> http://home.spenserj.com:3000/commits
+[19:16] <timothyw> SpenserJ What I have (yet to test...) so far is a list of PR "status" labels. I go and check if any of those labels haven't yet been created in the repo, and create them if needs be.
+[19:17] <timothyw> After that, listening to the events, I'll just do a precautionary remove on the Rejected and Merged labels before I add the Voting Underway label
+[19:17] <timothyw> And the same for Rejected / Merged... I'll remove the corresponding other status labels from the PR label list.
+[19:18] == karisma has changed nick to pokoleo_
+[19:19] == pokoleo_ [~karisma@76-10-156-23.dsl.teksavvy.com] has quit []
+[19:20] == karisma [~karisma@76-10-156-23.dsl.teksavvy.com] has joined #botwillacceptanything
+[19:23] <SpenserJ> timothyw: That sounds good. Let me know if you need any help
+[19:28] == karisma has changed nick to pokoleo
+[19:28] <pokoleo> sorry for leaving and re-joining 20x.
+[19:31] == pokoleo has changed nick to shale__
+[19:31] == shale__ has changed nick to pokoleo
+[19:31] <SpenserJ> All good.
+[19:35] <SpenserJ> AlphaTech: https://github.com/botwillacceptanything/botwillacceptanything/compare/master...AlphaT3ch:master
+[19:36] <SpenserJ> I removed the unused files from ChartJS, and just used Chart.min.js in its place.
+[19:36] <SpenserJ> Hopefully everything in lib/routes/commits.js makes sense, but ask if you have any questions.
+[19:37] <SpenserJ> I used a few functional programming calls to process the authors file easier, so it may be a bit confusing at first glance, but MDN has a great explanation of them all
+[19:38] <timothyw> Any clues how I can debug this stuff?
+[19:38] <SpenserJ> What are you trying to debug right now?
+[19:39] <timothyw> Well, I'm running the local webserver. Trying to debug my code in the integrations/github_labels.js
+[19:39] <SpenserJ> Debug as in get it to fire off the events, to see if your code works?
+[19:39] <timothyw> Well... that's one thing.
+[19:39] <SpenserJ> Just create and close some PRs on your repository
+[19:40] <timothyw> But I mean, I want to look at the payloads etc.
+[19:40] <SpenserJ> Ah, gotcha
+[19:40] <timothyw> Hmm, I suppose that works.
+[19:40] <SpenserJ> One second
+[19:40] <SpenserJ> https://developer.github.com/v3/issues/labels/ tells you a lot of the payloads you'll get back
+[19:41] <timothyw> Yeah I've been browsing that, but I'm uncertain because of our node-github plugin
+[19:42] <timothyw> I can't tell if it fetches the issues_url for me cleanly, or provides a function to it, or if the PR we get back in the handlePR function is just plain payload data untouched.
+[19:42] <AlphaTech> SpenserJ: How's the graph? Ready for testing?
+[19:43] <timothyw> labels_url I meant to say. and should I make my own request to labels_url or use the node-github api to fetch the issues for me using gh.issues.getIssueLabels({...},...)
+[19:44] <timothyw> I guess that's the way to go.
+[19:44] <SpenserJ> timothyw: https://gist.github.com/SpenserJ/ee94e1603e745e148a1c
+[19:44] <timothyw> Ugh.
+[19:44] <SpenserJ> Yeah, use the github library
+[19:44] <SpenserJ> You need to authenticate with GH to get or create some of these, and the library handles it for you
+[19:45] <timothyw> Poopies. I had that in there and then thought- wait, I have the pr object right here...
+[19:45] <timothyw> Then I got lost.
+[19:45] <SpenserJ> Haha yeah, the PR /may/ have the labels on it already, but we don't have any PRs with labels yet, so I couldn't tell you for sure
+[19:45] <SpenserJ> AlphaTech: Yeah, its all ready for you.
+[19:45] <SpenserJ> Take a look, give it a run (use node launcher.js) and tell me what you think
+[19:48] <AlphaTech> Okay, I gotta npm install which sometimes takes a while for some reason
+[19:52] <anythingbot> New PR: #281 - "Twitter Info to Website" - author: @shalecraig - https://github.com/botwillacceptanything/botwillacceptanything/pull/281
+[19:53] <anythingbot> New PR: #282 - "Added a "fork me on github" banner to all pages." - author: @shalecraig - https://github.com/botwillacceptanything/botwillacceptanything/pull/282
+[19:55] <anythingbot> Voting for PR #281 (Twitter Info to Website) FAILED :-1:
+[19:58] <pokoleo> SpenserJ: I just noticed that we don't have the twitter username in the config file - on purpose?
+[19:59] <pokoleo> wait wait
+[19:59] <pokoleo> no
+[19:59] <pokoleo> :|
+[19:59] <SpenserJ> pokoleo: Yes and no. It was initially hardcoded in the PR, so that we could do what we wanted with it. There was work done on a secret vault, so that we could store credentials, but I don't think it has fully taken off yet
+[19:59] <pokoleo> "secret vault"
+[19:59] <pokoleo> ah
+[19:59] <SpenserJ> No Twitter account in the config, because everybody ends up tweeting to the same account xD
+[20:00] <SpenserJ> Hence the need for https://github.com/botwillacceptanything/botwillacceptanything/pull/277, so we stop spamming the account when we test things
+[20:01] <SpenserJ> Does anyone know who set up the travisci account?
+[20:01] == hontss [hintss@107.170.202.23] has joined #botwillacceptanything
+[20:06] == mgberlin [~mgberlin@c-50-131-191-225.hsd1.ca.comcast.net] has quit [Remote host closed the connection]
+[20:06] == hintss [hintss@107.170.202.23] has quit [*.net *.split]
+[20:10] <anythingbot> New PR: #283 - "Add CodeClimate GPA to README.md" - author: @SpenserJ - https://github.com/botwillacceptanything/botwillacceptanything/pull/283
+[20:11] == avdg__ [~avdg@78-20-28-13.access.telenet.be] has joined #botwillacceptanything
+[20:14] == avdg_ [~avdg@2a02:1812:1123:b900:8c52:7774:7939:c39f] has quit [Ping timeout: 245 seconds]
+[20:16] == avdg__ [~avdg@78-20-28-13.access.telenet.be] has quit [Ping timeout: 244 seconds]
+[20:19] <anythingbot> New PR: #284 - "Made bot friendlier" - author: @mappum - https://github.com/botwillacceptanything/botwillacceptanything/pull/284

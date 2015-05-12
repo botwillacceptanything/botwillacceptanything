@@ -1,0 +1,999 @@
+<avdg_> mappum should provide fool badges :-)
+[06:42] == Gaelan [b89df49d@gateway/web/cgi-irc/kiwiirc.com/ip.184.157.244.157] has joined #botwillacceptanything
+[06:45] == broad [02625359@gateway/web/cgi-irc/kiwiirc.com/ip.2.98.83.89] has joined #botwillacceptanything
+[06:45] == broad [02625359@gateway/web/cgi-irc/kiwiirc.com/ip.2.98.83.89] has quit [Client Quit]
+[06:45] == hermitage [02625359@gateway/web/cgi-irc/kiwiirc.com/ip.2.98.83.89] has joined #botwillacceptanything
+[06:47] == zz_r04r has changed nick to r04r
+[06:53] == hermitage [02625359@gateway/web/cgi-irc/kiwiirc.com/ip.2.98.83.89] has quit [Quit: http://www.kiwiirc.com/ - A hand crafted IRC client]
+[07:00] == ebanaut [~satyarth@46.39.50.164] has joined #botwillacceptanything
+[07:14] <dbpokorny_> We need to replay these logs so we can try to guess when people are sleeping
+[07:18] == wekuo [~a@c213-89-129-206.bredband.comhem.se] has joined #botwillacceptanything
+[07:19] <korczis> :)
+[07:19] <korczis> I am not sure if that help, normally I do not go to bed at 5:30 am
+[07:26] <avdg_> We need a ping bot
+[07:26] <dbpokorny_> Hi Tomas, I see you commit here: c628f311c535af40425ffa0383b52a014ecc1661
+[07:27] <avdg_> if ping bot doesn't receive a ping, it sends a reset signal
+[07:27] <avdg_> or maybe we'll end up with having one soon
+[07:28] <dbpokorny_> this is the classic "how to merge with upstream but avoid pushing your merges to master" problem which is well-known and did cause substantial dev issues for Slide.com several years ago
+[07:28] <dbpokorny_> My sense is that dos1 and others are running into this problem as well
+[07:29] <dos1> avdg_: it can also work the other way aound - the "pingbot" can check if bots http interface responds, and if it doesn't - reset happens
+[07:29] <dbpokorny_> anyway, I think it is an issue, but it is a known issue many teams have faced over the years
+[07:29] <dos1> dbpokorny_: feature branches?
+[07:29] <dbpokorny_> YES
+[07:30] <dbpokorny_> So here is what looks like the "standard solution"
+[07:30] <dbpokorny_> http://ginsys.eu/git-and-github-keeping-a-feature-branch-updated-with-upstream/
+[07:30] <avdg_> we already have a launcer, not sure how it will end up being and how it will fetch signals
+[07:30] <dbpokorny_> there are many variations, but they all revolve around "learn how to use rebase"
+[07:35] <dbpokorny_> The very first time this happened to bwa2 was 3421163204fe433912b0ece442b8f56b4f07f53f
+[07:38] <dbpokorny_> so you know something is funny because you can see the name Sebastian has used for the local name of the upstream, "botwillacceptanything-master", and what you're not seeing is where a previous commit of his got out of order with the rest.
+[07:38] <dbpokorny_> git log | grep -i merge | grep master
+[07:39] <dbpokorny_> you can see the evolution: at first, everything is OK, then as time goes on, we get more and more of "merge churn" which is a pattern repeated again and again over many git projects
+[07:40] <dos1> we shouldn't vote yes on PRs with merges inside
+[07:41] <korczis> +1
+[07:41] <dbpokorny_> that makes sense
+[07:41] <avdg_> I'm using the "files changed" tab
+[07:41] <avdg_> https://github.com/botwillacceptanything/botwillacceptanything/pull/204/files
+[07:42] <avdg_> maybe we need a clarity policy for that
+[07:42] <avdg_> "Hey, this is too complicated" *throws solution*
+[07:44] <dbpokorny_> I'm still at the "knowing is half the battle" stage, not real clear to me what would be best for this project. This is a unique project no doubt
+[07:45] <avdg_> this needs to grow
+[07:45] <CompanionCube> indeed
+[07:45] <avdg_> though we have 726 stars now
+[07:45] <avdg_> which is great
+[07:50] <dos1> there's such a great potential in this project waiting to be unleashed
+[07:51] <dos1> hopefully we'll be able to reach the level of http://codeofrob.com/ soon!
+[07:59] == _1009 [uid50339@gateway/web/irccloud.com/x-rcxesovumczvqeok] has quit [Quit: Connection closed for inactivity]
+[08:01] <avdg_> hehe
+[08:01] <avdg_> too many project though and we have fragmentation
+[08:02] <avdg_> cool web page :-)
+[08:03] <avdg_> anythingbot needs to keep track of the hypes
+[08:03] <avdg_> (yeah, I have too many ideas)
+[08:10] <avdg_> uh... someone would probably wonder where the problem is in this tweet https://twitter.com/airlivenet/status/586907703538282496
+[08:25] == Gaelan [b89df49d@gateway/web/cgi-irc/kiwiirc.com/ip.184.157.244.157] has quit [Quit: http://www.kiwiirc.com/ - A hand crafted IRC client]
+[08:26] == avdg__ [~avdg@2a02:1812:1123:b900:a4ac:4f43:3a2c:3e4e] has joined #botwillacceptanything
+[08:29] == avdg_ [~avdg@2a02:1812:1123:b900:a4ac:4f43:3a2c:3e4e] has quit [Ping timeout: 252 seconds]
+[08:30] == avdg [~avdg@2a02:1812:1123:b900:186:1f42:f5e7:ee55] has joined #botwillacceptanything
+[08:33] == avdg__ [~avdg@2a02:1812:1123:b900:a4ac:4f43:3a2c:3e4e] has quit [Ping timeout: 252 seconds]
+[08:50] == hearn [~mike@84-75-198-85.dclient.hispeed.ch] has joined #botwillacceptanything
+[08:51] <avdg> #botnotacceptinganything mood :-)
+[08:51] <CompanionCube> ikr
+[08:51] <CompanionCube> is bot still dead?
+[08:52] <dbpokorny_> it is sleeping
+[08:54] * CompanionCube should learn to code node.js
+[09:04] == bramvdbogaerde [~bramvdbog@d54C4B22C.access.telenet.be] has quit [Quit: Be back later ...]
+[09:06] == bramvdbogaerde [~bramvdbog@d54C4B22C.access.telenet.be] has joined #botwillacceptanything
+[09:06] <avdg> hmm dbpokorny_ interesting pr
+[09:06] <avdg> I'm not interested and that makes it interested for pr
+[09:06] <avdg> *interesting
+[09:07] <dbpokorny_> any thoughts? questions?
+[09:07] <avdg> I don't think we should play git addicts
+[09:08] <CompanionCube> git addicts?
+[09:08] <avdg> as in git's against gits that can't use git properly
+[09:08] <dbpokorny_> the point is to observe the effect of workflow decisions on the course of a project
+[09:08] == bramvdbogaerde [~bramvdbog@d54C4B22C.access.telenet.be] has quit [Client Quit]
+[09:09] <avdg> +1 for that
+[09:09] <avdg> thats why I'm not voting
+[09:09] <dbpokorny_> people make workflow decisions, they don't realize they're making decisions, and then down the line you have problems
+[09:09] <avdg> problems should be distributed
+[09:10] <avdg> or you can let the expert talk using his language to noobs
+[09:10] <avdg> (or her)
+[09:12] <avdg> (yeah, I'm sometimes cracking brains, but mostly the solution is simple and seems inelegant)
+[09:17] == zz_AlphaTech has changed nick to AlphaTech
+[09:18] <AlphaTech> morning :)
+[09:19] <AlphaTech> So is the bot in operation now?
+[09:19] <dos1> we just need mappum to start it
+[09:19] <AlphaTech> heh
+[09:20] <dos1> pull request with fix already got enough votes
+[09:20] <AlphaTech> Also, with your PR (#204) did you see what I said?
+[09:20] <dos1> yeah, I replied
+[09:20] <AlphaTech> oh, heh
+[09:20] <dos1> there were probably two issues, as your fix got merged earlier
+[09:21] <AlphaTech> yeah
+[09:21] <AlphaTech> SpenserJ also fixed some vault error too with the this and self values
+[09:22] <AlphaTech> also, pests is the one that said that was the error and it let my local bot start fine
+[09:22] <avdg> someone must have a lot of confidence to put passphrases in public though
+[09:22] <avdg> I still like this idea :p
+[09:23] <dos1> AlphaTech: yeah, but then another merge went it and it broke again
+[09:23] <dos1> went in*
+[09:23] <dos1> there was one-time burst of 4 merges around 6 hours ago
+[09:23] <AlphaTech> ah, that explains it
+[09:24] <dos1> I've messed up a rebase of PR, so it broke again
+[09:30] <avdg> hmm I'm confused... https://github.com/botwillacceptanything/botwillacceptanything/pull/181 is merged but I see nothing in the history of the readme
+[09:30] <avdg> also nothing from pull in readme
+[09:31] <avdg> (don't say its a detached commit though it will explain everything)
+[09:31] == bramvdbogaerde [~bramvdbog@d54C4B22C.access.telenet.be] has joined #botwillacceptanything
+[09:31] <dos1> its a detached commit though it will explain everything
+[09:31] <avdg> :-)
+[09:33] == anon1341 [3294810c@gateway/web/cgi-irc/kiwiirc.com/ip.50.148.129.12] has joined #botwillacceptanything
+[09:39] == hearn [~mike@84-75-198-85.dclient.hispeed.ch] has quit [Quit: My MacBook Pro has gone to sleep. ZZZzzz…]
+[09:42] <dbpokorny_> it is a merge
+[09:42] <dbpokorny_> git show 52a823c958c32539a328b5b5bd45d8b235170407
+[09:42] <dbpokorny_> so it doesn't show up in "git log README.md"
+[09:44] <dbpokorny_> what does show up is 22ee412563ccdd7cffb38fb2ceb61f014682130a
+[09:45] <dbpokorny_> which can be obtained through "git blame README.md"
+[09:51] == bramvdbogaerde [~bramvdbog@d54C4B22C.access.telenet.be] has quit [Quit: Be back later ...]
+[09:52] <avdg> it's a very recent change, so the readme should have been changed to that version still
+[09:55] == hearn [~mike@84-75-198-85.dclient.hispeed.ch] has joined #botwillacceptanything
+[10:09] == bramvdbogaerde [~bramvdbog@d54c4b22c.access.telenet.be] has joined #botwillacceptanything
+[10:16] == bramvdbogaerde [~bramvdbog@d54c4b22c.access.telenet.be] has quit [Quit: Lingo: www.lingoirc.com]
+[10:16] == bramvdbogaerde [~bramvdbog@d54c4b22c.access.telenet.be] has joined #botwillacceptanything
+[10:16] == bramvdbogaerde [~bramvdbog@d54c4b22c.access.telenet.be] has quit [Client Quit]
+[10:16] == bramvdbogaerde [~bramvdbog@d54C4B22C.access.telenet.be] has joined #botwillacceptanything
+[10:25] <AlphaTech> If anyone wants to beta test my fancy webpages, I think I have the final release done... Right here -> http://irc.btri.x10.bz:3000/
+[10:26] <avdg> *wants more stats on homepage*
+[10:26] <avdg> the content on the homepage might end up better in smaller letters
+[10:26] <AlphaTech> avdg: http://irc.btri.x10.bz:3000/statistics
+[10:26] <avdg> :-)
+[10:27] <avdg> so meh, conclusion: I'm in debate with the home page
+[10:27] <avdg> home page should be kinda important
+[10:27] <AlphaTech> Also, try going to something like http://irc.btri.x10.bz:3000/blahblah404/somethingthat/doesnt/exist
+[10:27] <avdg> me no accept!
+[10:27] <avdg> :D
+[10:28] <AlphaTech> lol
+[10:28] == ebanaut [~satyarth@46.39.50.164] has quit [Quit: WeeChat 0.4.2]
+[10:28] <AlphaTech> it's okay, a lot of people can't accept the bossness of my webpages
+[10:28] <AlphaTech> it's very commonm
+[10:28] <AlphaTech> *common
+[10:29] <avdg> but meh, the real question is, do we have progress
+[10:29] <avdg> so I still would vote this in I guess (still need to check the code)
+[10:29] <SpenserJ> AlphaTech: I like how the new design is coming
+[10:29] <SpenserJ> How do you have the templates set up?
+[10:30] <AlphaTech> kinda
+[10:31] <AlphaTech> SpenserJ: http://irc.btri.x10.bz:3000/heresmywebpage/ofawesomeness
+[10:32] == avdg_ [~avdg@2a02:1812:1123:b900:f99a:81c6:e0cb:7cd1] has joined #botwillacceptanything
+[10:32] <SpenserJ> Neat
+[10:32] <AlphaTech> Why is everyone voting against it now?
+[10:33] <SpenserJ> Because the diff of webserver.js says that everything changed
+[10:33] <AlphaTech> I didn't though!
+[10:33] <SpenserJ> Did you change line endings or tab/spacing settings?
+[10:33] <AlphaTech> nope
+[10:33] <dos1> and the PR changed after votes were placed, so it should be closed anyway :P
+[10:33] <AlphaTech> Just changes the HTML code
+[10:33] <SpenserJ> Strange.
+[10:35] <AlphaTech> dos: How'd it go bonkers?
+[10:35] <dos1> [19:33] <SpenserJ> Because the diff of webserver.js says that everything changed
+[10:35] == avdg [~avdg@2a02:1812:1123:b900:186:1f42:f5e7:ee55] has quit [Ping timeout: 252 seconds]
+[10:36] <AlphaTech> But I really didn't...
+[10:37] <dos1> I don't know what you did or not - I see what I see :P
+[10:37] <AlphaTech> Heh, okay
+[10:37] <dos1> I'd just close this one and start new PR
+[10:37] <dos1> the bot would close it anyway, since it changed
+[10:38] <dos1> (it didn't the last time though, so there might be some bug somewhere - hence my downvote, to prevent accidents like last time)
+[10:39] <AlphaTech> <s>I'll just reroll until the votes go with me</s>
+[10:44] <AlphaTech> I hope #174 will merge before the bot takes a look at my PR
+[10:45] <korczis> #174 - This pull request contains merge conflicts that must be resolved.
+[10:45] <korczis> so my guess is "no"
+[10:46] <dos1> and looking at the votes, it's rather going to be rejected anyway
+[10:46] <korczis> no, your #174 will not go before your PR
+[10:47] <korczis> can somebody redeploy bot?
+[10:47] <dos1> mappum
+[10:47] <dos1> you're a bad ambulance
+[10:48] <AlphaTech> Lol
+[10:48] <korczis> we need better deployment process
+[10:48] <korczis> with roll-backs
+[10:48] <AlphaTech> Weeeeeewooooooweeeeeeewoooooooweeeewooooo
+[10:49] <korczis> probably i will deploy the bot on my own hosting ...
+[10:50] <AlphaTech> He has good hosting he just can't start the bot when a merge breaks it
+[10:50] <AlphaTech> *cough* make the bot run as a background process
+[10:50] <korczis> maybe i will dockerize this ...
+[10:50] <AlphaTech> *cough* set it up as a crontab to make sure it's up and to merge and fixes
+[10:51] <korczis> :)
+[10:53] <AlphaTech> Why is it +s here?
+[10:55] <CompanionCube> also, idea for the future: make the bot's IRC bot OP.#
+[10:55] <AlphaTech> Maybe voice?
+[10:56] <CompanionCube> in either case it would need a nickserv account
+[10:57] <AlphaTech> No
+[10:57] <AlphaTech> Flags could do hostmasks
+[10:58] <AlphaTech> So since the bot has a static IP, just tell ChanServ to give that IP op or voice
+[10:58] <CompanionCube> ...good point
+[10:58] * AlphaTech is an IRC addict
+[10:58] * AlphaTech also owns his own net :D
+[11:00] == deltab [~deltab@cpc2-smal2-0-0-cust22.19-1.cable.virginm.net] has joined #botwillacceptanything
+[11:01] <AlphaTech> mappum either needs to get error detection on this thing or give someone access to turn it back on
+[11:02] <AlphaTech> SpenserJ: Check this out http://stackoverflow.com/questions/7761475/node-js-catching-errors-so-script-doesnt-break
+[11:04] <CompanionCube> so use a process-manager thing or handle uncaughtException
+[11:05] <AlphaTech> You can either ignore the errors or handle them somehow... We have to feed it into the stdout though
+[11:16] <korczis> AlphaTech: Of course, if you run your script in something like forever or node-supervisor, when your script "stops" it will start back up, which might solve your problem.
+[11:16] <korczis> (from link you posted)
+[11:18] <dos1> it won't help in what we have right now though
+[11:18] <dos1> when you detect unlaunchable state, you should revert last merge(s)
+[11:21] == erasmospunk [~erasmospu@178.162.211.217] has quit [Remote host closed the connection]
+[11:24] <korczis> idea ..
+[11:24] <korczis> what about tagging git after successful start automatically ..
+[11:24] <korczis> or merging to stable branch ...
+[11:25] <korczis> and reverting to latest stable after N unsuccessful attempts to start
+[11:25] <dos1> not bad
+[11:25] <dos1> a tag for "successful PR merge" will be nice too
+[11:25] <korczis> how should secret.yml look like?
+[11:26] <dos1> as you might get into state where bot works, but cannot accept any PR anymore
+[11:26] <korczis> we will see ..
+[11:26] <korczis> I am almost finished with dockerization ..
+[11:26] <korczis> And I will run it on digital ocean on coreos ..
+[11:27] <korczis> Later I will add some kubernets and implement green/blue deployments
+[11:32] <CompanionCube> green/blue?
+[11:32] <korczis> http://martinfowler.com/bliki/BlueGreenDeployment.html
+[11:34] <CompanionCube> neat
+[11:34] <avdg_> bleh, digital ocean is heuge, I'm now noticing that lkml is hosted there too :p
+[11:35] <korczis> can somebody provide structure of yml with secret stuff ?
+[11:35] <korczis> (without secret stuff)
+[11:35] <korczis> i will put my github token there
+[11:36] <avdg_> https://github.com/botwillacceptanything/botwillacceptanything/blob/master/config.template.js
+[11:36] <korczis> secret.yml or so is not needed?
+[11:36] <dos1> it's not
+[11:36] <dos1> it's for the vault
+[11:37] <korczis> ok
+[11:37] <dos1> the bot stores the key there, not you
+[11:37] <dos1> keys*
+[11:37] <avdg_> don't trust the bank, trust the vault
+[11:37] <avdg_> :-)
+[11:38] <korczis> dos1: can you give me your public ssh key?
+[11:38] == AlphaTech has changed nick to zz_AlphaTech
+[11:38] <korczis> so i can give you access to machine ..
+[11:38] <korczis> just in case ..
+[11:46] <dos1> mappum mappum mappum mappum mappum mappum mappum mappum mappum mappum mappum mappum mappum mappum mappum mappum mappum mappum mappum mappum mappum mappum mappum mappum mappum mappum mappum mappum mappum mappum mappum mappum mappum
+[11:51] <avdg_> hmmm https://vimeo.com/115154289
+[11:52] <avdg_> I'm troubling to see the whole movie, but the things I see are interesting
+[12:03] <avdg_> interesting thing is that we have google and microsoft employee starring this project
+[12:04] <avdg_> ofc doesn't explain their real impact, but still
+[12:04] <avdg_> the user base we have now is actually great
+[12:07] <avdg_> really spread out around the world
+[12:07] <avdg_> we also have bicoin lovers and university students?
+[12:07] <avdg_> watch the stargazers
+[12:07] <avdg_> found someone working for ea
+[12:09] == wekuo [~a@c213-89-129-206.bredband.comhem.se] has left #botwillacceptanything []
+[12:15] == bramvdbogaerde [~bramvdbog@d54C4B22C.access.telenet.be] has quit [Quit: Lingo: www.lingoirc.com]
+[12:17] <dbpokorny_> yeah, the PR=public relations aspects of BWA2 are pretty incredible
+[12:20] <avdg_> keeping them is harder :-)
+[12:22] <CompanionCube> hopefully mappum will wake up soon
+[12:23] <avdg_> we can't wait for him though
+[12:23] <avdg_> it will end up being a bigger problem
+[12:24] <@mappum> Welp
+[12:25] <avdg_> ^
+[12:26] <korczis> I did deployed bot here - http://botwillacceptanything.korczis.com:3000/
+[12:26] <dbpokorny_> https://www.youtube.com/watch?v=IvVr2uks0C8
+[12:26] <@mappum> Last night I emergency merged your fix PRs,  and there was still a error killing the bot
+[12:26] <dbpokorny_> LADIES AND GENTELMEN
+[12:26] <korczis> using my fork https://github.com/korczis/botwillacceptanything
+[12:26] <dbpokorny_> MAPPUM HAS ARRIVED
+[12:27] <avdg_> *stands*
+[12:27] <avdg_> (well I was already standing :p)
+[12:27] <@mappum> Cool, I like how this is distributed and other people can run the bot
+[12:27] <korczis> no
+[12:27] <korczis> there is still problem with github
+[12:27] <korczis> *git*
+[12:27] == KiwiDash [~kokakiwi@gordon.kokakiwi.net] has left #botwillacceptanything ["Meh."]
+[12:27] <dos1> https://github.com/botwillacceptanything/botwillacceptanything/issues/192
+[12:27] <korczis> you need to manually fill credentials when starting bot
+[12:27] <korczis> which sucks ..
+[12:27] <dos1> korczis's bot is talking \o/
+[12:28] <dbpokorny_> has anyone tried out openshift?
+[12:28] <korczis> show-stopper for docker deployment
+[12:28] <@mappum> Yeah, so I'll give the credentials for the server to SpenserJ,  the #2 contributor. Is everyone ok with that or do we need to put it to a vote?
+[12:29] <dbpokorny_> I'm fine with that
+[12:29] <dos1> mappum: after merging the fix, bot did more merges and broke itself again
+[12:29] <dos1> mappum: https://github.com/botwillacceptanything/botwillacceptanything/pull/204
+[12:31] <korczis> i will probably work on my fork and selectively propagate changes from upstream ..
+[12:33] <dos1> mappum: (to madonna tune) give it to him! -ha-
+[12:36] <dos1> mappum: and merge #204 and start the bot!
+[12:37] == anythingbot [~nodebot@162.243.149.229] has joined #botwillacceptanything
+[12:37] <anythingbot> New PR: #206 - "Docker scripts" - author: @korczis - https://github.com/botwillacceptanything/botwillacceptanything/pull/206
+[12:37] <dos1> hehehehe https://github.com/botwillacceptanything/botwillacceptanything/issues/192 :D
+[12:37] <CompanionCube> Bot lives.
+[12:37] <dbpokorny_> this merging business seems to be a common problem for git projects
+[12:38] == travis-ci [~travis-ci@ec2-54-166-232-31.compute-1.amazonaws.com] has joined #botwillacceptanything
+[12:38] <travis-ci> botwillacceptanything/botwillacceptanything#115 (master - 1245f27 : Bot): The build passed.
+[12:38] <travis-ci> Change view : https://github.com/botwillacceptanything/botwillacceptanything/compare/18befd510071...1245f2734ffe
+[12:38] <travis-ci> Build details : http://travis-ci.org/botwillacceptanything/botwillacceptanything/builds/58098893
+[12:38] == travis-ci [~travis-ci@ec2-54-166-232-31.compute-1.amazonaws.com] has left #botwillacceptanything []
+[12:38] <dbpokorny_> it could be cured through required use of git-rebase
+[12:39] <dbpokorny_> that is, if the bot were to reject PRs with certain types of merges, then all of this could be avoided
+[12:40] <dbpokorny_> you can get a very stark picture of the direction of the project in this regard by looking at the output of the following command
+[12:41] <anythingbot> New PR: #207 - "Beautiful Webpage Design" - author: @AlphaT3ch - https://github.com/botwillacceptanything/botwillacceptanything/pull/207
+[12:41] <dbpokorny_> git log | grep -i merge | grep -i master
+[12:41] <dbpokorny_> well, this has turned into a post-mortem, my apologies
+[12:41] <avdg_> uh if we have secret.yml, we need public.yml
+[12:42] <anythingbot> New PR: #208 - "Docker scripts" - author: @korczis - https://github.com/botwillacceptanything/botwillacceptanything/pull/208
+[12:42] <avdg_> secret -> vault, not sure what should handle public
+[12:43] <CompanionCube> or we could have something like a redis instance which would be a nice generic place suitable for multiple bots to use
+[12:43] <avdg_> hmm public content should be voted imo
+[12:43] <avdg_> or at least for the main bot
+[12:44] <avdg_> we can decide who is admin and who has access to stuff in public
+[12:48] <CompanionCube> random thought: have a mechanism for automatically discovering other running bots
+[12:49] <dos1> CompanionCube: well, there almost is: https://github.com/botwillacceptanything/botwillacceptanything/issues/192
+[12:51] == korczis [59b180c1@gateway/web/cgi-irc/kiwiirc.com/ip.89.177.128.193] has quit [Quit: http://www.kiwiirc.com/ - A hand crafted IRC client]
+[12:53] <CompanionCube> I was thinking of something more like discovery.etcd.io
+[12:53] <dos1> mappum: btw. https://github.com/botwillacceptanything/botwillacceptanything/issues/203
+[12:55] <avdg_> what framework will we use? bootstrap?
+[12:59] <avdg_> awch...
+[12:59] <avdg_> oh nvm that's the other bot
+[12:59] <avdg_> we're fine :-)
+[13:00] == hearn [~mike@84-75-198-85.dclient.hispeed.ch] has quit [Quit: My MacBook Pro has gone to sleep. ZZZzzz…]
+[13:02] == Gaelan [b89df49d@gateway/web/cgi-irc/kiwiirc.com/ip.184.157.244.157] has joined #botwillacceptanything
+[13:04] == korczis [59b180c1@gateway/web/cgi-irc/kiwiirc.com/ip.89.177.128.193] has joined #botwillacceptanything
+[13:05] == Gaelan [b89df49d@gateway/web/cgi-irc/kiwiirc.com/ip.184.157.244.157] has quit [Client Quit]
+[13:05] <avdg_> #200 needs more voting
+[13:06] <anythingbot> Voting for PR #207 (Beautiful Webpage Design) PASSED :+1:
+[13:06] <anythingbot> 8 votes for, 0 votes against)
+[13:06] == anythingbot [~nodebot@162.243.149.229] has quit [Remote host closed the connection]
+[13:06] == anythingbot [~nodebot@162.243.149.229] has joined #botwillacceptanything
+[13:07] == travis-ci [~travis-ci@ec2-54-91-137-223.compute-1.amazonaws.com] has joined #botwillacceptanything
+[13:07] <travis-ci> botwillacceptanything/botwillacceptanything#118 (master - f1bd8f7 : Bot): The build passed.
+[13:07] <travis-ci> Change view : https://github.com/botwillacceptanything/botwillacceptanything/compare/1245f2734ffe...f1bd8f7c0cd8
+[13:07] <travis-ci> Build details : http://travis-ci.org/botwillacceptanything/botwillacceptanything/builds/58100979
+[13:07] == travis-ci [~travis-ci@ec2-54-91-137-223.compute-1.amazonaws.com] has left #botwillacceptanything []
+[13:10] <anythingbot> New PR: #209 - "Make buttons consistent." - author: @Gaelan - https://github.com/botwillacceptanything/botwillacceptanything/pull/209
+[13:10] <anythingbot> New PR: #210 - "Docker Scripts, attempt #2" - author: @korczis - https://github.com/botwillacceptanything/botwillacceptanything/pull/210
+[13:11] <korczis> dos1: bower gulp and forever are installed manually because they are installed globally
+[13:11] <dos1> korczis: ok, that makes sense; others still hold though
+[13:12] <korczis> what is the problem?
+[13:12] <korczis> apt-get update is called once
+[13:12] <korczis> apt-get upgrade is called once
+[13:12] <korczis> nodejs-legacy is installed
+[13:12] <dos1> well, it wasn't like that when I commented :P
+[13:13] <dos1> ah, the comments are spreading to new PRs
+[13:13] <dos1> I see xD
+[13:13] <dos1> yeah, those were attached to the commit, and new PRs still contain that commit
+[13:13] <korczis> that is true
+[13:14] <korczis> do you see any other problems?
+[13:16] <anythingbot> New PR: #211 - "Docker Scripts, attempt #3" - author: @korczis - https://github.com/botwillacceptanything/botwillacceptanything/pull/211
+[13:19] <anythingbot> New PR: #212 - "Use the DNS name and rename "webhook status" to "statistics" to match #207" - author: @dos1 - https://github.com/botwillacceptanything/botwillacceptanything/pull/212
+[13:19] <CompanionCube> nice one, I was going to do that
+[13:20] == tilgovi [~randall@couchdb/committer/tilgovi] has joined #botwillacceptanything
+[13:20] == pests [4589d4f5@gateway/web/freenode/ip.69.137.212.245] has joined #botwillacceptanything
+[13:20] <pests> hola.
+[13:20] <CompanionCube> hi
+[13:22] <pests> is the bot up again?
+[13:22] <dos1> yup!
+[13:22] <pests> sweet
+[13:22] <anythingbot> New PR: #213 - "Update webserver.js" - author: @AlphaT3ch - https://github.com/botwillacceptanything/botwillacceptanything/pull/213
+[13:26] * CompanionCube is setting up a local bot
+[13:27] <@mappum> the next generation bot should be some sort of distributed consensus bot
+[13:28] <@mappum> github wouldn't really be compatible with that, so we would need it to have its own app or something, that votes on each bot
+[13:29] <avdg_> hmmm
+[13:31] <korczis> the question is if it will not be better to start bot development from scratch
+[13:31] <korczis> implement core torso without voting
+[13:32] <korczis> because it is time consuming ...
+[13:32] <korczis> maybe some other project ;-)
+[13:33] == tilgovi [~randall@couchdb/committer/tilgovi] has quit [Ping timeout: 256 seconds]
+[13:34] <CompanionCube> we should stick with the current codebase for now
+[13:34] <avdg_> it just needs some spread :-)
+[13:34] <korczis> every bigger change is hard to have merged ....
+[13:34] <avdg_> I hope the voting will balance the spread so the code base stays fine
+[13:34] <korczis> i am sceptic
+[13:35] <avdg_> I'm thinking about md template formats atm
+[13:35] <korczis> md?
+[13:35] <avdg_> markdown
+[13:35] <korczis> i know ..
+[13:35] <korczis> imho not best choice ..
+[13:35] <korczis> what about mustache/handlebars ?
+[13:35] <avdg_> there are so many md messages in js I want to put in the template folder so bad
+[13:36] <avdg_> just for readability
+[13:37] * avdg_ is too dependent on consensus...
+[13:37] <avdg_> oh handlebars is actually an extention to mustache
+[13:38] <avdg_> kk
+[13:38] <avdg_> though mustache has reached 2.0
+[13:44] == tilgovi [~randall@couchdb/committer/tilgovi] has joined #botwillacceptanything
+[13:44] <avdg_> yuk, node-gyp doesn't find my python2
+[13:45] <korczis> https://github.com/botwillacceptanything/botwillacceptanything/pull/214
+[13:45] <korczis> anybody working on webserver.js ?
+[13:45] <CompanionCube> "--python python2" ftw
+[13:46] <korczis> i would like to create lib/middleware and lib/routes and split it ..
+[13:47] <CompanionCube> ...great, node-gyp is downloading a node .tar.gz and I have a shitty connection
+[13:48] <avdg_> I might be working on voting.js to remove the markdown templates
+[13:48] <avdg_> still need to set up everything
+[13:48] <avdg_> node-gyp is the worst ;-)
+[13:50] <korczis> maybe the docker stuff will get merged and everything will be easier ;-)
+[13:50] <avdg_> hmmm, didn't tried docker yet
+[13:50] <CompanionCube> 'gyp: binding.gyp not found (cwd: /home/samis/botwillacceptanything) while trying to load binding.gyp'
+[13:51] <CompanionCube> ...damm g2g
+[13:51] <avdg_> pfff... some wants to keep death projects alive
+[13:52] <CompanionCube> death projects? you mean dead projects?
+[13:52] <avdg_> yeah
+[13:52] <avdg_> dead project
+[13:52] <avdg_> 0xdead
+[13:53] <korczis> advg_: do you have docker installed?
+[13:53] <korczis> there is only problem ...
+[13:53] <korczis> how to deploy credentials/cert for git into docker ...
+[13:54] <CompanionCube> downsides of using Arch: Python 3 is the default.
+[13:54] <korczis> but same problem exists if you run stuff locally and want have it "daemonized"
+[13:54] <avdg_> afaik the python community wants to kill python 2
+[13:55] <CompanionCube> avdg_, yes
+[13:55] <avdg_> I guess the companies are saying no
+[13:55] <avdg_> not allowed
+[13:55] <CompanionCube> but you'd be suprising how much shit breaks when python == python3
+[13:55] <avdg_> I know, its like a new language
+[13:55] <avdg_> I know a bit about the php/hack horror btw...
+[13:56] <korczis> have any PR merged take ages ...
+[13:56] <avdg_> (though I didn't tried hack a lot)
+[13:56] <korczis> we should find some more effective strategy for accept/reject
+[13:56] <CompanionCube> Perhaps don't have a hardset limit of time?
+[13:57] <korczis> i want to split webserver into components and routes, but i am scared to do so because accepting/rejecting PR is slow processes and often there is many conficts ..
+[13:57] <korczis> btw ..
+[13:57] <korczis> what about following idea ...
+[13:58] <korczis> when somebody update PR, votes still counts, except for the situation when there is N comments like 'revote' in comments after update of PR which signalizes vote should be done again ..
+[13:58] <korczis> not every PR update is "smuggling in" incompatible/unrelated changes ;-)
+[13:59] <dbpokorny_> it should just reject if there are any merge conflicts
+[13:59] <dbpokorny_> right?
+[13:59] <korczis> hopefully.
+[13:59] <korczis> there is still problem with reopening PRs
+[14:00] <dbpokorny_> reopening PRs?
+[14:00] <korczis> rebasing ...
+[14:00] <dbpokorny_> why not just make a new one
+[14:00] <CompanionCube> I <3 virtualenv for python
+[14:00] <korczis> see my docker, docker2 and docker3 branches
+[14:00] <korczis> that is what I am trying to avoid
+[14:01] <korczis> I can not just rebase PR ..
+[14:01] <korczis> Or close it, rebase/merge, reopen ..
+[14:01] <dbpokorny_> yes you can
+[14:01] <korczis> ok, I will try ..
+[14:01] <korczis> but I got feeling it did not worked last time ..
+[14:01] <korczis> and I was forced to create new branches and PRs
+[14:02] <korczis> anyway ...
+[14:02] <korczis> bot is slow in accepting/rejecting ..
+[14:02] <korczis> I am waiting for PRs to be merged, to work on another stuff ..
+[14:02] <dbpokorny_> exactly, you need an automated process to quickly rebase
+[14:02] <korczis> After yesterdays experience I do not want to rebase ten million times
+[14:03] <korczis> there will be conflicts in auto-rebase ..
+[14:03] <korczis> you can not make it fully automatic now ...
+[14:03] <korczis> we are not there yet
+[14:03] <korczis> without better infrastructure, better (like blue/green) deployment it is no-go now
+[14:04] <dbpokorny_> that is much better than git log | grep -i "merge" | grep -i "master"
+[14:04] <korczis> what is "that" ?
+[14:05] <dbpokorny_> right you can't make it fully automatic because too many people are trying to commit...there is contention
+[14:05] <korczis> people are responsible for rebase ..
+[14:05] <korczis> or they should ..
+[14:05] <korczis> but bot should be more robust ..
+[14:05] <dbpokorny_> you see, if the bot makes it a *law* that you have to have a clean merge...
+[14:05] <korczis> when talking about deployment ...
+[14:05] <dbpokorny_> then the bot is protecting itself
+[14:06] <korczis> i have no problem with this
+[14:06] <dbpokorny_> sweet
+[14:06] <korczis> bot should be autonomous as much as possible ..
+[14:06] <korczis> I am just talking about what needs to be fixed/improved ..
+[14:06] <korczis> To have better experience ..
+[14:06] <korczis> Tell me ..
+[14:06] <anythingbot> New PR: #214 - "Generate authors, will be shown in WebUI" - author: @korczis - https://github.com/botwillacceptanything/botwillacceptanything/pull/214
+[14:07] <korczis> anythingbot: really?
+[14:07] <korczis> anythingbot: I created much sooner than you spotted it ..
+[14:07] <@mappum> korczis: no, it must have repolled
+[14:07] <korczis> can you clarify "repoll" please?
+[14:08] <@mappum> hm, it never posted it before that though
+[14:08] <@mappum> even though we have webhooks, it still polls to check for PRs every 30 minutes to make sure it didn't miss any
+[14:08] <avdg_> hmm... any in memory file storage device that watches fs too?
+[14:09] <avdg_> not sure if it's a great idea to always read a file from fs
+[14:09] <avdg_> uh the bot would be restarted anyway, no?
+[14:10] <avdg_> then nvm
+[14:14] <CompanionCube> Would the bot listening on a 2nd port be a good idea - at the start it could be a simple ping/pong response but later it could be used for something like inter-bot communication
+[14:14] <avdg_> with the launcher?
+[14:15] <avdg_> my current idea is to let launcher manage the bot instance
+[14:15] <avdg_> though that would require the launcher to be very stable
+[14:16] <avdg_> launcher can ping, restart process and reroll if really needed
+[14:17] <avdg_> #212 needs votes
+[14:18] <korczis> #211 needs votes
+[14:18] <korczis> #213 needs votes
+[14:19] <CompanionCube> #213 is closed
+[14:20] <pests> define "reroll when really needed"
+[14:21] <avdg_> if the bot breaks or not responds to multiple ping requests
+[14:21] <korczis> #214 needs votes
+[14:21] <korczis> then he is overloaded ..
+[14:21] <korczis> under ddos ..
+[14:21] <korczis> :)
+[14:21] <korczis> ^^ if the bot breaks or not responds to multiple ping requests
+[14:22] <avdg_> yeah, it can break legs and play pong ;-)
+[14:23] <korczis> http://en.wikipedia.org/wiki/Decentralized_Autonomous_Organization
+[14:24] == anythingbot [~nodebot@162.243.149.229] has quit [Remote host closed the connection]
+[14:24] == anythingbot [~nodebot@162.243.149.229] has joined #botwillacceptanything
+[14:24] == anythingbot [~nodebot@162.243.149.229] has quit [Remote host closed the connection]
+[14:24] == anythingbot [~nodebot@162.243.149.229] has joined #botwillacceptanything
+[14:25] == travis-ci [~travis-ci@ec2-54-166-49-4.compute-1.amazonaws.com] has joined #botwillacceptanything
+[14:25] <travis-ci> botwillacceptanything/botwillacceptanything#129 (master - 17800b6 : Bot): The build passed.
+[14:25] <travis-ci> Change view : https://github.com/botwillacceptanything/botwillacceptanything/compare/f1bd8f7c0cd8...17800b65e170
+[14:25] <travis-ci> Build details : http://travis-ci.org/botwillacceptanything/botwillacceptanything/builds/58107000
+[14:25] == travis-ci [~travis-ci@ec2-54-166-49-4.compute-1.amazonaws.com] has left #botwillacceptanything []
+[14:25] == travis-ci [~travis-ci@ec2-54-166-232-31.compute-1.amazonaws.com] has joined #botwillacceptanything
+[14:25] <travis-ci> botwillacceptanything/botwillacceptanything#130 (master - bb1bb61 : Bot): The build passed.
+[14:25] <travis-ci> Change view : https://github.com/botwillacceptanything/botwillacceptanything/compare/17800b65e170...bb1bb6180826
+[14:25] <travis-ci> Build details : http://travis-ci.org/botwillacceptanything/botwillacceptanything/builds/58107013
+[14:25] == travis-ci [~travis-ci@ec2-54-166-232-31.compute-1.amazonaws.com] has left #botwillacceptanything []
+[14:25] <dos1> I love https://github.com/botwillacceptanything/botwillacceptanything/issues/192
+[14:27] <dos1> just one vote left: https://github.com/botwillacceptanything/botwillacceptanything/pull/209
+[14:28] == anythingbot [~nodebot@162.243.149.229] has quit [Remote host closed the connection]
+[14:28] == anythingbot [~nodebot@162.243.149.229] has joined #botwillacceptanything
+[14:29] == zz_AlphaTech has changed nick to AlphaTech
+[14:30] <dos1> just two votes left: https://github.com/botwillacceptanything/botwillacceptanything/pull/211
+[14:30] <dos1> hmm, shouldn't bot announce that he's merging the PRs here, on IRC?
+[14:31] <hintss> dos1: PR it
+[14:31] <hintss> :P
+[14:31] <dos1> I mean, isn't it expected to work like that right now? :P
+[14:31] <CompanionCube> I really need to learn node.js :p
+[14:32] <dos1> BTW. we're at 200 pull requests right now
+[14:32] <dos1> 199 closed and 1 open
+[14:40] * CompanionCube will commit something tomorrow if he's not busy
+[14:42] <dos1> just one vote left: https://github.com/botwillacceptanything/botwillacceptanything/pull/211
+[14:42] == anythingbot [~nodebot@162.243.149.229] has quit [Remote host closed the connection]
+[14:42] == anythingbot [~nodebot@162.243.149.229] has joined #botwillacceptanything
+[14:43] <dos1> and no more PRs!
+[14:43] <dos1> https://github.com/botwillacceptanything/botwillacceptanything/issues/192 though... it's better than I expected :D
+[14:43] <korczis> perfect
+[14:43] == travis-ci [~travis-ci@ec2-54-166-232-31.compute-1.amazonaws.com] has joined #botwillacceptanything
+[14:43] <korczis> I am now working on splitting webser.js
+[14:43] <travis-ci> botwillacceptanything/botwillacceptanything#132 (master - 5e13a07 : Bot): The build passed.
+[14:43] <travis-ci> Change view : https://github.com/botwillacceptanything/botwillacceptanything/compare/607957204c59...5e13a0742799
+[14:43] <travis-ci> Build details : http://travis-ci.org/botwillacceptanything/botwillacceptanything/builds/58108157
+[14:43] == travis-ci [~travis-ci@ec2-54-166-232-31.compute-1.amazonaws.com] has left #botwillacceptanything []
+[14:44] <korczis> tomaskorcak@kx-mac:~/dev/botwillacceptanything$ ls lib/routes/
+[14:44] <korczis> commits.js    index.js      secrets.js    statistics.js stdout.js     webhook.js
+[14:44] <korczis> will be more maintainable
+[14:45] == CompanionCube [~samis@unaffiliated/drmushroom] has quit [Remote host closed the connection]
+[14:46] <avdg_> 200 closed pr!
+[14:49] <TabletCube> Back
+[14:50] <TabletCube> any recommendations on good node.js tutorials?
+[14:52] <avdg_> depends on what you want to understand
+[14:52] <avdg_> do you understand js?
+[14:53] <TabletCube> I think so, but I haven't really used it in a while
+[14:54] == tilgovi [~randall@couchdb/committer/tilgovi] has quit [Remote host closed the connection]
+[14:55] <avdg_> then there is the node.js api itself
+[14:55] <avdg_> which you can find here https://nodejs.org/api/
+[14:55] <avdg_> (yeah, this needs some time to get used to it, but shouldn't be that bad)
+[14:56] <avdg_> reading others code can make understanding the docs easier
+[14:56] == tilgovi [~randall@couchdb/committer/tilgovi] has joined #botwillacceptanything
+[14:56] <avdg_> there are just that require() function that are nodejs specific
+[14:56] <avdg_> and some modules like fs, https, http, os, process, etc
+[14:56] <avdg_> and finally there is npm
+[14:58] <TabletCube> that'll be useful
+[14:58] == AlphaTech [AlphaTech@unaffiliated/alphatech] has quit [Ping timeout: 240 seconds]
+[14:59] <TabletCube> Might read a refresher on JS first to make it easier though
+[14:59] <avdg_> there modules and npm packages all use the require() to include them
+[14:59] == AlphaTech [AlphaTech@unaffiliated/alphatech] has joined #botwillacceptanything
+[15:00] <avdg_> (there are some globals, they are the exception, but there are not many)
+[15:01] <avdg_> did you installed node already?
+[15:01] <TabletCube> yes, and all of the bot's dependencies,
+[15:01] <avdg_> just type node and you can type code :-)
+[15:01] <avdg_> ctrl+c twice to exit
+[15:03] <pests> does someone want to set up proper events and remove that irc/twitter stuff from voting.js ?
+[15:03] <pests> we need a vote merged, vote started, and vote closed event and then hook our irc and twitter communication to respond to those events.
+[15:04] <pests> i dont like how voting.js depends on irc and twitter.
+[15:04] <avdg_> go ahead :-) though I'm touching the templates in voting.js (but meh, I can always rebase)
+[15:05] <TabletCube> With events you could easily add a message/event queue later if/when the bot becomes more decentralised
+[15:06] <pests> im on a tablet with a keyboard right now. i dont like doing dev on it really.
+[15:07] <TabletCube> pests: I <3 Hacker's Keyboar
+[15:07] <TabletCube> *Keyboard
+[15:08] <pests> what are you doing in voting.js right now avdg_ ?
+[15:09] <pests> i have an idea
+[15:09] <pests> we could do voting on issues too
+[15:10] <avdg_> uh... I can't paste my patch...
+[15:10] <pests> hold on, i had a thought here that was important but i lost it...
+[15:10] <pests> i just meant in general
+[15:12] <avdg_> I'll be touching the templates in voting.js
+[15:39] == dlmc2013 [62d2c03b@gateway/web/cgi-irc/kiwiirc.com/ip.98.210.192.59] has joined #botwillacceptanything
+[15:39] == dlmc2013 [62d2c03b@gateway/web/cgi-irc/kiwiirc.com/ip.98.210.192.59] has quit [Client Quit]
+[15:43] <anythingbot> New PR: #215 - "Modularized webserver" - author: @korczis - https://github.com/botwillacceptanything/botwillacceptanything/pull/215
+[15:44] <korczis> please, can you review/check #215 ?
+[15:46] <AlphaTech> Does anyone know about the newest for throwing this error? http://pastebin.com/raw.php?i=wcPQDrkd
+[15:46] <korczis> ./lib/cookies.js does not exists obviously
+[15:46] <korczis> somebody forget to submit it
+[15:46] <AlphaTech> Lol
+[15:47] <korczis> 8 votes needed - https://github.com/botwillacceptanything/botwillacceptanything/pull/215
+[15:48] <AlphaTech> Cool
+[15:48] <AlphaTech> So what can I do to get the most recent working version?
+[15:48] <korczis> after this got merged i will put templates in own files
+[15:49] <AlphaTech> Okay, do you know what is the header and which is the footer?
+[15:49] <AlphaTech> (The HTML code)
+[15:49] <korczis> i will consult it with you
+[15:49] <AlphaTech> Okay, I can get it for you
+[15:49] <korczis> i will create layout file for template
+[15:49] <AlphaTech> Ah, okay
+[15:50] <korczis> but waiting for #215
+[15:50] <AlphaTech> <AlphaTech> So what can I do to get the most recent working version?
+[15:51] <avdg_> https://github.com/botwillacceptanything/botwillacceptanything/compare/master...avdg:templates
+[15:51] <AlphaTech> Cool
+[15:51] <korczis> why markdown?
+[15:52] <korczis> how you will put parameters in?
+[15:52] <korczis> why not mustache?
+[15:52] <avdg_> because it's already in markdown
+[15:52] <korczis> mustache can be anything
+[15:52] <avdg_> it's using mustache
+[15:52] <korczis> okay ..
+[15:52] <korczis> hm ..
+[15:52] <avdg_> these are templates
+[15:52] <avdg_> but are parsed by mustache
+[15:53] <avdg_> see lib/template.js
+[15:53] <AlphaTech> Ahhhh! I just wanna work with a working version!!!!!
+[15:53] <avdg_> I've keep template.js simple so it might do weird things
+[15:53] <dos1> hm...
+[15:53] <dos1> why does the bot use amdefine, btw?
+[15:54] <korczis> what is wrong with it?
+[15:54] <korczis> it got merged yesterday
+[15:54] <dos1> using AMD in node.js is kinda... uncommon?
+[15:54] <korczis> and it allows better structure of code ..
+[15:54] <anythingbot> New PR: #216 - "Remove templates from voting.js" - author: @avdg - https://github.com/botwillacceptanything/botwillacceptanything/pull/216
+[15:54] <dos1> how so?
+[15:55] <korczis> asynchronous loading?
+[15:55] <dos1> what can you do with amd that you can't with commonjs regarding code structure?
+[15:55] <korczis> sharing code with client if we will use client side framework
+[15:55] <dos1> maybe, yes
+[15:55] <korczis> check how it looked before and after
+[15:55] <dos1> but the js community seems to prefer commonjs+browserify than amdefine
+[15:56] <korczis> so close it ..
+[15:56] <korczis> and rewrite it to common js
+[15:56] <dos1> nah, I don't care
+[15:56] <korczis> or deal with current unmaintainable webserver.js
+[15:56] <dos1> I'm just curious about decision
+[15:56] <korczis> me neither
+[15:56] <dos1> cause it seems uncommon for such project
+[15:57] <korczis> uncomon?
+[15:57] <korczis> amdefine?
+[15:57] <dos1> yes
+[15:57] <dos1> AMD is common inside browser
+[15:57] <dos1> but now it even starts to fade away due to browserify
+[15:58] <korczis> https://github.com/botwillacceptanything/botwillacceptanything/blob/master/lib/webserver.js <--- HELL!!!
+[15:59] <korczis> why are not the requires in random order?
+[15:59] <korczis> so if i want to add one I need to check all require lines to make sure it is not there alrady
+[15:59] <korczis> why not in alphabetical order?
+[15:59] <korczis> why not system modules first and than relative modules?
+[16:00] <dos1> amd doesn't really change antything in this regard
+[16:00] <korczis> You are trying to say that current master is better than proposed PR?
+[16:00] <dos1> which PR?
+[16:00] <dos1> hell, I'm not talking about any PR
+[16:01] <korczis> https://github.com/botwillacceptanything/botwillacceptanything/pull/215
+[16:01] <dos1> just noticed amdefine in twitter.js
+[16:01] <dos1> and started to wonder
+[16:01] <avdg_> bot can't vote?
+[16:01] <dos1> and actually, amdefine there make things more messy
+[16:01] <korczis> ok
+[16:01] <korczis> messy?
+[16:01] <korczis> I do not understand.
+[16:02] <dos1> as you have to specify your dependences in two places
+[16:02] <dos1> both in the array of deps, and in function arguments
+[16:02] <korczis> two places?
+[16:02] <dos1>  var deps = [
+[16:02] <dos1>         'intercept-stdout',
+[16:02] <dos1>         '../shared'
+[16:02] <dos1>  ];
+[16:02] <dos1> and then
+[16:02] <dos1> define(deps, function(interceptStdout, Shared) {
+[16:02] <dos1> one, two
+[16:02] <dos1> looks like two places :)
+[16:03] <korczis> define('twitter', function(Twitter) {
+[16:03] <korczis> vs
+[16:03] <korczis> twitter = require('Twitter')
+[16:03] <korczis> big difference?
+[16:03] <dos1> yes, it's big
+[16:03] <korczis> ok
+[16:03] <korczis> vote against it
+[16:03] <avdg_> *var twitter :-)
+[16:03] <korczis> i knwo
+[16:03] <korczis> i know
+[16:03] <dos1> if you have ten dependences for instance
+[16:04] <korczis> var express = require('express');
+[16:04] <korczis>     var favicon = require('serve-favicon');
+[16:04] <korczis>     var bodyParser = require('body-parser');
+[16:04] <korczis>     var app = express();
+[16:04] <korczis>     var os = require('os');
+[16:04] <korczis>     var git = require('gift');
+[16:04] <korczis>     var sanitizeHtml = require('sanitize-html');
+[16:04] <korczis>     var interceptStdout = require('intercept-stdout');
+[16:04] <korczis>     var crypto = require('crypto');
+[16:04] <korczis>     var util = require('util');
+[16:04] <korczis>     var Vault = require('./vault.js');
+[16:04] <korczis> like this?
+[16:04] <dos1> it's [ 'a','b','c','d','e','f','g','h','i','j', function(a,b,c,d,e,f,g,h,i,j) {
+[16:04] <dos1> then you want to remove f
+[16:04] <korczis> as I said
+[16:04] <korczis> vote against it
+[16:04] <dos1> you need to find and remove it in two places
+[16:04] <korczis> :-1: is your friend
+[16:04] <dos1> as I said, I'm not talking about any PR
+[16:05] <dos1> why are you insisting that I am?
+[16:05] <korczis> your previous statements :)
+[16:05] <dos1> my previous statement was
+[16:05] <dos1> [01:00] <dos1> which PR?
+[16:05] <dos1> [01:00] <dos1> hell, I'm not talking about any PR
+[16:05] <avdg_> #215 bad?
+[16:06] <dos1> I'm just genericly discussing JS module systems
+[16:06] <dos1> and wondering if maybe using some DI wouldn't be nice there
+[16:06] <korczis> I am just trying to solve mess - see my previous work, gulp, lib folder, travis ci ..
+[16:06] <dos1> with DI AMD would start to make more sense I guess
+[16:07] <korczis> DI is next step
+[16:07] <avdg_> heh
+[16:07] <korczis> maybe we should create road map
+[16:07] <korczis> but some will say it is agains bots nature
+[16:07] <avdg_> current road map is solving complains
+[16:07] <korczis> I do not insist on amdefine ..
+[16:07] <dos1> korczis: when I started talking about it I wasn't even aware that #215 exists :P
+[16:08] <korczis> I decided to use it for cleaning mess, yesterady AMD got merged so I did not expected there will be problem with it
+[16:08] <korczis> my fault so
+[16:08] <dos1> keep in mind that AMD got merged when it shouldn't - it was a bug :D
+[16:08] <korczis> hm
+[16:09] <dos1> the PR got modified, but bot accepted it anyway for some reason
+[16:09] <dos1> and there was something funny with merge conflicts
+[16:09] <korczis> bot behaved as he was programmed :)
+[16:10] <korczis> nothing more, nothing less
+[16:10] <dos1> of course
+[16:10] <dos1> every software always does ;]
+[16:10] <avdg_> :-)
+[16:10] <korczis> :)
+[16:10] <TabletCube> There are no bugs. Only unexpected behaviour :)
+[16:10] <dos1> but now I'm looking at #215 - modularization is fine :+1:
+[16:10] <korczis> anyway ..
+[16:11] <dos1> still not really sure if AMD is really the way to go, but with DI later it might get pretty nice actually
+[16:11] <korczis> amdefine nicely modularize code (now) and it can be easily replaced (later) as the dependencies are on one (two) place(s)
+[16:11] <TabletCube> does Bot have an actual 'gender' as defined in the code or is it just a male by default?
+[16:12] * avdg_ needs to eat code before comparing
+[16:12] <dos1> this modulatization could be done without amdefine, so for me it's a completely separate thing ;)
+[16:12] <korczis> that is true
+[16:12] <TabletCube> I voted for due to modularization - not due to amdefine
+[16:13] <dos1> TabletCube: let's let him/her/it decide what he/she/it wants to be called!
+[16:13] <korczis> this way of modularization using amdefine solves some issues which could (but were not) solved without amdefine
+[16:13] <AlphaTech> Does the current build work now?
+[16:13] <TabletCube> dos1: it needs an initial name to call itself
+[16:13] <TabletCube> It can always identify as something else later
+[16:14] <dos1> hmmmmm
+[16:14] * dos1 searches npm for name generator module
+[16:14] <dos1> AlphaTech: it should I think?
+[16:14] <TabletCube> Perhaps it starts as a male with the name 'Bot'?
+[16:15] <dos1> I think he/she/it should decide on his/her/its own
+[16:15] <AlphaTech> dos1: A fork from 15 minutes ago wasn't working do to no file names lib/cookies.js
+[16:15] <avdg_> pff... how much stuff do we need before setting up a proper continues integration stuff...
+[16:16] <dos1> AlphaTech: huh?
+[16:16] <TabletCube> dos1: it does not yet have the capacity to decide
+[16:16] <korczis> #215 stops me from writing tests :)
+[16:16] <korczis> unit tests ..
+[16:16] <korczis> and than i will vote against any PR which will not include tests
+[16:16] <dos1> TabletCube: so let's give it to him/her/it!
+[16:16] <korczis> than tests will be part of travis pipeline
+[16:16] <korczis> and bot should not merge any PR which's tests failed
+[16:17] <AlphaTech> dos1: I just reinstalled the bot with the latest fork 15 minutes ago... It wouldn't start because it was calling for a file called lib/cookies.js which didn't exist
+[16:17] <korczis> now we have routes separated ..
+[16:17] <korczis> they can be loaded/mocked/tested individualy
+[16:17] <korczis> who forget to commit cookies.js ?
+[16:18] <avdg_> uh that blame...
+[16:18] <dos1> AlphaTech: I don't have lib/cookies.js and it works for me
+[16:18] <korczis> http://botwillacceptanything.com:3000/stdout/
+[16:18] <AlphaTech> http://pastebin.com/raw.php?i=wcPQDrkd
+[16:18] <dos1> are you sure you used master on botwillacceptanything/botwillacceptanything ?
+[16:18] <korczis> same here
+[16:18] <AlphaTech> Yes dos1
+[16:19] <dos1> AlphaTech: something's wrong on your side - there's even no reference to "cookies.js" inside code on current master
+[16:20] <dos1> korczis: errors are due to github sending webhooks for issue comments - bot doesn't check if it's issue or pull request and thinks everything is a PR
+[16:20] <korczis> oh okay
+[16:21] <dos1> AlphaTech: maybe try npm install?
+[16:23] <AlphaTech> dos1: Tried that :/
+[16:24] <AlphaTech> dos1: http://pastebin.com/raw.php?i=wcPQDrkd
+[16:25] <korczis> node main.jsmodule.js
+[16:25] <korczis> what is main.jsmodule.js ?
+[16:25] <korczis> why not
+[16:25] <korczis> node main.js ?
+[16:25] <korczis> or
+[16:25] <korczis> npm run main ?
+[16:25] <AlphaTech> I dunno
+[16:25] <korczis> can you try these ...
+[16:25] <AlphaTech> I'll just redownload it
+[16:26] <korczis> can you try
+[16:26] <korczis> npm run main
+[16:26] <korczis> pls?
+[16:27] <AlphaTech> I
+[16:27] <AlphaTech> *k
+[16:28] <AlphaTech> korczis: http://pastebin.com/raw.php?i=bEJfBrPP
+[16:29] <korczis> ok
+[16:29] <korczis> please share output of
+[16:29] <korczis> git log
+[16:29] <korczis> git reflog
+[16:29] <korczis> and
+[16:29] <korczis> cat main.js
+[16:29] <AlphaTech> K
+[16:29] <korczis> pastebin or gist.github.com
+[16:30] <dos1> dbpokorny_: say hi to your bot :3
+[16:30] <dbpokorny_> hi
+[16:30] <dbpokorny_> what?
+[16:30] <dos1> maybe here - https://github.com/botwillacceptanything/botwillacceptanything/issues/192 ? :)
+[16:31] <avdg_> hmmm https://github.com/illacceptanything/illacceptanything
+[16:31] <korczis> #215 please up or down :)
+[16:32] <korczis> 1008 stars
+[16:32] <korczis> it seems forking is not bad idea ..
+[16:32] <korczis> as we are slow :)
+[16:32] <korczis> </kidding>
+[16:33] <avdg_> we are using skynet though
+[16:33] <AlphaTech> korczis: [git log](http://irc.btri.x10.bz/gitlog.log) [git reflog](http://irc.btri.x10.bz/gitreflog.log) [cat main.js](http://irc.btri.x10.bz/main.js)
+[16:33] <korczis> their project is mess
+[16:33] <korczis> anyway
+[16:34] <korczis> they seem to accept any "minecraft" PR ;-)
+[16:34] == anythingbot [~nodebot@162.243.149.229] has quit [Remote host closed the connection]
+[16:34] <korczis> (no offense intended)
+[16:34] == anythingbot [~nodebot@162.243.149.229] has joined #botwillacceptanything
+[16:34] == anythingbot [~nodebot@162.243.149.229] has quit [Remote host closed the connection]
+[16:34] <avdg_> AlphaTech: no limit?
+[16:34] <AlphaTech> no limit what?
+[16:34] <avdg_> uh what happened
+[16:34] <TabletCube> If the bot was running on free computing resources then it could be more autonomous-like
+[16:35] <dos1> uh oh
+[16:35] == travis-ci [~travis-ci@ec2-54-166-49-4.compute-1.amazonaws.com] has joined #botwillacceptanything
+[16:35] <travis-ci> botwillacceptanything/botwillacceptanything#135 (master - ac1f1d0 : Bot): The build passed.
+[16:35] <travis-ci> Change view : https://github.com/botwillacceptanything/botwillacceptanything/compare/5e13a0742799...ac1f1d04f368
+[16:35] <travis-ci> Build details : http://travis-ci.org/botwillacceptanything/botwillacceptanything/builds/58116133
+[16:35] == travis-ci [~travis-ci@ec2-54-166-49-4.compute-1.amazonaws.com] has left #botwillacceptanything []
+[16:35] == travis-ci [~travis-ci@ec2-54-166-232-31.compute-1.amazonaws.com] has joined #botwillacceptanything
+[16:35] <travis-ci> botwillacceptanything/botwillacceptanything#136 (master - 5331d1b : Bot): The build passed.
+[16:35] <travis-ci> Change view : https://github.com/botwillacceptanything/botwillacceptanything/compare/ac1f1d04f368...5331d1b01d5e
+[16:35] <travis-ci> Build details : http://travis-ci.org/botwillacceptanything/botwillacceptanything/builds/58116165
+[16:35] == travis-ci [~travis-ci@ec2-54-166-232-31.compute-1.amazonaws.com] has left #botwillacceptanything []
+[16:35] <dos1> korczis: you tested your PR, did you? :P
+[16:35] <avdg_> I broke the bot...
+[16:35] <korczis> I did :)
+[16:35] <korczis> except of merging :)
+[16:35] <korczis> i checked commits, stdout, statistics ..
+[16:35] <avdg_> nvm these 2 merges came together :p
+[16:36] <AlphaTech> korczis: What's wrong with my build?
+[16:36] <dos1> avdg_: actually no, bot restarted once
+[16:36] <avdg_> :/
+[16:36] <TabletCube> Bot is dead again?
+[16:36] <avdg_> yeah, it restarted
+[16:36] <avdg_> then died
+[16:36] <korczis> AlphaTech
+[16:36] <avdg_> check up in the message log after (no offence
+[16:36] <korczis> grep -r -n './lib/cookies'
+[16:36] <dos1> /media/ssd/git/botwillacceptanything/lib/template.js:14
+[16:36] <dos1>             var filename = path.join(__dirname, TEMPLATES, template);
+[16:36] <dos1>                            ^
+[16:36] <korczis> grep -r -n './lib/cookies' .
+[16:37] <dos1> ReferenceError: path is not defined
+[16:37] <avdg_> :/
+[16:37] <avdg_> yeah
+[16:37] <avdg_> path was global?
+[16:37] <korczis> use amdefine :)
+[16:37] <korczis> no ..
+[16:37] <korczis> you see ..
+[16:37] <avdg_> I'll patch
+[16:37] <korczis> people thing lot of stuff is global as they do not need to require it explicitly
+[16:37] <korczis> think :)
+[16:38] <dos1> sooooooooooo
+[16:38] <avdg_> problem was, it was global on my machine...
+[16:38] <AlphaTech> korczis: http://pastebin.com/raw.php?i=5944NwhP
+[16:38] <korczis> </flame>
+[16:38] <avdg_> of course, bot's machine isn't mine
+[16:38] <dos1> hmm, right, it is global
+[16:38] <korczis> You mean system module ..
+[16:38] <korczis> Not local module
+[16:38] <korczis> AlphaTech: that is strange
+[16:39] <@mappum> do you guys have a fix i can merge in?
+[16:39] <avdg_> not yet
+[16:39] <korczis> #215 :)
+[16:39] <korczis> </joking>
+[16:39] <@mappum> https://gist.github.com/mappum/758a92fa6f5ffc8cb3c6
+[16:39] <korczis> ?
+[16:40] <korczis> that is #215 ?
+[16:40] <@mappum> we could detect so much of this before merging :/
+[16:40] <@mappum> that is master
+[16:40] <korczis> did you created config.js?
+[16:40] <korczis> from config.template.js?
+[16:40] <dos1> I have a fix
+[16:40] <AlphaTech> Me?
+[16:40] <dos1> pushing right now
+[16:40] <AlphaTech> If me, yes
+[16:40] <korczis> @mappum
+[16:40] <avdg_> though it's just "var path = require('path');"?
+[16:41] <@mappum> hm changes shouldn't require manual intervention, the bot should do staging and create the file itself
+[16:41] <dos1> mappum: #217
+[16:41] <dos1> https://github.com/botwillacceptanything/botwillacceptanything/pull/217
+[16:41] <korczis> config.js never exists
+[16:41] <korczis> i just added config.template.js
+[16:41] <avdg_> dos1: you're fast :D
+[16:41] <korczis> in readme was mentioned that you need to create config.js
+[16:41] <korczis> and no template was provided
+[16:41] <korczis> so do not blame me ;-)
+[16:41] <dos1> :3
+[16:42] == anythingbot [~nodebot@162.243.149.229] has joined #botwillacceptanything
+[16:42] <avdg_> pls pls pls don't break :D
+[16:42] == anythingbot [~nodebot@162.243.149.229] has quit [Remote host closed the connection]
+[16:42] <@mappum> it still needs that config
+[16:43] == travis-ci [~travis-ci@ec2-54-146-51-121.compute-1.amazonaws.com] has joined #botwillacceptanything
+[16:43] <travis-ci> botwillacceptanything/botwillacceptanything#138 (master - 370d69f : Bot): The build passed.
+[16:43] <travis-ci> Change view : https://github.com/botwillacceptanything/botwillacceptanything/compare/5331d1b01d5e...370d69fc954f
+[16:43] <travis-ci> Build details : http://travis-ci.org/botwillacceptanything/botwillacceptanything/builds/58116640
+[16:43] == travis-ci [~travis-ci@ec2-54-146-51-121.compute-1.amazonaws.com] has left #botwillacceptanything []
+[16:43] <avdg_> uh, I guess I see why
+[16:44] <avdg_> I'm running node v0.10.34
+[16:44] <korczis> https://gist.github.com/korczis/7126a0fcca0f3bdac9e3
+[16:44] == anon1341 [3294810c@gateway/web/cgi-irc/kiwiirc.com/ip.50.148.129.12] has quit [Quit: http://www.kiwiirc.com/ - A hand crafted IRC client]
+[16:44] <@mappum> korczis: it's happening on webhook events
+[16:45] <korczis> mappum: was not able to test this, fixed config, updated pr
+[16:46] <avdg_> installing node v0.12.2 :-)
+[16:46] <@mappum> why do we need closures and some module define thing? :/ node does that for you
+[16:46] <@mappum> it automatically wraps files in closures
+[16:47] <@mappum> and require is cleaner than define
+[16:47] <dos1> just as I said earlier!
+[16:47] <korczis> i am giving it up
+[16:47] <avdg_> path is still global :/
+[16:47] <dos1> modularization is fine, but AMD seems strange choice for node project
+[16:47] <@mappum> korczis: i know you like that stuff, but that's not node idiomatic
+[16:48] <korczis> nevermind
+[16:48] <korczis> i am going to join some other project instead - https://github.com/illacceptanything/illacceptanything
+[16:48] <@mappum> that's a different thing. but alright, thanks for all the PRs
+[16:48] <avdg_> dos1: what does (open) "node" (exec) "path" on your computer
+[16:48] <dos1> avdg_: it shows the module; that's also what I checked
+[16:48] <korczis> nv
+[16:49] <avdg_> I'm a bit confused now :p (though there are multiple pr)
+[16:49] <korczis> why did you merged #215?
+[16:49] <korczis> i was just about to close it ..
+[16:50] <korczis> to do not poison your codebase
+[16:50] <korczis> ?
+[16:50] <korczis> do not understand now
+[16:50] <dos1> bot merged it 16 minutes ago
+[16:50] <korczis> why you vote for it?
+[16:50] <dos1> calm down
+[16:50] <korczis> ?
+[16:51] <dos1> cause it redactored and modularized a unreadable chunk of code
+[16:51] <dos1> refactored*
+[16:51] <dos1> that's :+1:-worthy
+[16:51] <avdg_> dos1: anyway you still win this one :-) https://nodejs.org/api/path.html#path_path
+[16:51] <avdg_> docs recommend require
+[16:52] <TabletCube> I agree with dos1
+[16:52] <AlphaTech> mappum: Could you rate my webpage template from 0/10 please?
+[16:52] <dos1> guys, bot is not working
+[16:53] <AlphaTech> :/
+[16:53] <dos1> we have to fix it
+[16:53] <AlphaTech> Yup
+[16:53] <dos1> korczis: what is going on with it? it stopped working after mergin #215
+[16:53] <korczis> checking
+[16:53] <korczis> cannot find module 'mustache'
+[16:53] <korczis> not my work
+[16:53] <avdg_> hmm
+[16:53] <dos1> nah, that's npm install
+[16:53] <avdg_> npm install
+[16:54] <dos1> mappum said it's something about webhooks
+[16:54] <dos1> https://gist.github.com/mappum/758a92fa6f5ffc8cb3c6
+[16:54] <dos1> config is not defined in lib/routes/webhook
+[16:54] <korczis> https://github.com/botwillacceptanything/botwillacceptanything/pull/219/files
+[16:54] <dos1> hmm, so that's maybe not #215
+[16:55] <korczis> my fault
+[16:55] <korczis> again
+[16:55] <dos1> ah, so it is
+[16:55] <dos1> :v
+[16:55] <dos1> mappum: https://github.com/botwillacceptanything/botwillacceptanything/pull/219/files
+[16:56] <korczis> mappum: Can you, please, merge #219? This fixes config issue in webhooks. I though I was able to push this fix before you manually merged it.
+[16:58] <korczis> mappum: can you give access to machine to dos1 as well, please? ;-)
+[16:59] == anythingbot [~nodebot@162.243.149.229] has joined #botwillacceptanything
+[16:59] <dos1> mappum sure regrets starting this project right now :v
+[17:00] <AlphaTech> Lol
+[17:00] <korczis> I hope he is not ...
+[17:00] <@mappum> https://gist.github.com/mappum/f4669a82eb4be9aafbd6
+[17:00] <@mappum> lol i don't regret it, i just feel bad that i don't have time to keep it running smoothly
+[17:00] == travis-ci [~travis-ci@ec2-54-166-232-31.compute-1.amazonaws.com] has joined #botwillacceptanything
+[17:00] <travis-ci> botwillacceptanything/botwillacceptanything#140 (master - c870c62 : Bot): The build passed.
+[17:00] <travis-ci> Change view : https://github.com/botwillacceptanything/botwillacceptanything/compare/370d69fc954f...c870c62d39cf
+[17:00] <travis-ci> Build details : http://travis-ci.org/botwillacceptanything/botwillacceptanything/builds/58117715
+[17:00] == travis-ci [~travis-ci@ec2-54-166-232-31.compute-1.amazonaws.com] has left #botwillacceptanything []
+[17:01] <korczis> hm ..
+[17:01] <korczis> that looks strange
+[17:01] <dos1> now on http://botwillacceptanything.com:3000/stdout/
+[17:01] <avdg_> \o anythingbot
+[17:01] <korczis> so it works now?
+[17:02] <korczis> what about the problem mappum posted in his previous post?
+[17:02] <dos1> works as in "stays up" - hard to say if it will merge anything
+[17:02] == pests [4589d4f5@gateway/web/freenode/ip.69.137.212.245] has quit [Ping timeout: 246 seconds]
+[17:02] <dos1> korczis: look at http://botwillacceptanything.com:3000/stdout/
+[17:02] <korczis> oh, i see now
+[17:03] <korczis> btw can we use <pre> for stdout?
+[17:03] <korczis> I am trying to figure out what can cause that
+[17:04] <dos1> korczis: easy: config.githubAuth.webhookSecret
+[17:04] <dos1> looks like it doesn't return string (or buffer)
+[17:05] <korczis> ouch
+[17:05] <korczis> is not that problem of config file?
+[17:05] <korczis> I do not see anything like that in config.js or in config.template.js
+[17:06] <dos1> hmm
+[17:06] <dos1> actually, no, it happens later
+[17:06] <korczis> https://github.com/botwillacceptanything/botwillacceptanything/blob/master/config.template.js
+[17:06] <dos1> in update(blob)
+[17:06] <dos1> JSON.stringify(req.body)
+[17:07] <dos1> let's see...
+[17:07] <korczis> body is empty (?) my guess ..
+[17:07] <korczis> I mean null
+[17:08] <korczis> Probably it is caused by my "refactor" but I do not understand where is problem ..
+[17:08] <korczis> what is the root cause
+[17:10] <korczis> any ideas?
+[17:10] <SpenserJ> Hey guys, how's it going?
+[17:10] <dbpokorny_> time flies
+[17:11] <SpenserJ> req.body should be filled as long as nobody removed the app.use(BodyParser());
+[17:11] <korczis> shit
+[17:11] <korczis> Wrong order ..
+[17:11] <korczis> ?

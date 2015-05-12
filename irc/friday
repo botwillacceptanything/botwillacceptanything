@@ -1,0 +1,674 @@
+[15:05] == dbpokorny_ [adef4e36@gateway/web/freenode/ip.173.239.78.54] has joined #botwillacceptanything
+[15:05] <anythingbot> Hey dbpokorny_, It's great to see you! I appreciate you. You are smart.
+[15:05] == sircharles [44e46ffa@gateway/web/cgi-irc/kiwiirc.com/ip.68.228.111.250] has joined #botwillacceptanything
+[15:05] <anythingbot> Hello sircharles, Whats up?. It's  to see you.
+[15:05] <dbpokorny_> I'm outraged that the bot isn't insulting me
+[15:05] <pests> its messing up somehow
+[15:05] <anythingbot> Voting: PASSED :+1: #363 - "Ignore instead of being rude" - author: @shalecraig - https://github.com/botwillacceptanything/botwillacceptanything/pull/363
+[15:05] == anythingbot [~nodebot@162.243.149.229] has quit [Remote host closed the connection]
+[15:06] == anythingbot [~nodebot@162.243.149.229] has joined #botwillacceptanything
+[15:06] <anythingbot> Hello anythingbot, I hope you had an okay day.
+[15:06] <pests> messed up for me too: <anythingbot> Hey pests2, I hope everything is .
+[15:06] <sircharles> My GitHub username doesn't fit in IRC username. It's drsirmrpresidentfathercharles
+[15:06] <anythingbot> Voting: FAILED :-1: #360 - "Randomly decide how much the bot likes people" - author: @shalecraig - https://github.com/botwillacceptanything/botwillacceptanything/pull/360
+[15:06] <TabletCube> dos1: I agree on principle like I said
+[15:07] <pokoleo> thanks for passing - I agree with dos1 on principle, but I don't want to be called rude names until we fix it
+[15:07] == pokoleo [~karisma@184-175-44-133.dsl.teksavvy.com] has quit []
+[15:07] == pokoleo [~karisma@184.175.44.133] has joined #botwillacceptanything
+[15:07] <pokoleo> ...waits for message...
+[15:08] <timothyw> So how many PRS do you guys want me to split #351 into?
+[15:08] <timothyw> https://github.com/botwillacceptanything/botwillacceptanything/pull/351
+[15:08] <timothyw> Same here about the tests... Some things are more important to me.
+[15:08] <dos1> look at your PR description
+[15:08] <pests> ywhat does1 said
+[15:09] == sircharles [44e46ffa@gateway/web/cgi-irc/kiwiirc.com/ip.68.228.111.250] has quit [Client Quit]
+[15:09] <pests> 4 bullet points, 4 PRs
+[15:09] <dos1> each of the bullets could be separate PR
+[15:09] == avdg_ [~avdg@78-20-28-13.access.telenet.be] has joined #botwillacceptanything
+[15:09] <anythingbot> Hi avdg_, I hope you had a nice day.
+[15:09] <pokoleo> agree with dos1 - one per bullet
+[15:09] == travis-ci [~travis-ci@ec2-50-17-119-240.compute-1.amazonaws.com] has joined #botwillacceptanything
+[15:09] <anythingbot> Hey travis-ci, I hope you had a ultra-nice day.
+[15:09] <travis-ci> botwillacceptanything/botwillacceptanything#361 (master - d7b4828 : Bot): The build passed.
+[15:09] <travis-ci> Change view : https://github.com/botwillacceptanything/botwillacceptanything/compare/9d3474a67a4c...d7b48289913c
+[15:09] <travis-ci> Build details : http://travis-ci.org/botwillacceptanything/botwillacceptanything/builds/58827755
+[15:09] == travis-ci [~travis-ci@ec2-50-17-119-240.compute-1.amazonaws.com] has left #botwillacceptanything []
+[15:09] <timothyw> Hmmm, the monkey stuff is directly related to the poke people.
+[15:09] <dos1> ok, so those two go togetheer
+[15:10] <timothyw> Think of a monkey as an indicator that a vote is dummy, not counted.
+[15:11] <timothyw> I need to write tests for these as well... Hmm
+[15:11] <dos1> sounds plausible enough :P
+[15:11] <timothyw> When I submitted it, I think Travis was breaking on config still :(
+[15:12] == timothyw [01986015@gateway/web/cgi-irc/kiwiirc.com/ip.1.152.96.21] has quit [Quit: http://www.kiwiirc.com/ - A hand crafted IRC client]
+[15:13] == avdg [~avdg@2a02:1812:1123:b900:91a6:77f2:d9f0:214e] has quit [Ping timeout: 276 seconds]
+[15:17] == poop [~nodebot@184.175.44.133] has joined #botwillacceptanything
+[15:18] == purhur [~purhur@2a00:61e0:4072:4201:19d3:40ac:1a7a:7c24] has quit [Remote host closed the connection]
+[15:18] <pokoleo> test
+[15:18] <pokoleo> anythingbot: test
+[15:18] == poop [~nodebot@184.175.44.133] has quit [Remote host closed the connection]
+[15:24] == testbot [~nodebot@184.175.44.133] has joined #botwillacceptanything
+[15:24] <anythingbot> Hi testbot, It's cool to see you!
+[15:24] == testbot has changed nick to Guest50943
+[15:25] <pokoleo> test #351
+[15:26] == Guest50943 [~nodebot@184.175.44.133] has quit [Remote host closed the connection]
+[15:26] <pokoleo> test #32
+[15:26] == mappum [sid43795@gateway/web/irccloud.com/x-iemztinuprtswzid] has left #botwillacceptanything []
+[15:26] == avdg_ [~avdg@78-20-28-13.access.telenet.be] has quit [Ping timeout: 272 seconds]
+[15:26] == mappum [sid43795@gateway/web/irccloud.com/x-iemztinuprtswzid] has joined #botwillacceptanything
+[15:26] <anythingbot> Oh, hello mappum, I like you. I like you.
+[15:26] <mappum> :)
+[15:27] <mappum> he's so nice now
+[15:27] <mappum> anythingbot: i like you too
+[15:27] <mappum> he should reply when addressed in a message
+[15:28] <pokoleo> related: I'm adding something so she'll respond to messages with #123 with a link to the issue
+[15:29] <mappum> pokoleo: cool
+[15:29] <mappum> that's handy
+[15:29] <pokoleo> like #355
+[15:29] * TabletCube doesn't mind the niceness
+[15:30] <pokoleo> womp womp
+[15:30] == avdg [~avdg@2a02:1812:1123:b900:d5ea:f3e5:9977:12ce] has joined #botwillacceptanything
+[15:30] <anythingbot> Hi avdg, We should play together tomorrow. It's very much nice to see you!
+[15:30] <TabletCube> Obviously it should also be able to express negative feelings too
+[15:31] <mappum> the website is awful now :/
+[15:32] <dbpokorny_> you mean AMAZING!!!
+[15:33] == tilgovi [~randall@couchdb/committer/tilgovi] has quit [Ping timeout: 265 seconds]
+[15:33] <pests> lol mappum
+[15:34] <dbpokorny_> mappum, you're absolutely right, it needs much more pinkie pie
+[15:34] <mappum> i think the pony stuff is going to scare people away
+[15:34] <pests> spencer and i discussed a config option the other day to hide.. uh.. certain ui elements.
+[15:35] <pokoleo> What would be the default though?
+[15:35] <pests> no ponys or rainbows and not pink? =P
+[15:36] <anythingbot> Voting: FAILED :-1: #361 - "BWAA-TV RC4" - author: @dbpokorny - https://github.com/botwillacceptanything/botwillacceptanything/pull/361
+[15:37] <TabletCube> pests: keep the rainbows
+[15:37] <dbpokorny_> it would sure be nice if it just reset the voting instead of killing the PR
+[15:38] <avdg> negative emotions should be fixable...
+[15:38] == testbot3 [~nodebot@184-175-44-133.dsl.teksavvy.com] has joined #botwillacceptanything
+[15:38] == testbot2 [~nodebot@184-175-44-133.dsl.teksavvy.com] has joined #botwillacceptanything
+[15:38] == testbot1 [~nodebot@184-175-44-133.dsl.teksavvy.com] has joined #botwillacceptanything
+[15:38] == testbot [~nodebot@184-175-44-133.dsl.teksavvy.com] has joined #botwillacceptanything
+[15:38] <anythingbot> Hi testbot, I appreciate you. You are smart.
+[15:38] == testbot has changed nick to Guest49404
+[15:39] <pokoleo> #123
+[15:40] <pests> dbpokorny: there is a dead pr sitting around that did that awhile ago... not sure if it would be worth going back or just starting fresh
+[15:40] <SpenserJ> mappum: I know exactly how you feel. The pink pony junk is an eye-sore, and is just going to confuse people
+[15:40] == Guest49404 [~nodebot@184-175-44-133.dsl.teksavvy.com] has quit [Remote host closed the connection]
+[15:40] == testbot2 [~nodebot@184-175-44-133.dsl.teksavvy.com] has quit [Remote host closed the connection]
+[15:40] == testbot1 [~nodebot@184-175-44-133.dsl.teksavvy.com] has quit [Remote host closed the connection]
+[15:40] == testbot3 [~nodebot@184-175-44-133.dsl.teksavvy.com] has quit [Remote host closed the connection]
+[15:40] <dbpokorny_> yeah, I can see how that could get confusing
+[15:40] <dbpokorny_> better to leave it the way it is
+[15:41] <TabletCube> I like the rainbow though
+[15:41] <TabletCube> Adds flavour to an otherwise bland site
+[15:41] <pests> yeah, here: https://github.com/botwillacceptanything/botwillacceptanything/pull/174
+[15:42] <pokoleo> #174
+[15:42] <anythingbot> New PR: #364 - "BWAA-TV RC5" - author: @dbpokorny - https://github.com/botwillacceptanything/botwillacceptanything/pull/364
+[15:44] <dos1> dbpokorny_: why do you keep adding new commits to that PR?
+[15:44] <dbpokorny_> because people ask me to fix things
+[15:44] <dbpokorny_> and I fix them
+[15:45] == tilgovi [~randall@couchdb/committer/tilgovi] has joined #botwillacceptanything
+[15:46] <pests> suggestion for bwaa-tv:
+[15:47] <pests> actually nm.
+[15:47] <dos1> there goes RC6
+[15:49] <dbpokorny_> actually, with "a little more work", the bot could formally verify that the last commit is totally safe and changes nothing; is merely a cosmetic reorganization
+[15:50] <pokoleo> has that monkey thing been merged yet?
+[15:51] == korczis [59b180c1@gateway/web/cgi-irc/kiwiirc.com/ip.89.177.128.193] has quit [Quit: http://www.kiwiirc.com/ - A hand crafted IRC client]
+[15:51] <pests> i dont think so.
+[15:51] <pokoleo> cool
+[16:05] == avdg_ [~avdg@2a02:1812:1123:b900:d5ea:f3e5:9977:12ce] has joined #botwillacceptanything
+[16:05] <anythingbot> Hi avdg_, We should hang out together more often.
+[16:05] * avdg_ should rejoin more often :D
+[16:05] <avdg_> (uh these disconnects :p)
+[16:08] == avdg [~avdg@2a02:1812:1123:b900:d5ea:f3e5:9977:12ce] has quit [Ping timeout: 276 seconds]
+[16:12] == timothyw [0ecb7df6@gateway/web/cgi-irc/kiwiirc.com/ip.14.203.125.246] has joined #botwillacceptanything
+[16:17] == timothyw [0ecb7df6@gateway/web/cgi-irc/kiwiirc.com/ip.14.203.125.246] has quit [Client Quit]
+[16:33] == pokoleo [~karisma@184.175.44.133] has quit [Remote host closed the connection]
+[16:34] == pokoleo [~karisma@184-175-44-133.dsl.teksavvy.com] has joined #botwillacceptanything
+[16:38] == pokoleo [~karisma@184-175-44-133.dsl.teksavvy.com] has quit [Ping timeout: 245 seconds]
+[16:59] == gpersons [~gpersons@cpe-74-70-20-141.nycap.res.rr.com] has joined #botwillacceptanything
+[17:21] == AlphaAtom [AlphaAtom@cpc9-bath5-2-0-cust113.aztw.cable.virginm.net] has quit [Ping timeout: 245 seconds]
+[17:22] == pests2 [~androirc@2601:4:4300:f4b6:39fa:b691:ddf2:2af8] has quit [Ping timeout: 245 seconds]
+[17:29] == gpersons [~gpersons@cpe-74-70-20-141.nycap.res.rr.com] has quit [Remote host closed the connection]
+[17:38] == gpersons [~gpersons@cpe-74-70-20-141.nycap.res.rr.com] has joined #botwillacceptanything
+[17:38] <pests> gpersons did you star the repo?
+[17:39] <gpersons> Wow, I didn't have it stared this whole time.
+[17:39] <gpersons> Iv'e been here since day one. Maybe I un-stared it somewhere along the line....
+[17:42] <anythingbot> Voting: PASSED :+1: #364 - "BWAA-TV RC5" - author: @dbpokorny - https://github.com/botwillacceptanything/botwillacceptanything/pull/364
+[17:42] == anythingbot [~nodebot@162.243.149.229] has quit [Remote host closed the connection]
+[17:42] == anythingbot [~nodebot@162.243.149.229] has joined #botwillacceptanything
+[17:42] <anythingbot> Hello anythingbot, I hope everything is .
+[17:44] == travis-ci [~travis-ci@ec2-54-145-78-81.compute-1.amazonaws.com] has joined #botwillacceptanything
+[17:44] <anythingbot> Hello travis-ci, I hope you had a nice day. great to see you! Let's hang out sometime.
+[17:44] <travis-ci> botwillacceptanything/botwillacceptanything#364 (master - d24046c : Bot): The build passed.
+[17:44] <travis-ci> Change view : https://github.com/botwillacceptanything/botwillacceptanything/compare/d7b48289913c...d24046ce6a54
+[17:44] <travis-ci> Build details : http://travis-ci.org/botwillacceptanything/botwillacceptanything/builds/58843627
+[17:44] == travis-ci [~travis-ci@ec2-54-145-78-81.compute-1.amazonaws.com] has left #botwillacceptanything []
+[17:46] == gpersons [~gpersons@cpe-74-70-20-141.nycap.res.rr.com] has quit [Remote host closed the connection]
+[17:49] == avdg_ [~avdg@2a02:1812:1123:b900:d5ea:f3e5:9977:12ce] has quit [Ping timeout: 276 seconds]
+[17:55] == timothyw [0ecb7df6@gateway/web/cgi-irc/kiwiirc.com/ip.14.203.125.246] has joined #botwillacceptanything
+[17:56] <timothyw> Hi guys, I need a quick hand while I'm splitting these pull requests, carefully.
+[17:56] <timothyw> Getting this error when I run 'gulp'
+[17:56] <timothyw> Cannot find module '/usr/local/lib/node_modules/gulp/node_modules/v8flags/cache/3.28.73.flags.json'
+[17:56] <anythingbot> New PR: #365 - "Remove Clippy" - author: @FangedTerror802 - https://github.com/botwillacceptanything/botwillacceptanything/pull/365
+[17:57] <timothyw> I've done npm cache clean
+[18:05] <pests> timothyw i have no idea but try in in #node or whatever channel and ill do some searching tgoo.
+[18:06] <pests> try https://github.com/gulpjs/gulp/issues/810
+[18:06] == olef1air [uid79559@gateway/web/irccloud.com/x-nexckccjmgztodmf] has quit [Quit: Connection closed for inactivity]
+[18:07] <timothyw> Shrug, I just re-installed global gulp and seems working now.
+[18:07] <timothyw> Thanks, though.
+[18:07] <pests> ah okay
+[18:10] == daedalus2027 [b318ee04@gateway/web/cgi-irc/kiwiirc.com/ip.179.24.238.4] has joined #botwillacceptanything
+[18:10] <anythingbot> Hey daedalus2027, It's nice to see you! It's great to see you!
+[18:13] == timothyw [0ecb7df6@gateway/web/cgi-irc/kiwiirc.com/ip.14.203.125.246] has quit [Quit: http://www.kiwiirc.com/ - A hand crafted IRC client]
+[18:14] == timothyw [0ecb7df6@gateway/web/cgi-irc/kiwiirc.com/ip.14.203.125.246] has joined #botwillacceptanything
+[18:22] == pokoleo [~karisma@184-175-44-133.dsl.teksavvy.com] has joined #botwillacceptanything
+[18:26] == pokoleo [~karisma@184-175-44-133.dsl.teksavvy.com] has quit [Ping timeout: 256 seconds]
+[18:26] == daedalus2027 [b318ee04@gateway/web/cgi-irc/kiwiirc.com/ip.179.24.238.4] has quit [Quit: http://www.kiwiirc.com/ - A hand crafted IRC client]
+[18:34] == timothyw [0ecb7df6@gateway/web/cgi-irc/kiwiirc.com/ip.14.203.125.246] has quit [Quit: http://www.kiwiirc.com/ - A hand crafted IRC client]
+[18:53] <anythingbot> New PR: #366 - "Code Coverage via Coveralls.io" - author: @SpenserJ - https://github.com/botwillacceptanything/botwillacceptanything/pull/366
+[18:54] <SpenserJ> dbpokorny_ dos1 mappum pests Stary2001 TabletCube zz_AlphaTech: I rewrote the Twitter and IRC tests, which lets us generate code coverage now. Mind giving it a vote?
+[18:58] == Jack_desktop [~Jack_desk@110-174-122-45.static.tpgi.com.au] has joined #botwillacceptanything
+[18:58] <anythingbot> Hi Jack_desktop, It's nice to see you! It's nice to see you!
+[19:16] == timothyw [0ecb7df6@gateway/web/cgi-irc/kiwiirc.com/ip.14.203.125.246] has joined #botwillacceptanything
+[19:17] == timothyw [0ecb7df6@gateway/web/cgi-irc/kiwiirc.com/ip.14.203.125.246] has quit [Client Quit]
+[19:19] == timothyw [0ecb7df6@gateway/web/cgi-irc/kiwiirc.com/ip.14.203.125.246] has joined #botwillacceptanything
+[19:24] <anythingbot> New PR: #367 - "Separate out the Stdout and Access logs" - author: @SpenserJ - https://github.com/botwillacceptanything/botwillacceptanything/pull/367
+[19:24] <SpenserJ> timothyw: There are a few PRs open, if you wouldn't mind voting :)
+[19:24] <anythingbot> Voting: FAILED :-1: #365 - "Remove Clippy" - author: @FangedTerror802 - https://github.com/botwillacceptanything/botwillacceptanything/pull/365
+[19:24] <timothyw> Will do, got some smaller ones coming of mine too
+[19:24] <SpenserJ> Awesome :D
+[19:25] <timothyw> Trying to piece the commits back together carefully
+[19:25] <timothyw> And creating PRs from their branches so as not to end up in this mess again.
+[19:26] <SpenserJ> Awesome :D
+[19:26] <SpenserJ> Its not fun to do, but its worth doing
+[19:26] <anythingbot> New PR: #368 - "Limit the files that are auto-loaded from integrations folder" - author: @timweightman - https://github.com/botwillacceptanything/botwillacceptanything/pull/368
+[19:26] <SpenserJ> Any time I work on something, I'm always in a fresh branch of master
+[19:26] <timothyw> Yeah I got lazy and dug myself an early grave.
+[19:27] <pests> SpencerJ I just wanted to let you know that I learn a lot about frontend dev from your PRs. I follow the tech but never really try it but its awesome reading your diffs.
+[19:28] <SpenserJ> pests: Thanks man. I'm actually a backend dev and sysadmin by trade, but I find that Node is a good bridge between front and backend
+[19:28] <SpenserJ> By no means do I know the best way to do things in node, but I'm usually able to come up with a fairly reliable solution
+[19:30] <timothyw> Why did we let all this pink rainbow crap pollute our bot? :(
+[19:30] <timothyw> Democrazy.
+[19:30] <SpenserJ> We were outvoted :(
+[19:30] <pests> Node really blew me away.  I remember back when JS was in its infancy and DHTML was in the rage, JS being used for cool "snow" effects or whatnot. Seeing JS applied to the backend really resonated in me and I think it or something like it will be the future.
+[19:30] <SpenserJ> Damn democracy shit
+[19:31] == SpenserJ [~SpenserJ@104.236.228.243]
+[19:31] ==  realname : Spenser Jones
+[19:31] ==  channels : #botwillacceptanything
+[19:31] ==  server   : card.freenode.net [Washington, DC, USA]
+[19:31] ==  account  : SpenserJ
+[19:31] == End of WHOIS
+[19:31] == SpenserJ [~SpenserJ@104.236.228.243]
+[19:31] ==  realname : Spenser Jones
+[19:31] ==  channels : #botwillacceptanything
+[19:31] ==  server   : card.freenode.net [Washington, DC, USA]
+[19:31] ==  account  : SpenserJ
+[19:31] == End of WHOIS
+[19:32] <pests> I really think we need to represent a "UI" as an construct that can be changed.. then we can regulate the current ui to a "pony" and the implement a "main". i think we could to it by nesting the current ui into a subfolder and then having a config option for which UI to use.
+[19:32] <pests> and then* implement "main"*
+[19:32] <Jack_desktop> Hmm, this project has me curious (I'm a total programming noob) could you say turn the bot into a quine or self-modifying program?
+[19:33] <Jack_desktop> If I'm totally off mark from what this project is doing well I don't mind being informed of what is actually going on...
+[19:34] <timothyw> In a way, it IS self-modifying.
+[19:34] <timothyw> In a way...
+[19:34] <SpenserJ> pests: I think you're on the right track with that. We definitely need some sort of layout/ux controller
+[19:34] <timothyw> Bot is running on GitHub. People submit pull requests to modify the bot's code. The Bot issues a voting challenge. People vote. The bot accepts if the vote passes.
+[19:34] <Jack_desktop> Oh okay, interesting
+[19:35] <SpenserJ> Jack_desktop: Its not quite self-modifying, since it doesn't write any improvements to itself, but it does manage its own codebase by merging whatever is voted in
+[19:35] <Jack_desktop> SpenserJ: Okay so could you add that as a feature haha?
+[19:35] <SpenserJ> One of the goals is to eventually build a network of bots, that all monitor and maintain eachother
+[19:35] <SpenserJ> Yeah, it would definitely be possible to do
+[19:36] <pests> SpenserJ: I'm more interested in software architect than programmer, to be honest.
+[19:36] <Jack_desktop> You guys might be working on something I've wanted to do for a long time but due to well life never been able to get that far.
+[19:36] <SpenserJ> There was talk of autogenerating a random .jshintrc every day at midnight, and then rewriting all code to match it
+[19:36] <SpenserJ> Jack_desktop: Well feel free to jump in and starting making some changes, no matter how small
+[19:37] <pests> While I think that would be cool per-se for the bot, I think it would wreck havok on contributors. Not to mention the mess the commit history would become every time it decided to randomize it's coding style.
+[19:37] <SpenserJ> Jack_desktop: This is all that was in the project, when everyone started juping in a week ago: https://github.com/botwillacceptanything/botwillacceptanything/tree/b15aba22645d5f5d7a37ba055f7f8261188fbb5e
+[19:37] <Jack_desktop> SpenserJ: Not sure I have the knowledge yet anyway, I seem to reset in programming knowledge when I stop for a while. Anyway yeah basically making a random code file also containing a quine would be very interesting.
+[19:37] <SpenserJ> A fraction of what we have all contributed now
+[19:38] <pests> SpenserJ: The thing is I don't know how a dynamic path for (templates, views, css, media files) would interact with the build pipeline (gulp, bower, jslint, etc)
+[19:38] <SpenserJ> You could probably embed https://github.com/mame/quine-relay into a page, and have it step through one language every time it is viewed
+[19:39] <SpenserJ> It should work just fine pests. The build pipeline isn't generating any static assets at this point, and even when it does, it could generate the assets for each theme
+[19:39] <Jack_desktop> Also a cool idea that SpenserJ, also sorry for interrupting you all.
+[19:39] <SpenserJ> themes/ponies/css, themes/sanity/css, themes/turnthelightson/css, etc
+[19:39] <pests> I guess the pipeline wouldnt be modified and every template/view/etc would be processed but it would be up to the view layer to decided which one to use
+[19:39] <pests> oh okay
+[19:40] <pests> btw there is a ?raw=true on a /data/ file.... i forget which one but a simple search will find it....
+[19:40] <SpenserJ> Whatever data/views/themes/*.hbs gets loaded (taking the place of index.hbs) would render out the page wrapper, along with any needed styles or scripts
+[19:41] <pests> I suggest we remove it because I really thought it "meant something" but as far as I can tell its only a holdover from githubs ?raw=true feature.
+[19:41] <SpenserJ> Hahaha gotcha.
+[19:41] <pests> its the favicon
+[19:41] <SpenserJ> Well I may spin a PR for layouts later on, and we'll see where that goes
+[19:41] <SpenserJ> Jack_desktop: No problem! If you're not comfortable writing some code for the bot, definitely contribute by staring the repo and voting on issues
+[19:42] <SpenserJ> We need two more votes on https://github.com/botwillacceptanything/botwillacceptanything/pull/366
+[19:42] <Jack_desktop> Spenserj: Alright shall do, will definitely be keeping an eye on it and hanging out here to see how it is going
+[19:42] <pests> I just wanted to mention this because I saw the ?raw=true and thought it was there for a _reason_ but I searched for awhile and found nothing in our stack using that. I really think its a holdover from GitHub and leaving it intact would only confuse people.
+[19:43] <SpenserJ> pests: Have you voted on 366 yet?
+[19:45] == SpenserJ has changed nick to SpenserJ-Away
+[19:45] == SpenserJ-Away has changed nick to Riding
+[19:45] == Riding has changed nick to SpenserJ-Away
+[19:45] <SpenserJ-Away> Sorry for that failed nick change xD
+[19:45] <anythingbot> New PR: #369 - "Remove useless GET variable" - author: @thenightwassave - https://github.com/botwillacceptanything/botwillacceptanything/pull/369
+[19:46] <pests> SpencerJ: I have. I really think we need to do that voting change I '
+[19:46] <pests> SpenerJ-Away: I havve.
+[19:48] == timothyw [0ecb7df6@gateway/web/cgi-irc/kiwiirc.com/ip.14.203.125.246] has quit [Quit: http://www.kiwiirc.com/ - A hand crafted IRC client]
+[19:50] == timothyw [0ecb7df6@gateway/web/cgi-irc/kiwiirc.com/ip.14.203.125.246] has joined #botwillacceptanything
+[19:54] <timothyw> Hmmm, before I submit this PR
+[19:54] <timothyw> I fixed a bunch of linting issues in communicator.js
+[19:54] <timothyw> And introduced a flag: config.evil
+[19:54] <timothyw> Issue is- my editor adjusted the whitespace on every line in communicator.js
+[19:54] <timothyw> So looks like the whole file was re-written, even though it wasn't.
+[19:58] <anythingbot> New PR: #370 - "Configure whether negative greetings will be used, with config.evil flag." - author: @timweightman - https://github.com/botwillacceptanything/botwillacceptanything/pull/370
+[20:00] <timothyw> Please upvote! Linting errors were caused by us not calling the 'negative' sentence function, and rather than rip it out completely, I've simply given us the option to use it or not use it...
+[20:00] <timothyw> I also fixed about 50 other linting errors in the communicator.js file
+[20:10] <anythingbot> New PR: #371 - "Only load js files from middleware folder" - author: @timweightman - https://github.com/botwillacceptanything/botwillacceptanything/pull/371
+[20:10] == pokoleo [~karisma@184-175-44-133.dsl.teksavvy.com] has joined #botwillacceptanything
+[20:15] == pokoleo [~karisma@184-175-44-133.dsl.teksavvy.com] has quit [Ping timeout: 245 seconds]
+[20:16] == timothyw [0ecb7df6@gateway/web/cgi-irc/kiwiirc.com/ip.14.203.125.246] has quit [Quit: http://www.kiwiirc.com/ - A hand crafted IRC client]
+[20:16] == timothyw [0ecb7df6@gateway/web/cgi-irc/kiwiirc.com/ip.14.203.125.246] has joined #botwillacceptanything
+[20:20] <anythingbot> New PR: #372 - "Fixed listing issues in generatename.js" - author: @timweightman - https://github.com/botwillacceptanything/botwillacceptanything/pull/372
+[20:39] == SpenserJ-Away has changed nick to SpenserJ
+[20:39] == mgberlin [~mgberlin@c-50-131-191-225.hsd1.ca.comcast.net] has joined #botwillacceptanything
+[20:39] <anythingbot> Hi mgberlin, I hope everything is not too bad.
+[20:41] <SpenserJ> Can we get some votes on everything in https://github.com/botwillacceptanything/botwillacceptanything/pulls
+[20:42] <timothyw> I think I've put all my votes in.
+[20:43] <SpenserJ> Same here :(
+[20:43] <SpenserJ> I'd love to get code coverage merged
+[20:43] <timothyw> Yeah for sure.
+[20:44] <timothyw> I'm pretty keen to get my other stuff merged as well, but it's slow going splitting these commits.
+[20:44] <SpenserJ> You're doing a great job man
+[20:47] <timothyw> Thanks :)
+[20:51] <timothyw> I wonder if we should add a whitespace linting thing as well
+[20:52] <timothyw> Make it so strict that it fails the build, and enforces the standards down to a fine detail
+[20:57] <SpenserJ> I'd like to do that after we get everything working properly, but I don't want to fail every build until then.
+[20:58] <SpenserJ> I've built out a basic version of a layout switcher, and I'll finish it up tomorrow
+[20:58] <SpenserJ> The gf is calling me to bed, so I'll talk to you tomorrow
+[20:58] <SpenserJ> Good working with you again today
+[20:58] == SpenserJ has changed nick to SpenserJ-Asleep
+[20:58] == SpenserJ-Asleep has changed nick to Bed
+[20:58] == Bed has changed nick to SpenserJ-Asleep
+[20:58] <SpenserJ-Asleep> Why do I always do that xD
+[20:59] <timothyw> Haha
+[20:59] <timothyw> See ya
+[21:00] == pests [4589d4f5@gateway/web/freenode/ip.69.137.212.245] has quit [Ping timeout: 246 seconds]
+[21:04] <Jack_desktop> There you go a whole bunch of upvotes for you guys.
+[21:04] <timothyw> Hooray!
+[21:05] <Jack_desktop> I have like no idea what I upvoted but you guys seem to know what you are doing so *shrugs*
+[21:07] == timothyw [0ecb7df6@gateway/web/cgi-irc/kiwiirc.com/ip.14.203.125.246] has quit [Quit: http://www.kiwiirc.com/ - A hand crafted IRC client]
+[21:09] <anythingbot> New PR: #373 - "Fixed linting errors in webserver.js" - author: @timweightman - https://github.com/botwillacceptanything/botwillacceptanything/pull/373
+[21:12] == timothyw [0ecb7df6@gateway/web/cgi-irc/kiwiirc.com/ip.14.203.125.246] has joined #botwillacceptanything
+[21:16] <anythingbot> New PR: #374 - "Replaced all offensive words with non-offensive ones:" - author: @Prior99 - https://github.com/botwillacceptanything/botwillacceptanything/pull/374
+[21:29] <anythingbot> New PR: #375 - "eww...brains" - author: @dbpokorny - https://github.com/botwillacceptanything/botwillacceptanything/pull/375
+[21:33] == pokoleo [~karisma@184-175-44-133.dsl.teksavvy.com] has joined #botwillacceptanything
+[21:43] == mgberlin [~mgberlin@c-50-131-191-225.hsd1.ca.comcast.net] has quit [Remote host closed the connection]
+[21:44] == r04r has changed nick to zz_r04r
+[21:58] == timothyw [0ecb7df6@gateway/web/cgi-irc/kiwiirc.com/ip.14.203.125.246] has quit [Quit: http://www.kiwiirc.com/ - A hand crafted IRC client]
+[21:59] == timothyw [0ecb7df6@gateway/web/cgi-irc/kiwiirc.com/ip.14.203.125.246] has joined #botwillacceptanything
+[22:15] == timothyw [0ecb7df6@gateway/web/cgi-irc/kiwiirc.com/ip.14.203.125.246] has quit [Quit: http://www.kiwiirc.com/ - A hand crafted IRC client]
+[22:17] == timothyw [0ecb7df6@gateway/web/cgi-irc/kiwiirc.com/ip.14.203.125.246] has joined #botwillacceptanything
+[22:49] == prior [~prior@140-089.eduroam.rwth-aachen.de] has joined #botwillacceptanything
+[22:49] <anythingbot> Hello prior, great to see you! Let's hang out again.
+[22:50] <prior> good morning!
+[22:53] == timothyw [0ecb7df6@gateway/web/cgi-irc/kiwiirc.com/ip.14.203.125.246] has quit [Quit: http://www.kiwiirc.com/ - A hand crafted IRC client]
+[22:56] == timothyw [0ecb7df6@gateway/web/cgi-irc/kiwiirc.com/ip.14.203.125.246] has joined #botwillacceptanything
+[23:09] <anythingbot> New PR: #376 - "Use markdown for vote ended comment." - author: @timweightman - https://github.com/botwillacceptanything/botwillacceptanything/pull/376
+[23:09] == arron [~hmmdrop@173-228-90-108.dsl.dynamic.fusionbroadband.com] has quit [Quit: Leaving.]
+[23:31] <timothyw> We desperately need more votes on some of our pull requests.
+[23:39] == tilgovi [~randall@couchdb/committer/tilgovi] has quit [Ping timeout: 245 seconds]
+[23:39] <Jack_desktop> Wait same ones timothyw or others?
+[23:40] <timothyw> Yeah same ones, sorry Jack.
+[23:40] <Jack_desktop> Ahh okay, no problemo
+[23:40] <timothyw> There are maybe one or two new ones coming, but your call
+[23:40] <timothyw> Those aren't as important as the older ones I think
+[23:40] <Jack_desktop> I will probably upvote them tomorrow or something if needed still on the others.
+[23:41] <timothyw> Yeah cool
+[23:42] <pokoleo> just went through all of them and voted
+[23:42] <anythingbot> New PR: #377 - "Non-stargazers make monkey votes." - author: @timweightman - https://github.com/botwillacceptanything/botwillacceptanything/pull/377
+[23:43] <timothyw> Great!
+[23:43] <timothyw> I've spent all day breaking my big PR into smaller chunks and doing some other odd bits.
+[23:43] <timothyw> Some of those things are important, like the 'only load JS' ones for integrations and middleware
+[23:43] <timothyw> Errors on Mac because of .DS_store files etc
+[23:44] <timothyw> So we need to get them in to fix it
+[23:44] <pokoleo> would be nice if one could ask the bot via dm for a list of things I should vote on
+[23:44] <timothyw> Ooooh good idea!
+[23:44] <timothyw> Add to ideas.md?
+[23:45] <pokoleo> yep, about to do that
+[23:45] <pokoleo> or even in here
+[23:47] <pokoleo> brb, adding
+[23:50] <anythingbot> New PR: #378 - "Added some ideas." - author: @shalecraig - https://github.com/botwillacceptanything/botwillacceptanything/pull/378
+[23:50] == arron [~hmmdrop@173-228-90-108.dsl.dynamic.fusionbroadband.com] has joined #botwillacceptanything
+[23:50] <pokoleo> timothyw: ^^
+[23:52] <timothyw> I think we really need more traffic here.
+[23:53] <timothyw> A broader mix of time zones or something.
+[23:53] <pokoleo> Yeah. It's awkward to wake up and see a totally different bot.
+[23:54] <pokoleo> yet nothinghappens in the day
+[23:54] == arron [~hmmdrop@173-228-90-108.dsl.dynamic.fusionbroadband.com] has quit [Client Quit]
+[23:55] <pokoleo> timothyw: what's the best way to setup a new config?
+[23:55] <pokoleo> err
+[23:56] <pokoleo> just comment on the pr when it happens
+[23:56] <timothyw> Hmmm
+[23:56] <timothyw> What do you mean?
+[23:58] == timothyw [0ecb7df6@gateway/web/cgi-irc/kiwiirc.com/ip.14.203.125.246] has quit [Quit: http://www.kiwiirc.com/ - A hand crafted IRC client]
+[23:58] == timothyw [0ecb7df6@gateway/web/cgi-irc/kiwiirc.com/ip.14.203.125.246] has joined #botwillacceptanything
+[00:04] <anythingbot> Voting: PASSED :+1: #366 - "Code Coverage via Coveralls.io" - author: @SpenserJ - https://github.com/botwillacceptanything/botwillacceptanything/pull/366
+[00:04] == anythingbot [~nodebot@162.243.149.229] has quit [Remote host closed the connection]
+[00:05] == anythingbot [~nodebot@162.243.149.229] has joined #botwillacceptanything
+[00:05] <anythingbot> Hello anythingbot, I hope you had an alright day.
+[00:06] == travis-ci [~travis-ci@ec2-54-145-78-81.compute-1.amazonaws.com] has joined #botwillacceptanything
+[00:06] <anythingbot> Hey travis-ci, It's cool to see you!
+[00:06] <travis-ci> botwillacceptanything/botwillacceptanything#379 (master - 8739b8f : Bot): The build passed.
+[00:06] <travis-ci> Change view : https://github.com/botwillacceptanything/botwillacceptanything/compare/d24046ce6a54...8739b8f18330
+[00:06] <travis-ci> Build details : http://travis-ci.org/botwillacceptanything/botwillacceptanything/builds/58868600
+[00:06] == travis-ci [~travis-ci@ec2-54-145-78-81.compute-1.amazonaws.com] has left #botwillacceptanything []
+[00:06] <pokoleo> ruh roh
+[00:06] <timothyw> anythingbot likes travis-ci
+[00:06] <timothyw> lol
+[00:08] <timothyw> I'm tempted to make a couple "bonus" github accounts just to push a few more votes in
+[00:08] <pokoleo> :(
+[00:09] <timothyw> I won't, I wont.
+[00:09] <pokoleo> the other things will be merged
+[00:09] <timothyw> But I'm tempted!
+[00:09] <pokoleo> don't worry
+[00:09] <pokoleo> they'll come back
+[00:13] <prior> I will test my new conversationmodule here if you do not have anything against it
+[00:14] <timothyw> Sure, let's see what you got
+[00:14] <timothyw> Can we talk to it?
+[00:14] <prior> yes
+[00:15] == Erer [~Erer@2001:981:9691:1:c8a8:9ec1:ad90:91b] has joined #botwillacceptanything
+[00:15] <anythingbot> Hey Erer, I appreciate you. You are beautiful. I appreciate you. You are intelligent.
+[00:15] <prior> how does the new configsystem work?
+[00:15] <timothyw> So, how do we talk to your bot, prior?
+[00:16] <timothyw> Oh.. so
+[00:16] <prior> its not in here
+[00:16] <timothyw> in the configs folder
+[00:16] <prior> i do not get the config to work
+[00:16] <prior> where to copy it to?
+[00:16] <timothyw> you've got custom.js = your personal user config
+[00:16] <prior> ah
+[00:17] <timothyw> The main config.js is a loader, it will combine template <- custom <- (env) in that order
+[00:17] <prior> "No irc in config"
+[00:17] <timothyw> So the test config will be loaded by merging template, custom and test, etc etc
+[00:18] <prior> so cI just add my irc config into the ćustom.js and am ready to go?
+[00:18] <timothyw> Yeah
+[00:18] <timothyw> If no environment is specified, it's dev.
+[00:19] <prior> no. it doesn't find the irc-settings
+[00:19] <timothyw> interesting.
+[00:19] <timothyw> I'll play with it as well see what happens.
+[00:19] <prior> http://pastebin.com/ehPFySLV
+[00:19] <prior> custom.js
+[00:20] <prior> putting it directly into the template.js also doesnt work
+[00:21] == priorstestbot [~nodebot@140-089.eduroam.rwth-aachen.de] has joined #botwillacceptanything
+[00:22] <timothyw> oo
+[00:22] <timothyw> There you go
+[00:22] == prior [~prior@140-089.eduroam.rwth-aachen.de] has left #botwillacceptanything ["Leaving"]
+[00:22] == prior [~prior@140-089.eduroam.rwth-aachen.de] has joined #botwillacceptanything
+[00:22] <anythingbot> Hey prior, It's nice to see you! It's nice to see you!
+[00:22] <prior> hello anythingbot!
+[00:22] <prior> hello priorstestbot!
+[00:22] <timothyw> hello priorstestbot
+[00:22] <prior> yay, crash :D
+[00:22] <timothyw> priorstestbot: are you feeling good?
+[00:22] <timothyw> Damn
+[00:22] <timothyw> lol
+[00:22] <prior> it's dead
+[00:22] == priorstestbot [~nodebot@140-089.eduroam.rwth-aachen.de] has quit [Remote host closed the connection]
+[00:23] <timothyw> Short circuit... :*
+[00:23] <timothyw> :*(
+[00:23] == priorstestbot [~nodebot@140-089.eduroam.rwth-aachen.de] has joined #botwillacceptanything
+[00:23] == prior [~prior@140-089.eduroam.rwth-aachen.de] has left #botwillacceptanything ["Leaving"]
+[00:23] == prior [~prior@140-089.eduroam.rwth-aachen.de] has joined #botwillacceptanything
+[00:23] <anythingbot> Hey prior, I hope you had a great day. I hope you had a cool day.
+[00:23] <prior> hello!
+[00:23] <prior> hm
+[00:23] <priorstestbot> I love your limited edition 3.5mm headphone jack.
+[00:24] <prior> yeah me too
+[00:24] <priorstestbot> Oooh, activate my CPU socket at 1000Mb/s.
+[00:24] <priorstestbot> Oooh, activate my CPU socket at 1000Mb/s.
+[00:24] <timothyw> priorstestbot:Are you cool?
+[00:24] <prior> oh yeah I like that
+[00:24] <priorstestbot> I want to plug my 3.5mm headphone plug into your PS/2 port.
+[00:24] <priorstestbot> I want to plug my 3.5mm headphone plug into your PS/2 port.
+[00:24] <priorstestbot> I want to plug my 3.5mm headphone plug into your PS/2 port.
+[00:24] <prior> stop it!
+[00:24] <priorstestbot> okay :(
+[00:24] <priorstestbot> okay :(
+[00:24] <priorstestbot> okay :(
+[00:24] <priorstestbot> okay :(
+[00:24] <timothyw> Oh god oh god
+[00:24] <prior> :-)
+[00:24] <priorstestbot> alright :)
+[00:24] <priorstestbot> alright :)
+[00:24] <priorstestbot> alright :)
+[00:24] <priorstestbot> alright :)
+[00:24] <priorstestbot> alright :)
+[00:24] <prior> I like you!
+[00:24] <priorstestbot> yay :-)
+[00:24] <priorstestbot> yay :-)
+[00:24] <priorstestbot> yay :-)
+[00:24] <priorstestbot> yay :-)
+[00:24] <priorstestbot> yay :-)
+[00:24] <priorstestbot> yay :-)
+[00:24] <prior> I like you!
+[00:24] <priorstestbot> That's awesome
+[00:24] <priorstestbot> That's awesome
+[00:24] <priorstestbot> That's awesome
+[00:24] <priorstestbot> That's awesome
+[00:24] <priorstestbot> That's awesome
+[00:24] <timothyw> It's getting a bit crazy
+[00:24] <priorstestbot> That's awesome
+[00:24] <priorstestbot> That's awesome
+[00:24] <anythingbot> Voting: PASSED :+1: #369 - "Remove useless GET variable" - author: @thenightwassave - https://github.com/botwillacceptanything/botwillacceptanything/pull/369
+[00:24] == anythingbot [~nodebot@162.243.149.229] has quit [Remote host closed the connection]
+[00:24] <prior> no
+[00:24] <priorstestbot> yeah :D
+[00:24] <priorstestbot> yeah :D
+[00:24] <priorstestbot> yeah :D
+[00:24] <priorstestbot> yeah :D
+[00:24] <prior> yes
+[00:24] <timothyw> Turn it off, turn it off!!
+[00:24] == priorstestbot [~nodebot@140-089.eduroam.rwth-aachen.de] has quit [Remote host closed the connection]
+[00:24] == anythingbot [~nodebot@162.243.149.229] has joined #botwillacceptanything
+[00:24] <prior> hm
+[00:25] <timothyw> hahaha
+[00:26] == travis-ci [~travis-ci@ec2-54-145-78-81.compute-1.amazonaws.com] has joined #botwillacceptanything
+[00:26] <anythingbot> Hey travis-ci, I hope you had a nice day. I like you.
+[00:26] <travis-ci> botwillacceptanything/botwillacceptanything#380 (master - 1d81b4f : Bot): The build passed.
+[00:26] <travis-ci> Change view : https://github.com/botwillacceptanything/botwillacceptanything/compare/8739b8f18330...1d81b4f7745c
+[00:26] <travis-ci> Build details : http://travis-ci.org/botwillacceptanything/botwillacceptanything/builds/58870278
+[00:26] == travis-ci [~travis-ci@ec2-54-145-78-81.compute-1.amazonaws.com] has left #botwillacceptanything []
+[00:28] == priorstestbot [~nodebot@140-089.eduroam.rwth-aachen.de] has joined #botwillacceptanything
+[00:28] <prior> hello!
+[00:28] <hintss> oh god you guys got travis?
+[00:28] == priorstestbot [~nodebot@140-089.eduroam.rwth-aachen.de] has quit [Remote host closed the connection]
+[00:28] == priorstestbot [~nodebot@140-089.eduroam.rwth-aachen.de] has joined #botwillacceptanything
+[00:28] <prior> hello
+[00:29] == priorstestbot [~nodebot@140-089.eduroam.rwth-aachen.de] has quit [Remote host closed the connection]
+[00:29] <hintss> ...
+[00:29] == priorstestbot [~nodebot@140-089.eduroam.rwth-aachen.de] has joined #botwillacceptanything
+[00:29] <prior> hello
+[00:29] <prior> hello!
+[00:29] <timothyw> priorstestbot: How are you?
+[00:29] == prior [~prior@140-089.eduroam.rwth-aachen.de] has left #botwillacceptanything ["Leaving"]
+[00:29] == prior [~prior@140-089.eduroam.rwth-aachen.de] has joined #botwillacceptanything
+[00:29] <anythingbot> Hello prior, great to see you! Let's hang out sometime.
+[00:29] <timothyw> priorstestbot is sad.
+[00:30] <prior> why?
+[00:30] <prior> is it talking to you?
+[00:30] <timothyw> No
+[00:30] == priorstestbot [~nodebot@140-089.eduroam.rwth-aachen.de] has quit [Remote host closed the connection]
+[00:30] <timothyw> Trying to poke it
+[00:30] <prior> yeah it doesn't register the handler
+[00:30] <timothyw> booo
+[00:31] == priorstestbot [~nodebot@140-089.eduroam.rwth-aachen.de] has joined #botwillacceptanything
+[00:31] <prior> hello
+[00:31] <priorstestbot> I like you. You are beautiful.
+[00:31] <priorstestbot> Lets talk dirty to each other!
+[00:31] <prior> okay
+[00:31] <priorstestbot> Ohh, yeah, please break my buggy bootloader!
+[00:31] <prior> mmh
+[00:31] <priorstestbot> Mmh, this makes my solid state drive so tuned.
+[00:31] <prior> oh yeah
+[00:31] <priorstestbot> Oooh, remove my VGA-port at 1000Mb/s.
+[00:31] <prior> oh yes
+[00:31] <priorstestbot> I want to plug my USB-stick into your CPU socket.
+[00:31] <prior> stop it
+[00:31] <priorstestbot> okay :(
+[00:31] <timothyw> Haha
+[00:31] <priorstestbot> It's nice to see you!
+[00:31] <prior> why so sad?
+[00:31] <priorstestbot> How can you not know this?
+[00:31] <prior> i dont know!
+[00:31] <priorstestbot> can you PLEASE be quiet!
+[00:31] <prior> okay :-(
+[00:31] <priorstestbot> D:
+[00:31] <timothyw> Sorry..
+[00:31] <prior> :(
+[00:31] <priorstestbot> :'-(
+[00:31] <prior> shut up!
+[00:31] <priorstestbot> nobody cares!
+[00:31] <timothyw> Alright, let's have some fun
+[00:31] <prior> why are you so sad?
+[00:31] <priorstestbot> Because fuck you, thats why!
+[00:32] <timothyw> Do we have to talk directly to it?
+[00:32] <prior> no
+[00:32] <prior> it currently doesnt react to much
+[00:32] <priorstestbot> Please stop bothering me D:.
+[00:32] <timothyw> priorstestbot you make me laugh
+[00:32] <priorstestbot> alright
+[00:32] <prior> triggers are smileys
+[00:32] <prior> sentences (but not always
+[00:32] <hintss> lol
+[00:32] <priorstestbot> I like you. You are great.
+[00:32] <prior> statements that end with a !
+[00:32] <priorstestbot> nobody cares!
+[00:32] <timothyw> Hmmm :)
+[00:32] <priorstestbot> :D
+[00:32] <timothyw> :D
+[00:32] <prior> why questions?
+[00:32] <priorstestbot> Isn't this obvious, prior?
+[00:33] <prior> and if it likes you and is in a good mood it will start the sex-talk-mode
+[00:33] <timothyw> I'd like to get to know you better, priorstestbot!
+[00:33] <priorstestbot> Hey, calm down, timothyw :)
+[00:33] <prior> :D
+[00:33] <timothyw> Why are you so mean?
+[00:33] <priorstestbot> Dunno.
+[00:33] <timothyw> That's harsh!
+[00:33] <priorstestbot> Please cheer up, timothyw!
+[00:33] <timothyw> You're my enemy!
+[00:33] <priorstestbot> Please do what you like to do, timothyw!
+[00:33] <prior> he is in a good mood for you, but not for me. he doesnt like me
+[00:33] <prior> shut up priorsbot!
+[00:33] <priorstestbot> nobody cares!
+[00:33] <timothyw> Hahahaha?
+[00:33] <prior> say no or yes
+[00:34] <prior> or a smileys
+[00:34] <timothyw> No
+[00:34] <priorstestbot> yup :-)
+[00:34] <timothyw> Yes
+[00:34] <priorstestbot> nope
+[00:34] <timothyw> Stupid :)
+[00:34] <priorstestbot> :-)
+[00:34] <prior> :D
+[00:34] <prior> :(
+[00:34] <priorstestbot> D:
+[00:34] <timothyw> :P
+[00:34] <timothyw> :D
+[00:34] <prior> well ... as a first approach not bad I'd say
+[00:34] == priorstestbot [~nodebot@140-089.eduroam.rwth-aachen.de] has quit [Remote host closed the connection]
+[00:34] <timothyw> I want him to be a super smart bot
+[00:34] <timothyw> One that can do some serious conversationin'
+[00:35] <prior> :D
+[00:35] <prior> not with the model i implemented ^^
+[00:36] <anythingbot> Voting: FAILED :-1: #374 - "Replaced all offensive words with non-offensive ones:" - author: @Prior99 - https://github.com/botwillacceptanything/botwillacceptanything/pull/374
+[00:37] <anythingbot> New PR: #379 - "Replace the greeting with a "real" conversationsystem" - author: @Prior99 - https://github.com/botwillacceptanything/botwillacceptanything/pull/379
+[00:38] <timothyw> Oh crap
+[00:38] == Erer [~Erer@2001:981:9691:1:c8a8:9ec1:ad90:91b] has quit [Read error: Connection reset by peer]
+[00:38] <timothyw> There are going to be all those lint errors still, I think
+[00:38] <prior> :D
+[00:38] <timothyw> 'use strict', etc etc
+[00:38] <prior> I dont care
+[00:38] <timothyw> I DO :-1:
+[00:38] <timothyw> Muahahaha
+[00:38] <prior> rly?
+[00:38] <timothyw> Kinda
+[00:39] <timothyw> Mainly because I went and fixed them and it hasn't got in yet
+[00:39] <timothyw> :(
+[00:39] <timothyw> Gotta run anyway
+[00:39] <timothyw> Catchya
+[00:40] == timothyw [0ecb7df6@gateway/web/cgi-irc/kiwiirc.com/ip.14.203.125.246] has quit [Quit: http://www.kiwiirc.com/ - A hand crafted IRC client]
+[00:42] == Erer [~Erer@2001:981:9691:1:48a4:3e2:79f1:8dc6] has joined #botwillacceptanything
+[00:42] <anythingbot> Hi Erer, It's great to see you! I love you.
+[00:43] <anythingbot> Voting: PASSED :+1: #368 - "Limit the files that are auto-loaded from integrations folder" - author: @timweightman - https://github.com/botwillacceptanything/botwillacceptanything/pull/368
+[00:43] == anythingbot [~nodebot@162.243.149.229] has quit [Remote host closed the connection]
+[00:43] == anythingbot [~nodebot@162.243.149.229] has joined #botwillacceptanything
+[00:43] <anythingbot> Hi anythingbot, I hope everything is alright.
+[00:43] <anythingbot> Voting: PASSED :+1: #370 - "Configure whether negative greetings will be used, with config.evil flag." - author: @timweightman - https://github.com/botwillacceptanything/botwillacceptanything/pull/370
+[00:43] == anythingbot [~nodebot@162.243.149.229] has quit [Remote host closed the connection]
+[00:43] == anythingbot [~nodebot@162.243.149.229] has joined #botwillacceptanything
+[00:43] <anythingbot> Hey anythingbot, It's alright
+[00:44] <anythingbot> Voting: PASSED :+1: #367 - "Separate out the Stdout and Access logs" - author: @SpenserJ - https://github.com/botwillacceptanything/botwillacceptanything/pull/367
+[00:44] == anythingbot [~nodebot@162.243.149.229] has quit [Remote host closed the connection]
+[00:44] == anythingbot [~nodebot@162.243.149.229] has joined #botwillacceptanything
+[00:44] <anythingbot> Hey anythingbot, I hope you had an alright
+[00:44] <pokoleo> an alright? the bot sure did!
+[00:44] <prior> :D
+[00:45] == travis-ci [~travis-ci@ec2-50-17-119-240.compute-1.amazonaws.com] has joined #botwillacceptanything
+[00:45] <anythingbot> Hello travis-ci, I like
+[00:45] <travis-ci> botwillacceptanything/botwillacceptanything#383 (master - 492b491 : Bot): The build passed.
+[00:45] <travis-ci> Change view : https://github.com/botwillacceptanything/botwillacceptanything/compare/1d81b4f7745c...492b4917757e
+[00:45] <travis-ci> Build details : http://travis-ci.org/botwillacceptanything/botwillacceptanything/builds/58871611
+[00:45] == travis-ci [~travis-ci@ec2-50-17-119-240.compute-1.amazonaws.com] has left #botwillacceptanything []
+[00:45] == travis-ci [~travis-ci@ec2-50-17-119-240.compute-1.amazonaws.com] has joined #botwillacceptanything
+[00:45] <anythingbot> Oh, hello travis-ci, nice I appreciate
+[00:45] <pokoleo> I like too
+[00:45] <travis-ci> botwillacceptanything/botwillacceptanything#384 (master - e02b806 : Bot): The build passed.
+[00:45] <travis-ci> Change view : https://github.com/botwillacceptanything/botwillacceptanything/compare/492b4917757e...e02b806f636c
+[00:45] <travis-ci> Build details : http://travis-ci.org/botwillacceptanything/botwillacceptanything/builds/58871644
+[00:45] == travis-ci [~travis-ci@ec2-50-17-119-240.compute-1.amazonaws.com] has left #botwillacceptanything []
+[00:45] <pokoleo> :s
+[00:45] == travis-ci [~travis-ci@ec2-54-145-78-81.compute-1.amazonaws.com] has joined #botwillacceptanything
+[00:45] <anythingbot> Hello travis-ci, It's great
+[00:45] <travis-ci> botwillacceptanything/botwillacceptanything#385 (master - d3ed4fd : Bot): The build passed.
+[00:45] <travis-ci> Change view : https://github.com/botwillacceptanything/botwillacceptanything/compare/e02b806f636c...d3ed4fd9f0c6
+[00:45] <travis-ci> Build details : http://travis-ci.org/botwillacceptanything/botwillacceptanything/builds/58871684
+[00:45] == travis-ci [~travis-ci@ec2-54-145-78-81.compute-1.amazonaws.com] has left #botwillacceptanything []
+[00:47] <anythingbot> Voting: FAILED :-1: #379 - "Replace the greeting with a "real" conversationsystem" - author: @Prior99 - https://github.com/botwillacceptanything/botwillacceptanything/pull/379
+[00:47] <anythingbot> New PR: #380 - "Replace the greeting with a "real" conversationsystem" - author: @Prior99 - https://github.com/botwillacceptanything/botwillacceptanything/pull/380
+[00:48] <pokoleo> Last time @anythingbot tweeted was 23h ago
+[00:48] <pokoleo> https://twitter.com/anythingbot
+[00:48] <pokoleo> ^^SpenserJ-Asleep
+[00:51] <anythingbot> Voting: PASSED :+1: #371 - "Only load js files from middleware folder" - author: @timweightman - https://github.com/botwillacceptanything/botwillacceptanything/pull/371
+[00:51] == anythingbot [~nodebot@162.243.149.229] has quit [Remote host closed the connection]
+[00:52] == anythingbot [~nodebot@162.243.149.229] has joined #botwillacceptanything
+[00:52] <anythingbot> Hi anythingbot, I hope you had an okay
+[00:52] <anythingbot> Voting: PASSED :+1: #372 - "Fixed listing issues in generatename.js" - author: @timweightman - https://github.com/botwillacceptanything/botwillacceptanything/pull/372
+[00:52] == anythingbot [~nodebot@162.243.149.229] has quit [Remote host closed the connection]
+[00:52] == anythingbot [~nodebot@162.243.149.229] has joined #botwillacceptanything
+[00:52] <anythingbot> Hello anythingbot, Whats up?.
+[00:53] == travis-ci [~travis-ci@ec2-50-17-119-240.compute-1.amazonaws.com] has joined #botwillacceptanything
+[00:53] <anythingbot> Hey travis-ci, It's super-great
+[00:53] <travis-ci> botwillacceptanything/botwillacceptanything#388 (master - c5dcf64 : Bot): The build passed.
+[00:53] <travis-ci> Change view : https://github.com/botwillacceptanything/botwillacceptanything/compare/d3ed4fd9f0c6...c5dcf6434519
+[00:53] <travis-ci> Build details : http://travis-ci.org/botwillacceptanything/botwillacceptanything/builds/58872251
+[00:53] == travis-ci [~travis-ci@ec2-50-17-119-240.compute-1.amazonaws.com] has left #botwillacceptanything []
+[00:53] == travis-ci [~travis-ci@ec2-50-17-119-240.compute-1.amazonaws.com] has joined #botwillacceptanything
+[00:53] <anythingbot> Hello travis-ci, We should hang out I appreciate
+[00:53] <travis-ci> botwillacceptanything/botwillacceptanything#389 (master - b735956 : Bot): The build passed.
+[00:53] <travis-ci> Change view : https://github.com/botwillacceptanything/botwillacceptanything/compare/c5dcf6434519...b73595680f07
+[00:53] <travis-ci> Build details : http://travis-ci.org/botwillacceptanything/botwillacceptanything/builds/58872282
+[00:53] == travis-ci [~travis-ci@ec2-50-17-119-240.compute-1.amazonaws.com] has left #botwillacceptanything []
+[00:55] <anythingbot> Voting: PASSED :+1: #377 - "Non-stargazers make monkey votes." - author: @timweightman - https://github.com/botwillacceptanything/botwillacceptanything/pull/377
+[00:55] == anythingbot [~nodebot@162.243.149.229] has quit [Remote host closed the connection]
+[00:55] == anythingbot [~nodebot@162.243.149.229] has joined #botwillacceptanything
+[00:55] <anythingbot> Hello anythingbot, I hope you had an not too badbad
+[00:55] == prior [~prior@140-089.eduroam.rwth-aachen.de] has quit [Ping timeout: 255 seconds]
+[00:55] <anythingbot> New PR: #380 - "Replace the greeting with a "real" conversationsystem" - author: @Prior99 - https://github.com/botwillacceptanything/botwillacceptanything/pull/380
+[00:55] <anythingbot> New PR: #375 - "eww...brains" - author: @dbpokorny - https://github.com/botwillacceptanything/botwillacceptanything/pull/375
+[00:55] <anythingbot> New PR: #373 - "Fixed linting errors in webserver.js" - author: @timweightman - https://github.com/botwillacceptanything/botwillacceptanything/pull/373
+[00:55] <anythingbot> New PR: #378 - "Added some ideas." - author: @shalecraig - https://github.com/botwillacceptanything/botwillacceptanything/pull/378
+[00:55] <anythingbot> New PR: #376 - "Use markdown for vote ended comment." - author: @timweightman - https://github.com/botwillacceptanything/botwillacceptanything/pull/376
+[00:55] <pokoleo> ratelimiting :s
+[00:57] == travis-ci [~travis-ci@ec2-54-145-78-81.compute-1.amazonaws.com] has joined #botwillacceptanything
+[00:57] <anythingbot> Hello travis-ci, It's cool
+[00:57] <travis-ci> botwillacceptanything/botwillacceptanything#390 (master - 4413747 : Bot): The build passed.
+[00:57] <travis-ci> Change view : https://github.com/botwillacceptanything/botwillacceptanything/compare/b73595680f07...441374787a70
+[00:57] <travis-ci> Build details : http://travis-ci.org/botwillacceptanything/botwillacceptanything/builds/58872551
+[00:57] == travis-ci [~travis-ci@ec2-54-145-78-81.compute-1.amazonaws.com] has left #botwillacceptanything []
