@@ -1,0 +1,72 @@
+Anything Request Live
+
+1. The anythingbot is currently broadcasting a video feed 24/7
+
+    1.1 The default video feed may be interrupted by preempting to demonstrate the
+	concept of dynamically replacing one video feed with another
+
+2. As of 5/19/2015 the video feed is clunky:
+
+	2.1 It requires the user to reload the page when a youtube video or soundcloud
+	track ends.
+	
+	2.2 The video preemption does not push a page reload from the server...all
+	users must reload the video feed in order to watch the preempting feed.
+
+3. Point 2.1 can be addressed with a call to setTimeout in the browser client at
+time of page load corresponding to the remaining duration of the current youtube
+video / soundcloud track. Point 2.2 can be addressed with websockets
+
+4. Example application: "Anything Request Live". Create a reddit thread in
+/r/botwillacceptanything with the title "ARL 5/25/2015 8:00pm PDT". The bot polls
+the subreddit every 20 minutes and puts up a sign (akin to the "voting started"
+sign/template for github PRs) saying voting has started for the ARL program that
+will air at the time specified in the title of the thread. Reddit users then
+post youtube videos / soundcloud tracks in top-level comments in the thread. Call
+such a thread an "ARL announcement thread". The top-level comment must contain the
+same data as a media entry in lib/media.js (name, duration, URL,
+youtube/soundcloud ...yes this should be denormalized, when people vote they
+should know these details without having to click through to the media content).
+It will now be possible for reddit users to vote on the content they would like to
+see when the program airs.
+
+At the program "air time" (the time and date specified in the title of the
+announcement thread) the video feed is preempted with:
+
+    4.1 an introduction ("MTV's TRL Opening Sequence Fall '04" 
+    https://www.youtube.com/watch?v=QCZe5yCujkY 0:00:15) followed by
+
+	4.2 the top 10 media items played in sequence (in order from 10th to 1st)
+	ranked by the number of votes in the announcement thread.
+	
+5. In order to implement this, bot must be able to:
+
+    5.1 extract data from reddit threads
+	
+	5.2 parse reddit comments and turn them into media items
+
+	5.3 count reddit comment votes (and cache data from 5.2 and 5.3)
+	
+	5.3 assemble the ARL program playlist
+
+	5.4 schedule the program air date and time
+
+The bot can poll /r/botwillacceptanything once every 20 minutes looking for ARL
+announcement threads. Once it sees a thread, it will check for sanity (the air
+date must be in the future, among other things) and post a "voting started" sign
+with the voting rules. It will also check the comments. Any comments with
+malformed media item entries will be flagged (the bot will comment on the
+top-level comment indicating that it can't process the media item).
+
+For diagnostics and testing, the http endpoint /arl can display information about
+the next ARL program to air (the media items submitted to the announcement thread
+and the current ranking) all taken from the anythingbot's cache (the anythingbot
+will cache the relevant data for ARL programs just as it does for PRs)
+
+This means that the votes could be up to 20 minutes out of date. In order to keep
+reddit users from gaming the votes near the air time, the bot can slightly
+randomize the time it compiles the ARL votes (just as it does with the PR votes).
+In any case reddit doesn't support webhooks in the same way github does, so
+polling will have to do.
+
+
