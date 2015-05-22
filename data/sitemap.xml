@@ -30,6 +30,11 @@
   <priority>0.80</priority>
 </url>
 <url>
+  <loc>http://botwillacceptanything.com/usa/</loc>
+  <changefreq>always</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
   <loc>http://botwillacceptanything.com/votes/</loc>
   <changefreq>always</changefreq>
   <priority>0.80</priority>
