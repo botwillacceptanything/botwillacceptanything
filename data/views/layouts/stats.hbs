@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="icon" type="image/ico" href="/favicon.ico?raw=true">
+        <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+		<script>
+
+function updateStats(memuse) {
+	if (memuse.rss != null) {
+		document.getElementById('rss').innerHTML = memuse.rss;
+		document.getElementById('heapTotal').innerHTML = memuse.heapTotal;
+		document.getElementById('heapUsed').innerHTML = memuse.heapUsed;
+	} else {
+		console.log(memuse);
+	}
+}
+var host = window.document.location.host.replace(/:.*/, '');
+var ws = new WebSocket('ws://' + host + ':3001');
+ws.onmessage = function (event) {
+    updateStats(JSON.parse(event.data));
+};
+
+		</script>
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+        <title>Bot Will Accept Anything</title>
+        <meta name="author" content="Sync Music Video">
+        <link rel="stylesheet" type="text/css" href="/css/media.css" />
+    </head>
+    <body><h1 id="Header">Stats</h1>
+
+    <div class="Content">
+        {{{body}}}
+    </div>
+    </body>
+</html>
