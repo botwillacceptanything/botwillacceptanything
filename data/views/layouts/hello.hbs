@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="icon" type="image/ico" href="/favicon.ico?raw=true">
+        <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+        <script>
+
+function updateHello(hellomsg) {
+    var helloElt = document.createElement("div");
+    helloElt.innerHTML = hellomsg.content;
+	document.getElementById('hellodiv').appendChild(helloElt);
+}
+var host = window.document.location.host.replace(/:.*/, '');
+var ws = new WebSocket('ws://' + host + ':3010');
+ws.onmessage = function (event) {
+    updateHello(JSON.parse(event.data));
+};
+
+function sayhello(content, broadcast) {
+    if (ws.readyState != WebSocket.OPEN) {
+        console.log("websocket is closed");
+        return;
+    }
+    if (!content) {
+        content = 'hello';
+    }
+    if (broadcast) {
+        broadcast = 1;
+    } else {
+        broadcast = 0;
+    }
+    var data = {
+        content: content,
+        broadcast: broadcast
+    };
+    ws.send(JSON.stringify(data));
+    console.log("sent hello message to server");
+}
+
+        </script>
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+        <title>Bot Will Accept Anything</title>
+        <meta name="author" content="Sync Music Video">
+        <link rel="stylesheet" type="text/css" href="/css/media.css" />
+    </head>
+    <body><h1 id="Header">Websockets hello world</h1>
+
+    <div class="Content">
+        {{{body}}}
+    </div>
+    </body>
+</html>
