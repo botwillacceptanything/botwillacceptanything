@@ -80,7 +80,7 @@
 
       it("should ignore a PR that doesn't have enough votes", function (done) {
         var testPR = _.merge({}, basePR);
-        addComments(testPR, 3, 0);
+        addComments(testPR, 1, 0);
         getVoters(testPR).forEach(function (user) {
           voting.starGazers[user] = true;
         });
@@ -94,7 +94,7 @@
       it("should edit non-stargazers' comments", function (done) {
         var mockEditComment = mock.issues.editComment();
         var testPR = _.merge({}, basePR);
-        addComments(testPR, 3, 0);
+        addComments(testPR, 2, 0);
         getVoters(testPR).slice(0, -1).forEach(function (user) {
           voting.starGazers[user] = true;
         });

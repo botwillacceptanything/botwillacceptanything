@@ -37,8 +37,8 @@
        voting: {
          period: 15,
          period_jitter: 0.2,
-         minVotes: 7,
-         supermajority: 0.65,
+         minVotes: 5,
+         supermajority: 0.5,
          pollInterval: 3, // Minutes
        },
 
