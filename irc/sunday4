@@ -1,0 +1,817 @@
+:12] <avdg> but its a stub
+[12:12] <anythingbot> New PR: #248 - "All URLs point to the repo in the config and not the main... Useful for testing new favicons and such" - author: @AlphaT3ch - https://github.com/botwillacceptanything/botwillacceptanything/pull/248
+[12:12] <korczis> looks good to me
+[12:13] <avdg> though each user needs to democratically add their hashed password in there
+[12:14] <avdg> but meh, that adds a layer of trust
+[12:14] <korczis> https://github.com/botwillacceptanything/botwillacceptanything/pull/248/files
+[12:14] <avdg> the vault will determine access rights
+[12:14] <korczis> somebody should pass config to template
+[12:15] <korczis> https://github.com/AlphaT3ch/botwillacceptanything/blob/master/lib/routes/commits.js#L18..L21
+[12:15] <korczis> AlphaTech: Did you tested this? I will be surprised if it works as expected ..
+[12:15] <korczis> Because config is not passed to view ..
+[12:15] <AlphaTech> No
+[12:15] <AlphaTech> It isn't?
+[12:15] <korczis> see second arugment of res.render function
+[12:16] <korczis> what is passed as second argument to res.render function that is accessible from view template (hbs now)
+[12:16] <AlphaTech> https://github.com/AlphaT3ch/botwillacceptanything/blob/master/lib/routes/commits.js#L5
+[12:16] <korczis> it is just require
+[12:16] <korczis> .hbs does not have access to all variables
+[12:16] <korczis> only to variables which were passed
+[12:17] <AlphaTech> Oh
+[12:17] <AlphaTech> PR closed; how do I pass them
+[12:17] <korczis> it is easy
+[12:17] <korczis> add after this line
+[12:17] <korczis> https://github.com/AlphaT3ch/botwillacceptanything/blob/master/lib/routes/commits.js#L19
+[12:17] <korczis> config: config
+[12:18] <AlphaTech> Literally?
+[12:18] <AlphaTech> Just "config: config"?
+[12:18] <korczis> https://gist.github.com/korczis/324a3f9d4d1e593da4c1
+[12:19] <korczis> and now you can access {{config.blah}} from commits.hbs
+[12:19] <AlphaTech> Line 20?
+[12:19] <korczis> Yop
+[12:19] <AlphaTech> K
+[12:19] <korczis> you need to do the same for other routes/views ..
+[12:19] <AlphaTech> K
+[12:20] <korczis> let me know if this works ..
+[12:21] <korczis> btw, it will be nice to have this in template as well - https://github.com/botwillacceptanything/botwillacceptanything/blob/945a3a93464644ea9b421f19fd93484626178732/lib/routes/statistics.js#L19..L21
+[12:22] <AlphaTech> What about index.js?
+[12:22] <korczis> http://stackoverflow.com/questions/21843840/how-does-res-renderview-locals-callback-work-node-js-express-module
+[12:22] <AlphaTech> No var data
+[12:22] <korczis> index.js is not route ..
+[12:22] <korczis> it is main include
+[12:22] <dbpokorny_> suppose we had two bots running on :3000 and :3001, production (3000) and development (3001). Source code for both is maintained in parallel in the repo. Bot recognizes commits of a certain type, which are "replace prod code with dev code". Doubles the repo size but it means we can be really fast and loose about pushing changes to dev
+[12:22] <korczis> root route is root.js
+[12:22] <AlphaTech> K
+[12:23] <korczis> wait
+[12:23] <korczis> talking about line 41 in index.js ?
+[12:23] <dbpokorny_> because if dev blows up, the main is still fine. In fact, this will allow us to develop and stage features in parallel on :3002, :3003, ... just a thought
+[12:24] <korczis> data should be passed as well if they are needed in error404 view - https://github.com/botwillacceptanything/botwillacceptanything/blob/945a3a93464644ea9b421f19fd93484626178732/data/views/error404.hbs
+[12:24] <AlphaTech> korczis: I don't see "var data" in root.js or statistics.js but I found it in commits.js and stdout.js
+[12:25] <korczis> because they were not needed
+[12:25] <korczis> so they were not passed
+[12:25] <korczis> create
+[12:25] <korczis> var data = { config: config} ;
+[12:25] <korczis> and pass it as second argument to res.render
+[12:25] <korczis> and than you can access config from error404.hbs
+[12:25] <AlphaTech> K
+[12:26] <korczis> check answer - http://stackoverflow.com/questions/21843840/how-does-res-renderview-locals-callback-work-node-js-express-module
+[12:26] <korczis> res.render() function compiles your template (please don't use ejs), inserts locals there and creates html output out of those two things
+[12:29] <AlphaTech> korczis: Can you check my master branch? I don't know if I did it right or not
+[12:29] <korczis> send me a link to your master plsw
+[12:30] <korczis> nevermind, i got it
+[12:30] <AlphaTech> korczis: http://GitHub.com/AlphaT3ch/botwillacceptanything
+[12:30] <AlphaTech> Lol
+[12:31] <korczis> I am checking this - https://github.com/botwillacceptanything/botwillacceptanything/compare/master...AlphaT3ch:master
+[12:31] <korczis> looks good
+[12:32] <korczis> should be fine
+[12:32] <anythingbot> New PR: #249 - "Pointing URLs to config repo and not the main" - author: @AlphaT3ch - https://github.com/botwillacceptanything/botwillacceptanything/pull/249
+[12:32] <korczis> but it will be better if you test it locally
+[12:32] <korczis> ;-)
+[12:32] <AlphaTech> I can't dad
+[12:33] <AlphaTech> * xD
+[12:33] <AlphaTech> My Linux VPS is down
+[12:33] <korczis> why?
+[12:33] <AlphaTech> They're doing maintence
+[12:33] <korczis> locally
+[12:33] <korczis> not at your remote vps
+[12:33] <AlphaTech> I'm on a cell phone
+[12:33] <korczis> oh so
+[12:33] <korczis> :)
+[12:33] <AlphaTech> Heh
+[12:33] <korczis> you are editing templates on cell phone?
+[12:34] <AlphaTech> Yup
+[12:34] <dos1> >2015
+[12:34] <dos1> >not running node on your phone
+[12:34] <AlphaTech> Can you run node on an iPhone?
+[12:34] <dos1> >2015
+[12:34] <dos1> >iPhone
+[12:34] <AlphaTech> Lol
+[12:37] <AlphaTech> Someone should work on the bot running as a background process once you type in the GitHub username and password
+[12:37] <korczis> Someone should figure out how to pass github credentials withou typing them ..
+[12:38] <AlphaTech> Yeah, quite annoying
+[12:38] <korczis> If I restart the server hosting this app, I do not want to type credentials manually ..
+[12:38] <AlphaTech> Yup
+[12:39] <AlphaTech> Wait actually, make a simple Linux bash script for it
+[12:39] <korczis> for what?
+[12:39] <korczis> for typing credentials
+[12:39] <korczis> ?
+[12:39] <AlphaTech> Yeah
+[12:39] <dos1> you can add credentials to .git/config ...
+[12:40] <korczis> i woul prefer to pass them via commandline arguments, use environment variable or load them from config if specified
+[12:40] <korczis> after all these attemps fail the program can ask user to type them
+[12:40] <korczis> standard linux behavior imho
+[12:40] <AlphaTech> korczis: Save this as start.sh and chmod +x it http://pastebin.com/raw.php?i=knmfA187
+[12:41] <korczis> I may, but check my previous post ..
+[12:41] <AlphaTech> Ah, cool
+[12:42] <AlphaTech> Yeah, if you type them in wrong it crashes
+[12:42] <AlphaTech> Quite annoying
+[12:42] == TabletCube [~TCube@95f15efe.skybroadband.com] has quit [Ping timeout: 244 seconds]
+[12:44] <korczis> https://help.github.com/articles/caching-your-github-password-in-git/
+[12:45] <SpenserJ> Hows the bot going?
+[12:45] <AlphaTech> SpenserJ: Great!
+[12:46] <korczis> SpenserJ: My huge PR got merged and it seems no major problems were caused
+[12:46] <korczis> Now is time to unify templates, start using layout file and write tests
+[12:46] <AlphaTech> Always a bonus
+[12:46] <korczis> So we are good :)
+[12:47] <korczis> I am happy, that I was able to get all my refactoring PRs merged ..
+[12:47] <korczis> Easier to maintain and collaborate now
+[12:47] <korczis> IMHO
+[12:48] <avdg> :-)
+[12:49] <AlphaTech> Oh and the ngnix proxy is up
+[12:49] <avdg> not sure how to name my file though, currently its config.public.js
+[12:51] <korczis> I have no problem with this name
+[12:52] <SpenserJ> What is that config for?
+[12:53] == TabletCube [~TCube@95f15efe.skybroadband.com] has joined #botwillacceptanything
+[12:53] <SpenserJ> Glad the PR was merged korczis
+[12:54] <korczis> Me too, thank all for your help and patience, pardon me for being bit rude sometimes ...
+[12:55] <AlphaTech> A bit rude?!?!
+[12:55] <AlphaTech> A bit?!?!?
+[12:55] <AlphaTech> I'm just kidding, you're totally nice
+[12:59] <SpenserJ> Agreed. Dont think you were rude at all
+[13:01] <AlphaTech> Someone should add the real site to the channel topic
+[13:01] <SpenserJ> Nobody can, since none of us have op
+[13:02] <dos1> I was!
+[13:02] <dos1> I was rude!
+[13:02] <dos1> didn't I?
+[13:02] <dos1> :3
+[13:03] <korczis> i do not think so
+[13:03] <dos1> dang :(
+[13:03] <dos1> I can't even into being rude ;_;
+[13:03] <avdg> SpenserJ: that public config?
+[13:04] <avdg> just to add a way to put authentication settings in public
+[13:04] <avdg> which can make the vault safer I guess
+[13:04] <SpenserJ> I think I missed some, since I'm on mobile. Why do we want auth in the public record?
+[13:05] <avdg> so they can add their secret data to their bot, while there is still a way to control democratically who has right to which keys
+[13:05] <avdg> like the twitter keys
+[13:06] <avdg> 1) user adds public password to the file
+[13:06] <avdg> 2) requests access in public config to certain keys to the vault
+[13:07] <avdg> 3) with password set and auth access, user can edit values
+[13:07] <avdg> (and they are stored secretly server side)
+[13:08] <anythingbot> New PR: #250 - "Layout" - author: @korczis - https://github.com/botwillacceptanything/botwillacceptanything/pull/250
+[13:08] <korczis> ^^^ this is nice one ;-)
+[13:09] <avdg> hmm
+[13:10] <korczis> check how it looks now - https://github.com/korczis/botwillacceptanything/tree/layout/data/views
+[13:10] <korczis> statistics - https://github.com/korczis/botwillacceptanything/blob/layout/data/views/statistics.hbs
+[13:10] <korczis> commits - https://github.com/korczis/botwillacceptanything/blob/layout/data/views/commits.hbs
+[13:10] <korczis> etc
+[13:12] <avdg> yeah
+[13:12] <dos1> @korczis Create test.md b62cfb3
+[13:12] <dos1> @korczis Delete test.md 09e3950
+[13:12] <korczis> ?
+[13:12] <dos1> from your PR
+[13:12] <avdg> best 2 commits in the world ;-)
+[13:12] <korczis> i overlooked that, sorry ..
+[13:12] <avdg> (though I wouldn't do that on purpose)
+[13:12] <dos1> I would vote on PR with only those two commits
+[13:13] <dos1> but otherwise I have to think about it ;)
+[13:13] <korczis> ;-)
+[13:16] <dx> i like how the IPs that access the website are unintentionally anonymized as 127.0.0.1 because of the proxy
+[13:17] <korczis> it can be disabled easily
+[13:18] <korczis> and in header x-forwarded-for is real IP :)
+[13:18] <CompanionCube> it looks good that way - it's as if the bot is visiting it's own web pages
+[13:19] * avdg donates shirt "localhost only <insert pic hand palm meaning halt>" to bot
+[13:20] <CompanionCube> the bot has no use for a shirt unless it obtains a 3D avatar
+[13:20] <CompanionCube> (or 2D even)
+[13:21] <avdg> hmm in the best case, we might actually end up blocking his cooling device
+[13:21] <avdg> oops
+[13:21] <avdg> or her
+[13:22] <CompanionCube> isn't the general consensus that it's either a he or an it
+[13:22] <avdg> I'm unaware of the consensus rule
+[13:23] * dos1 looks for some 3D avatar generating library in npm
+[13:25] == TabletCube [~TCube@95f15efe.skybroadband.com] has quit [Ping timeout: 250 seconds]
+[13:26] == CompanionCube [~samis@95f15efe.skybroadband.com] has quit [Ping timeout: 264 seconds]
+[13:27] == CompanionCube [~samis@95f16f81.skybroadband.com] has joined #botwillacceptanything
+[13:29] <SpenserJ> Avdg, gotcha. That sounds like a great idea
+[13:30] <avdg> about the public file?
+[13:30] <SpenserJ> Korczis Loving the new templates!
+[13:30] <SpenserJ> Avdg yeah, its awesome
+[13:31] <anythingbot> New PR: #251 - "Layout+#249" - author: @korczis - https://github.com/botwillacceptanything/botwillacceptanything/pull/251
+[13:32] <korczis> SpenserJ: Glad to here that ..
+[13:32] <korczis> This was probably last bigger chunk I wanted to solve for a while.
+[13:32] <korczis> Now I will focus on tests.
+[13:34] <korczis> btw, #251 allows access config from any view template without explicitly passing config from view. it is done automagically now.
+[13:34] <SpenserJ> :D
+[13:36] <dbpokorny_> I have to get lunch now, but fully independent trees for dev and prod directly in the repo is a possibility that deserves attention. It would reduce pain substantially
+[13:37] <dbpokorny_> and allow PRs to be split up into 2 types: changes to dev, and simply copy paste the dev tree to the prod tree
+[13:37] <dbpokorny_> if a dev bot is running on 3001, then any breaking changes will be seen before they go live
+[13:38] <SpenserJ> I love that idea
+[13:38] <dbpokorny_> cool~
+[13:38] <anythingbot> New PR: #252 - "Layout+#249+typo" - author: @korczis - https://github.com/botwillacceptanything/botwillacceptanything/pull/252
+[13:38] <CompanionCube> dbpokorny, why not use a branch rather than a tree
+[13:39] <korczis> I am for using branch
+[13:39] <dbpokorny_> how would that work?
+[13:39] <korczis> same as travis
+[13:39] <korczis> or in general i am for idea, working as travis ..
+[13:39] <korczis> ie, pr is checked out somewher ..
+[13:40] <korczis> everything is there ..
+[13:40] <dbpokorny_> sure, so master-dev?
+[13:40] <korczis> and if everything pass bot can merge changes.
+[13:40] <korczis> but maybe I am missing something
+[13:40] <dbpokorny_> well, the two approaches are rather different
+[13:40] <CompanionCube> Have Bot make an automated merge issue to be voted on?
+[13:41] <dbpokorny_> so the thing about having a different branch is that you need a place to put it in the filesystem
+[13:42] <dbpokorny_> travis is doing a service for other projects, which is why it can use branches, but because bwaa is doing it for itself, it is harder
+[13:42] <korczis> that is partially true
+[13:43] <CompanionCube> branches != directories
+[13:43] <korczis> but what about idea to have deployed stable branch at port #3000, #dev branch on port 4000
+[13:43] == messycaje [~messycaje@42-67-62-177.EMOME-IP.hinet.net] has joined #botwillacceptanything
+[13:43] <CompanionCube> Branchies are essentially git metadata. The copy of the bot code you check out comes from the 'master' branch by default.
+[13:43] <korczis> and try to update dev branch, test everything and merge after tests passed and than update
+[13:43] == erasmospunk [~erasmospu@178.162.199.91] has joined #botwillacceptanything
+[13:43] <dbpokorny_> but it seems like both of these options are going to satisfy the current lack of anything remotely resembling a distinction between dev and prod
+[13:44] <avdg> commits have reference to their parent, and each branch has a reference to a commit
+[13:45] <korczis> I would like to messing with this so it is up to you guys
+[13:45] <avdg> branches and tags are stored in a file in the internal git storage format
+[13:45] == messycaje [~messycaje@42-67-62-177.EMOME-IP.hinet.net] has left #botwillacceptanything []
+[13:47] <dbpokorny_> korczis: again there is the problem of where in the filesystem to put the dev branch
+[13:47] <dbpokorny_> unless /tmp?
+[13:47] <korczis> what about namig project-branch
+[13:48] <korczis> botwillacceptanything-master
+[13:48] <korczis> botwillacceptanything-stable
+[13:48] <korczis> etc
+[13:48] <SpenserJ> Does it really matter where? On the server we'll have two folders, one watching PRs to dev, and one watching PRs to master
+[13:48] <CompanionCube> or you could alternate between dev and stable
+[13:48] <anythingbot> New PR: #253 - "Might as well use some more deprecated tags while we are at it." - author: @Petah - https://github.com/botwillacceptanything/botwillacceptanything/pull/253
+[13:48] <korczis> we can use symlinks ..
+[13:48] <korczis> and have two folders
+[13:48] <CompanionCube> Having 2 bots running when only 1 would practically be in use seems rather wasteful
+[13:48] <SpenserJ> Or prod watching both, and just monitoring devs status
+[13:48] <korczis> and launcher will link to one or other ..
+[13:48] <korczis> but we need some mechanism for switching back
+[13:49] <CompanionCube> korczis, switching between branches is a single git command / operation
+[13:49] <SpenserJ> Having two separate projects goes against the concept of git, since branches are meant for just this
+[13:49] <korczis> I know
+[13:49] <korczis> but you can not have checkoud out two branches, be running from one, checking the second at the same time
+[13:50] <anythingbot> New PR: #254 - "Add public config file" - author: @avdg - https://github.com/botwillacceptanything/botwillacceptanything/pull/254
+[13:50] <CompanionCube> Alternate between dev and prod?
+[13:50] <dbpokorny_> SpenserJ: what makes you think branches are meant for this?
+[13:51] <korczis> CompanionCube: yop
+[13:52] <korczis> to all: any preferences for nodejs testing framework?
+[13:52] <dbpokorny_> there are two different approaches: the dev and prod branches is one approach. Another approach is a fully independent system that has dev and prod subtrees of the main git tree
+[13:52] <korczis> I would like to work on mocha + phantomjs
+[13:52] <SpenserJ> dbpokorny_: If we're trying to find a way of running two copies of the application, and staging changes on a live instance before they go into master, then a dev branch is a great solution.
+[13:53] <SpenserJ> When we're (or the bot) is satisfied with the dev branch, it merges it into master, and the main repo restarts
+[13:53] <SpenserJ> s/main repo/main bot/
+[13:53] <dbpokorny_> I don't disagree, but I'm not convinced that it is the best solution for this project. You may be correct, I just don't know right now
+[13:53] <avdg> korczis: I'm used to mocha
+[13:54] <SpenserJ> If you run two separate projects, the commits don't match between each project, and merging changes from one to the other becomes more difficult.
+[13:54] == erasmospunk [~erasmospu@178.162.199.91] has quit [Ping timeout: 272 seconds]
+[13:54] <dbpokorny_> to be honest, I'd have to code it both ways and see
+[13:54] <dbpokorny_> not separate projects. I never said that
+[13:54] <SpenserJ> Unless dev is a project that forked off of the main one, at which point it is no different than a branch
+[13:54] <korczis> I am for two folders each using different branch
+[13:54] <korczis> I am against using multiple repos
+[13:55] <dbpokorny_> No, that is not what I meant. I meant, you have devlib, devdata, dev.js devconfig.js and lib,data,main.js, config.js
+[13:55] <dbpokorny_> I never said multiple repos. Never
+[13:55] <korczis> Okay so ..
+[13:56] <SpenserJ> I may have attributed someone elses comment to you accidentally. Sorry about that
+[13:56] <korczis> you can have one config with sections
+[13:56] <dbpokorny_> no worries
+[13:56] <CompanionCube> dbpokorny, that just smells of giant duplication
+[13:56] <korczis> { global: {}, dev: {}, test: {}, prod: {}, local: {} }
+[13:56] <dbpokorny_> yes, you could do it with a single config
+[13:56] <korczis> and merge them
+[13:56] <SpenserJ> Having lib and dev lib still seems to go against the concept of git though.
+[13:56] <CompanionCube> ^
+[13:56] <dbpokorny_> right, it is a giant duplication. 100% true
+[13:57] <dbpokorny_> but from a management point of view it is trivial
+[13:57] <SpenserJ> Config is the only area where I can see there being issues, and if there are two directories running two instances, the config would be unique in each
+[13:57] <korczis> merge glob with section with dev, or glob with test, or glob with prod ..
+[13:57] <CompanionCube> plus it will leave us with renames *everywhere*
+[13:57] <dbpokorny_> since the bot is the only one that ever touches any of the prod stuff
+[13:57] <dbpokorny_> no, not renames everywhere
+[13:57] <dbpokorny_> just a few lines in main.js
+[13:58] <Stary2001> wat
+[13:58] <CompanionCube> dbpokorny, I mean with git
+[13:58] <korczis> in my other project I have folder config with multiple files - global.js, development.js, test.js, production.js
+[13:59] <CompanionCube> ^ that at least makes sense
+[13:59] <dbpokorny_> the reason it is trivial is that no human ever touches anything in data/lib anymore, only devdata/devlib. So the bot is the only thing that ever touches lib and data
+[13:59] <korczis> I just check NODE_ENV variable and than merge global.js with appropriate file
+[13:59] <Stary2001> ...devdata..dev...lib...wat
+[13:59] <korczis> so the dev/test/production only contains what should be overloaded
+[13:59] <CompanionCube> Stary2001, hungarian-esque notation 2: electric boogaloo
+[13:59] <SpenserJ> I don't think that global/dev/test/prod configs are even needed, if they run in separate directories. Configs aren't tracked, so you just do a unique config made for each stage of the deployment flow
+[13:59] <korczis> they are ...
+[14:00] <Stary2001> CompanionCube: xd
+[14:00] <CompanionCube> dbpokorny, so essentially branches but without the metadata and with a messier root
+[14:00] <SpenserJ> dbpokorny_: That means it is still reapplying the changes from devlib to lib, and recreating the commits
+[14:00] <korczis> for example I do not want to run git pull on my local machine as it overides changes on my local machine when developing, I want to have this disabled for local tests
+[14:00] <korczis> I do not want to show stacktrace in production build
+[14:01] <korczis> I want to disable this in config for production
+[14:01] <korczis> and many others
+[14:01] <dbpokorny_> well a switch like that is easy enough, it knows whether it is dev or prod
+[14:01] <korczis> where the different values will be stored?
+[14:01] <korczis> ifs in .js files?
+[14:01] <korczis> oh no, please
+[14:02] <korczis> if NODE_ENV == 'production'
+[14:02] <korczis> ..
+[14:02] <korczis> ?
+[14:02] <SpenserJ> I can understand default configs, but not if the config isn't tracked by git.
+[14:02] <korczis> in .js?
+[14:02] <dbpokorny_> well
+[14:02] <dbpokorny_> there are many ways to pass this data around
+[14:02] <korczis> because we have just one config and it includes sensitive stuff
+[14:02] <dbpokorny_> if you do "node main.js" or "node dev.js" it is no problem to tell which
+[14:02] <dbpokorny_> I was thinking the command line would determine it
+[14:02] <korczis> I am for merging config.global.js -> config.secret.js -> config.production.js
+[14:02] <korczis> for example
+[14:03] <korczis> why to run two apps?
+[14:03] <korczis> why not
+[14:03] <dbpokorny_> yeah, sounds good
+[14:03] <korczis> node app.js --env=something ?
+[14:03] <dbpokorny_> sure
+[14:03] <korczis> everything except config.secret.js can be in git
+[14:06] <SpenserJ> As long as we consider user and repo to be secret, that makes sense.
+[14:06] <korczis> yop
+[14:06] <SpenserJ> Anything that is specific to a deploy would need to be marked as secret, even if it doesn't need to be hidden from the public
+[14:06] <SpenserJ> I like the idea otherwise
+[14:07] <dbpokorny_> I'm going to think about the sysadmin aspect of this change over lunch
+[14:08] <CompanionCube> brb
+[14:08] == CompanionCube [~samis@95f16f81.skybroadband.com] has quit [Remote host closed the connection]
+[14:12] == TabletCube [~TCube@95f16f81.skybroadband.com] has joined #botwillacceptanything
+[14:13] <TabletCube> What I miss
+[14:14] <korczis> Bot is fully autonomous now, committing to its own codebase, voting for its own PRs ...
+[14:14] <korczis> So not, much
+[14:15] <avdg> making its own pr would be a next step :p
+[14:15] <TabletCube> You are aware that I am CompanionCube right
+[14:15] <korczis> now we are
+[14:15] <avdg> AlphaTech: you mind the rebase?
+[14:16] <avdg> see #249
+[14:16] * TabletCube points at the similar nicks / hosts / activity patterns
+[14:20] <korczis> few (4) more votes for #252 ?
+[14:21] <korczis> btw, can we run ./authors.sh when restarting server, please?
+[14:24] <dbpokorny> It spins up a new bot for every or
+[14:24] <dbpokorny> Or
+[14:24] <dbpokorny> Autocorrect damn you
+[14:24] <korczis> ?
+[14:24] <dbpokorny> Pull request
+[14:25] <korczis> I do not think so ..
+[14:25] <korczis> Why you think so?
+[14:25] <avdg> I guess #254 is hard to understand
+[14:27] <korczis> http://botwillacceptanything.com/stdout/ will need pagination or something, maybe support for streaming changes ...
+[14:27] <korczis> Btw, what about bower?
+[14:27] <korczis> btw, is gulp run during deployment?
+[14:27] <avdg> korczis: https://travis-ci.org/botwillacceptanything/botwillacceptanything/jobs/58193295
+[14:28] <avdg> at least, thats done
+[14:28] <korczis> I know, I implemented this
+[14:28] <avdg> oh
+[14:28] <korczis> But I am talking about deployment to server
+[14:28] <korczis> gulp builds documentation
+[14:28] <korczis> and will do other things
+[14:29] <korczis> like bower download, process less/sass pack assets
+[14:31] <avdg> there is no clear process on what we want no? at least not in my view
+[14:31] <avdg> so that means we can do "anything"
+[14:32] <avdg> (but meh, I ended up in weird situations just because I lacked information and others kept carrying on their plans...)
+[14:33] <avdg> but that was at least not in open source :p
+[14:33] <avdg> yet
+[14:34] <dbpokorny> New behavior: on a pr, main bot checks out new code to tmp/... And spins up a new dev bot just for that pr. Humans can test it out and vote on it. When pr is processed, dev bot is killed by main bot. So all of the sysadmin should be performed by the bot
+[14:35] <korczis> sounds nice
+[14:35] <korczis> I am bit scarred about running multiple tmp/ instances and properly cleaning/killing them
+[14:35] <avdg> hmm, I want to run it with its ports sandboxed
+[14:35] <korczis> but i like the idea
+[14:35] <avdg> not sure if that's possible
+[14:35] <korczis> what about simple proxy directly in bot
+[14:36] <korczis> and serving it from /pr/421
+[14:36] <korczis> etc
+[14:36] <avdg> a port can't be used by 2 processes I guess, there is a problem
+[14:36] <korczis> https://www.npmjs.com/package/http-proxy-simple
+[14:36] <TabletCube> Idea: run each bot as a docker container
+[14:37] <korczis> that will not be problem once we eliminate need for manually enter github credentials
+[14:40] * korczis has on radar - tests (unit/integration/acceptance), bower, sass/less, background tasks, admin interface Web UI for BWA
+[14:40] <korczis> you guys?
+[14:40] <avdg> currently focussed on auth
+[14:41] <avdg> though I have that lock protocol policy to work on
+[14:41] <korczis> can we add logging via github/twitter/facebook (passport npm module) ..
+[14:41] <korczis> than we can add rights and permissions
+[14:41] <korczis> people can vote who will have which permissions
+[14:41] <korczis> etc
+[14:41] <korczis> what you think of this?
+[14:42] <avdg> uh how does that interfere with my current plan?
+[14:42] <korczis> just asking :)
+[14:42] <avdg> with making the vault secure
+[14:42] <korczis> i expect there is no interference
+[14:42] <avdg> oh, now I see
+[14:42] <avdg> oauth stuff
+[14:42] <korczis> as I said, I am just asking what you think of an idea ..
+[14:42] <korczis> yop
+[14:42] <korczis> oauth ..
+[14:42] <avdg> I thought another system to store secrets :p
+[14:43] <korczis> this is not for storing secrets
+[14:43] <korczis> oauth is just for auth ..
+[14:43] <korczis> i am not discussing where the sensitive info will be stored
+[14:44] <dbpokorny> Korczis I think it makes sense
+[14:44] <avdg> hmm just adding a twitter username will be enough in that case?
+[14:44] <avdg> or any other service username
+[14:45] <avdg> (for auth purposes)
+[14:46] <korczis> adding where?
+[14:46] <SpenserJ> I like the idea dbpokorny. Spinning up a server for each PR for easy testing makes it much easier for us to avoid bad commits.
+[14:47] <SpenserJ> How would we handle testing webhooks and such?
+[14:47] <korczis> http://passportjs.org/
+[14:47] <korczis> I am for testing webhooks using the mocks
+[14:47] <korczis> so no real github webhook setup will be needed
+[14:47] <dbpokorny> Mocks.
+[14:47] <korczis> after mocha will be deployed
+[14:48] <dbpokorny> Lots of mocking up of services
+[14:48] <korczis> talking about mocking webhook POST from github
+[14:48] <avdg> pls vote #254 :-)
+[14:48] <korczis> so you will not need to setup real mock
+[14:48] <dbpokorny> Real mock
+[14:49] <korczis> Real webhook
+[14:49] <dbpokorny> Much postmodern
+[14:49] <dbpokorny> I don't follow
+[14:49] <korczis> I mean ..
+[14:50] <dbpokorny> The point of a mock is the bot thinks it is doing something but it really isn't
+[14:50] <korczis> when you will test functionality of /webhook/github route, you will not setup real github webhook, you will not create real PR, you will just send some mock json to that endpoint pretending that it arrived from github
+[14:51] <korczis> dbpokorny: you know mocha?
+[14:52] <korczis> and see this - https://github.com/pgte/nock
+[14:52] <SpenserJ> Mocks sound good. How are you guys handling it automatically tweeting when you're testing.
+[14:52] <SpenserJ> https://twitter.com/anythingbot
+[14:52] <SpenserJ> Don't want to spam the account, but I'm pulling the tweet functionality out of voting.js
+[14:53] <dbpokorny> No I don't
+[14:53] <korczis> Another reason to have envrionment specific configs and disable in this case twitter for local tests
+[14:53] <korczis> Another example of differences in environments so you see it is not so rare
+[14:54] <dbpokorny> Twitter mock and github mock should do it
+[14:54] <korczis> btw, guys, can you share what do you plan to work on?
+[14:55] <korczis> dbpokorny: that is what I am talking about :)
+[14:55] <korczis> and then functionality of webhooks.js can be tested without need for real communication with twitter/github
+[14:56] <dbpokorny> Uh, I am planning on managing my bwa2 addiction
+[14:56] <korczis> same problem here
+[14:56] <korczis> 3 to go - https://github.com/botwillacceptanything/botwillacceptanything/pull/252
+[14:57] <korczis> ^^^ dbpokorny
+[14:57] <dbpokorny> Gah no gh credentials on iPhone
+[14:57] <dbpokorny> Sry
+[14:57] <korczis> saf
+[14:57] <korczis> sad
+[14:57] <korczis> no worries :)
+[14:57] <dbpokorny> Yeah I'm a noob:)
+[14:58] <korczis> do not think so
+[14:58] <dos1> I'm a bad person 8)
+[15:00] * korczis is looking forward when low-level deployment/testing stuff will be solved and playing with real AI/autonomous stuff then
+[15:00] <avdg> Only non-humans like my patch :/
+[15:01] <korczis> IMHO problem is it is only stub ..
+[15:02] <korczis> Without any integration with loading configs, merging them, etc ..
+[15:02] <korczis> There is a risk it will end up in this form :)
+[15:02] <korczis> I am for reflecting what we discussd
+[15:02] <korczis> Creating folder for configs ..
+[15:02] <korczis> create global.js
+[15:02] <korczis> create local.js
+[15:02] <korczis> etc
+[15:03] <korczis> and implementing logic for merging configs during start
+[15:03] <korczis> :)
+[15:03] <korczis> (just my two cents)
+[15:03] <korczis> https://github.com/dreamerslab/node.extend
+[15:04] <dos1> https://twitter.com/anythingbot/status/587374109086089216
+[15:04] <dos1> thanks bot :3
+[15:04] <dos1> anythingbot: :*
+[15:04] <korczis> lol
+[15:05] <avdg> uh... so afraid to touch the server code atm :p
+[15:05] <korczis> anythingbot: ask people to vote for #252
+[15:05] <korczis> because we have no tests :)
+[15:05] == SpensersBot [~nodebot@S0106306023d5ca13.cg.shawcable.net] has joined #botwillacceptanything
+[15:06] * korczis is going to move irc and twitter related stuff to https://github.com/botwillacceptanything/botwillacceptanything/tree/master/lib/integrations
+[15:06] <dos1> korczis: seems he doesn't like you - https://twitter.com/anythingbot/status/587376184188624896 :/
+[15:07] <SpenserJ> korczis: I'm already moving them out of voting
+[15:07] <SpenserJ> Once they're in the correct files, I'll move them into integrations
+[15:07] <korczis> I will wait for you so ..
+[15:07] <SpenserJ> Just testing the IRC change now
+[15:07] <korczis> As I did not started working on it ..
+[15:07] <korczis> SpenserJ: nice
+[15:08] <korczis> IMPORTANT: mustache/handlebars ?
+[15:08] == SpensersBot [~nodebot@S0106306023d5ca13.cg.shawcable.net] has quit [Remote host closed the connection]
+[15:08] * korczis is going to unify templates
+[15:08] == SpensersBot [~nodebot@S0106306023d5ca13.cg.shawcable.net] has joined #botwillacceptanything
+[15:08] <SpensersBot> Voting for PR #18 (Test Pull) FAILED :-1:
+[15:09] == SpensersBot [~nodebot@S0106306023d5ca13.cg.shawcable.net] has quit [Remote host closed the connection]
+[15:09] == SpensersBot [~nodebot@S0106306023d5ca13.cg.shawcable.net] has joined #botwillacceptanything
+[15:09] <korczis> ^^^ lol
+[15:09] == SpensersBot [~nodebot@S0106306023d5ca13.cg.shawcable.net] has quit [Remote host closed the connection]
+[15:09] <korczis> PR #18 - Autonomous license is lie
+[15:10] == SpensersBot [~nodebot@S0106306023d5ca13.cg.shawcable.net] has joined #botwillacceptanything
+[15:10] <korczis> https://wwwwwwwwwwwwwwwwwwwwww.bitnik.org/r/
+[15:10] <SpenserJ> Sorry for the spam guys
+[15:10] <korczis> np
+[15:10] <dbpokorny> Np
+[15:11] == SpensersBot [~nodebot@S0106306023d5ca13.cg.shawcable.net] has quit [Remote host closed the connection]
+[15:14] <anythingbot> New PR: #255 - "Move jsdoc" - author: @korczis - https://github.com/botwillacceptanything/botwillacceptanything/pull/255
+[15:15] == SpensersBot [~nodebot@S0106306023d5ca13.cg.shawcable.net] has joined #botwillacceptanything
+[15:16] <korczis> mustache/handlebars ?
+[15:17] == SpensersBot [~nodebot@S0106306023d5ca13.cg.shawcable.net] has quit [Remote host closed the connection]
+[15:17] * korczis is for implementing random darknet shopper as one of the example projects/usages of BWAA
+[15:18] * korczis is changing the name of BWAA as it is too long, error prone to type, hard to remember for "Joe The Average"
+[15:18] == SpensersBot [~nodebot@S0106306023d5ca13.cg.shawcable.net] has joined #botwillacceptanything
+[15:18] * korczis is FOR changing the name of BWAA as it is too long, error prone to type, hard to remember for "Joe The Average"
+[15:18] <SpenserJ> Getting an issue with this sending an IRC message before the client is up. Any thoughts on how to defer the message until its connected, without missing any events when the bot is acting on PRs?
+[15:19] <SpenserJ> I could probably stash them in an array and send them when its ready, but that feels a bit dirty
+[15:20] <korczis> deffered?
+[15:20] <korczis> I mean that promise library I integrated
+[15:20] <korczis> You can postpone IRC setup until is right time
+[15:21] <korczis> SpenserJ: See https://github.com/botwillacceptanything/botwillacceptanything/blob/master/lib/webserver.js#L23..L30
+[15:21] <SpenserJ> Not necessarily deferred, but queue up any messages that need to be sent to IRC, until after the bot has connected
+[15:22] <korczis> Can we use same strategy of setup for integrations as for middleware/routes ..
+[15:22] == IDM350 [~MM@pool-100-1-246-12.nwrknj.fios.verizon.net] has quit [Quit: leaving]
+[15:22] <korczis> To chain them in promises ..
+[15:22] <SpenserJ> I think we'd end up losing messages for the few seconds between the bot closing/merging PRs, and the IRC connection being ready if we use promises
+[15:23] <korczis> Initialization of webserver.js is using promises ..
+[15:23] <SpenserJ> Unless I can use an await do delay the irc.say()
+[15:23] <korczis> first the "middleware" is initiated one by one ..
+[15:24] <korczis> What source code files are we talking about? Maybe I can help a little bit with promisifying this.
+[15:24] <korczis> btw, did you noticed what server says when he starts?
+[15:25] <SpenserJ> Moved the IRC messages from voting.js to irc.js. Give me a few minutes to clean it up and push the broken version up
+[15:25] <korczis> I mean this - https://gist.github.com/korczis/daaaacf8c4d5afbc9282
+[15:27] <korczis> I am using promises/deferred to init the stuff in right order and avoid eventual problems caused by random order of results from nodejs async functions
+[15:27] <SpenserJ> korczis: https://github.com/SpenserJ/botwillacceptanything/blob/feature_clean_up_voting/lib/irc.js#L26-L29
+[15:27] <SpenserJ> That event fires before the IRC bot has connected, which means it fails to calculate the maxLineLength (inside IRC) and can't send it through
+[15:28] <korczis> I see
+[15:28] <SpenserJ> Ah, so basically defer all of the bot until IRC connects?
+[15:28] <SpenserJ> Might work
+[15:29] <korczis> Yop
+[15:29] <korczis> That was my idea
+[15:29] <SpenserJ> What tells main to hold off until webserver is ready?
+[15:29] <korczis> I am for integrating integrations/ initialization in the same pipeline as middleware
+[15:29] <SpenserJ> Not seeing any code in main
+[15:29] <korczis> but refactor what you need first
+[15:30] <korczis> what you mean?
+[15:30] <korczis> webserver is initalized after all midlleware and views are initialized
+[15:30] <korczis> caused by - https://github.com/botwillacceptanything/botwillacceptanything/blob/master/lib/webserver.js#L23..L30
+[15:31] <SpenserJ> We need the bot to hold off on acting on any PRs, until IRC has connected. Webserver doesn't need to block the PR functionality
+[15:31] <korczis> it says - first initialize middleware (in alphabetical oreder), than initialize routes (in alphabetical order) than start server ..
+[15:31] <korczis> We should add one more .then() somewhere and initialize integrations
+[15:31] <SpenserJ> I understand delaying the server from starting until middleware and routes are loaded, but if we try sending an IRC message before IRC is connected, it won't go through
+[15:32] <SpenserJ> This is a matter of losing messages if the bot changes a PR before its ready
+[15:32] <korczis> if we will start integrations in the same way as middleware/routes and then start webserver/bot we will be out of troubles
+[15:32] <SpenserJ> I've got to take off. Feel free to work off my branch though, since voting is cleaned up
+[15:32] <korczis> untin the webserver is initialized webhooks are ignored
+[15:33] <korczis> if we will init integrations (irc) before starting server, we are out of trouble
+[15:33] <korczis> I am still waiting for #252 to got merged
+[15:33] <korczis> Before starting to work on tests ..
+[15:33] <korczis> So feel free to work on anything ..
+[15:34] <korczis> It is 0:33 am in here, I am going to work tomorrow, so I will probably leave soon ..
+[15:34] <korczis> I am afraid I will not have time for BWAA during the week ..
+[15:35] <korczis> That is the reason why I wanted to focus on primal architecture/deployment changes this week ...
+[15:35] <korczis> *weekend*
+[15:37] <korczis> btw, I am happy to connect with you guys via linkedin - https://www.linkedin.com/in/korcaktomas
+[15:38] <korczis> my private email is korczis [at] that-gmail com
+[15:38] <TabletCube> Shouldn't the extra bit in the license be CC0 rather than public domaim
+[15:38] <korczis> what is CC0 ?
+[15:39] <korczis> Creative Common *Something* ?
+[15:39] <TabletCube> http://www.gnu.org/licenses/license-list.html#CC0
+[15:39] <dos1> creative commons zero
+[15:39] <dos1> basically "as public domain as can legally get"
+[15:39] <korczis> If that is not possible for any reason, CC0 also provides a lax, permissive license as a fallback.
+[15:39] <korczis> ^^ quote from your license
+[15:39] <korczis> will not be MIT better?
+[15:40] * korczis is just asking
+[15:40] <korczis> https://github.com/botwillacceptanything/botwillacceptanything/pull/252 reminder
+[15:42] <TabletCube> Already votex
+[15:43] <TabletCube> korczis: it's already under public domain so unless there's any specific objections
+[15:43] <korczis> ok
+[15:51] <anythingbot> New PR: #256 - "Load port from config" - author: @korczis - https://github.com/botwillacceptanything/botwillacceptanything/pull/256
+[15:53] <anythingbot> New PR: #257 - "Load port from config typo fixed" - author: @korczis - https://github.com/botwillacceptanything/botwillacceptanything/pull/257
+[15:56] <avdg> uh, auth should be done with post
+[15:57] <avdg> a get request would leak information in the logs
+[15:57] <avdg> and logs are outputted on stdout
+[15:58] <dos1> #252 - one vote left
+[16:00] <korczis> SpenserJ: mappum: can you share the script you are using for deployment?
+[16:00] <korczis> I think there has to be some manually involved steps, correct me if I am wrong.
+[16:01] <korczis> I just want to run gulp as part of restart pipeline
+[16:01] <dos1> "node main.js" works for me...
+[16:01] <korczis> what is the problem with "node main.js" / "node run main" ?
+[16:02] <korczis> any error there?
+[16:02] <dos1> no, I meant that this is the whole "deployment script" I need here
+[16:02] <korczis> For me it is sufficient as well...
+[16:03] <korczis> But I want to hear opinion from guys doing "real deployment" ...
+[16:04] <korczis> dos1: if you clone the folder to empty folder, you need to copy/create config.js and specify github credentials
+[16:04] <korczis> I am talking about deployment script for "virgine" machine
+[16:04] <dos1> yep, you do it once and forget about it
+[16:04] <dos1> I guess that's how it is on botwillacceptanything.com :P
+[16:05] <korczis> show-stopper for automatic deployment/restart and/or docker
+[16:05] <dos1> how is it in any way related to restart?
+[16:06] <korczis> when you deploy this to clean folder you need to specify that
+[16:07] <korczis> btw, anybody got idea why 'POST /freenode-proxy-checker.txt' is here http://botwillacceptanything.com/stdout/
+[16:07] <korczis> ^^^ SpenserJ: it is part of irc integration?
+[16:07] == NickyEye [~textual@c-67-165-219-130.hsd1.co.comcast.net] has joined #botwillacceptanything
+[16:07] <korczis> one vote needed - v
+[16:07] <korczis> one vote needed - https://github.com/botwillacceptanything/botwillacceptanything/pull/252/files
+[16:09] <korczis> NickyEye: ^^^^
+[16:09] <korczis> Can you?
+[16:09] <NickyEye> sure
+[16:10] == anythingbot [~nodebot@162.243.149.229] has quit [Remote host closed the connection]
+[16:10] <korczis> Giving the start to repo and commenting :+1: here - https://github.com/botwillacceptanything/botwillacceptanything/pull/252 - should be sufficient
+[16:10] == anythingbot [~nodebot@162.243.149.229] has joined #botwillacceptanything
+[16:10] <korczis> thanks
+[16:11] <AlphaTech> korczis: In the web server, how do you think http://i.imgur.com/nay5EOO.jpg would be?
+[16:11] == travis-ci [~travis-ci@ec2-54-197-185-250.compute-1.amazonaws.com] has joined #botwillacceptanything
+[16:11] <travis-ci> botwillacceptanything/botwillacceptanything#203 (master - 79f65ed : Bot): The build passed.
+[16:11] <travis-ci> Change view : https://github.com/botwillacceptanything/botwillacceptanything/compare/585362a1e0a7...79f65ed93f3c
+[16:11] <travis-ci> Build details : http://travis-ci.org/botwillacceptanything/botwillacceptanything/builds/58205007
+[16:11] == travis-ci [~travis-ci@ec2-54-197-185-250.compute-1.amazonaws.com] has left #botwillacceptanything []
+[16:11] <korczis> as a background?
+[16:12] <AlphaTech> To the webpage
+[16:12] <dos1> http://botwillacceptanything.com/statistics/ is broken
+[16:12] <AlphaTech> Also, put it full page because zoomed out looks funky
+[16:13] <korczis> dos1: that is strange, any idea why?
+[16:13] <dos1> dunno, just spotted it
+[16:13] <AlphaTech> <s>Your templates</s>
+[16:14] <korczis> o see
+[16:14] <korczis> i see
+[16:14] <korczis> the stuff is not passed
+[16:14] <korczis> give me a second
+[16:14] <AlphaTech> WOAH
+[16:14] <AlphaTech> Someone fix the ngnix config please
+[16:14] <AlphaTech> It's outputting all over the stdout
+[16:15] <dos1> that's not nginx
+[16:15] <dos1> that's our bot
+[16:15] <AlphaTech> why didn't it do that when it was on :3000 then?
+[16:16] <dos1> cause he wasn't doing that back then
+[16:17] <AlphaTech> oh, well it's kinda spammy in stdout
+[16:18] <anythingbot> New PR: #258 - "Fix template" - author: @korczis - https://github.com/botwillacceptanything/botwillacceptanything/pull/258
+[16:19] <korczis> AlphaTech: This is responsible for spamming - https://github.com/botwillacceptanything/botwillacceptanything/blob/master/lib/middleware/logger.js
+[16:20] <korczis> Once we will have support for merging environments we can skip initialization of this piece of middleware
+[16:20] <korczis> And prevent "spammy" behavior ...
+[16:21] == r04r has changed nick to zz_r04r
+[16:23] * korczis is thinking how to prevent bot to discard (using git pull/checkout) changes when running locally. Causing lot of troubles. Korczis looks like prickhead which is not able to merge his changes properly for hat reason.
+[16:26] <dos1> my workflow:
+[16:26] <dos1> - create a new branch
+[16:26] <dos1> - commit changes
+[16:26] <dos1> - launch bot
+[16:26] <dos1> - ammend commit
+[16:26] <dos1> - launch bot
+[16:26] <dos1> (...)
+[16:26] <dos1> - ammend commit giving it the final commit message
+[16:26] <korczis> I am doing almost the same ..
+[16:26] <dos1> - push
+[16:26] <dos1> - create PR
+[16:27] <korczis> But when I launch the bot it throws away all my changes ..
+[16:27] <korczis> So it is ..
+[16:27] <dos1> it doesn't when they're commited
+[16:27] <korczis> I do not want to have changes commited before I test them but I have to elsewhere the bot will throw it away
+[16:27] <dos1> why? what does it change?
+[16:28] <dos1> you don't have to push them, and you can simply ammend them
+[16:28] <dos1> so you end with just one commit at the end
+[16:28] <korczis> It will be nice to have the option for that in config.js once we will have config.js (etc) merging implemented
+[16:28] <korczis> Ok
+[16:28] <korczis> Ammend solves that
+[16:28] <dos1> sure, will be nice, but it's not critical
+[16:28] <korczis> You are right
+[16:28] <korczis> I am not saying this is critical
+[16:28] == mgberlin [~mgberlin@c-50-131-191-225.hsd1.ca.comcast.net] has joined #botwillacceptanything
+[16:29] == NickyEye [~textual@c-67-165-219-130.hsd1.co.comcast.net] has quit [Quit: My Mac has gone to sleep. ZZZzzz…]
+[16:29] <korczis> config.local.js with disabled git.pull will be nice anyway
+[16:32] == NickyEye [~textual@c-67-165-219-130.hsd1.co.comcast.net] has joined #botwillacceptanything
+[16:36] <AlphaTech> <korczis> AlphaTech: This is responsible for spamming - https://github.com/botwillacceptanything/botwillacceptanything/blob/master/lib/middleware/logger.js
+[16:36] <AlphaTech> KILL IT!
+[16:36] <korczis> no
+[16:37] <korczis> I will implement configurable log levels instead ..
+[16:37] <AlphaTech> Meh, why do we need to know the connecting browsers?
+[16:37] <korczis> For different environments ..
+[16:37] <AlphaTech> Oh, that's better
+[16:38] == mgberlin [~mgberlin@c-50-131-191-225.hsd1.ca.comcast.net] has quit [Read error: Connection reset by peer]
+[16:38] == mgberlin_ [~mgberlin@c-50-131-191-225.hsd1.ca.comcast.net] has joined #botwillacceptanything
+[16:38] <AlphaTech> Well, I'm going to dinner with my family so bye for now!
+[16:39] == AlphaTech has changed nick to zz_AlphaTech
+[16:42] == avdg [~avdg@2a02:1812:1123:b900:383d:be08:d0aa:da6f] has quit [Ping timeout: 252 seconds]
+[16:42] <anythingbot> New PR: #259 - "Bower with gulp integration" - author: @korczis - https://github.com/botwillacceptanything/botwillacceptanything/pull/259
+[16:45] == NickyEye [~textual@c-67-165-219-130.hsd1.co.comcast.net] has quit [Quit: My Mac has gone to sleep. ZZZzzz…]
+[16:55] <korczis> Can we discuss for #259 now, please?
+[16:55] <korczis> https://github.com/botwillacceptanything/botwillacceptanything/pull/259
+[16:55] <korczis> it is breaking nothing for  sure
+[16:55] <korczis> just bringing the bower - http://bower.io/
+[16:55] == mgberlin_ [~mgberlin@c-50-131-191-225.hsd1.ca.comcast.net] has quit [Remote host closed the connection]
+[16:55] == pests [452f71a1@gateway/web/freenode/ip.69.47.113.161] has joined #botwillacceptanything
+[16:56] <pests> hola
+[16:56] <korczis> hola
+[16:56] <korczis> I am glad to see you back in here again
+[16:57] <pests> oh yeah, i was one of the first few in here actually. just been busy last two days.
+[16:57] <korczis> pests: Lot things happened in meantime....
+[16:58] <pests> ah what went down?
+[16:58] <pests> seems like the bot is just a huge collection of different technologies now. i dont do js dev but is it always like this? bower, gulp, amdefine, node, docker, nginx, jshint, travis, etc. just seems like a lot to know.
+[16:59] <korczis> what is your expertise?
+[16:59] <korczis> what you are most proficient in?
+[17:00] * korczis is trying to find the best fit for pests
+[17:01] <pests> eh. i know what all those do per-se but just not doing frontend work right now. current job requires C# for most things and im a old time PHPer
+[17:01] <korczis> No worries ..
+[17:01] <korczis> You know html5?
+[17:01] <korczis> Promises?
+[17:01] <korczis> Javascript?
+[17:01] <korczis> Node.js specific JS stuff?
+[17:02] <korczis> Docker/CoreOS?
+[17:02] <korczis> Css/JS frameworks?
+[17:02] <pests> I really like React currently.
+[17:02] <korczis> Anything will be valuable ...
+[17:02] <korczis> We are almost there (css/js framework)
+[17:02] <korczis> The question is what we will chose ..
+[17:03] <korczis> But I will rather focus on core voting mechanisms ..
+[17:03] <pests> yeah i agree
+[17:03] <korczis> Implementing them ..
+[17:03] <korczis> So the contributors/stargazers can choose ...
+[17:04] <pests> im thenightwassave @ github. that webhook enabled/disabled thing was obscere so i see why you missed it when converting that page to a template.
+[17:04] <korczis> pests: You can vote here - https://github.com/botwillacceptanything/botwillacceptanything/pulls
+[17:04] <korczis> To share your opinions ..
+[17:05] <korczis> Share your ideas / comments
+[17:05] <korczis> We are listening ..
+[17:05] <pests> i have been since day one as @thenightwassave
+[17:05] <korczis> I see lot of development happening this weekend ...
+[17:06] <korczis> Much more compared with past history of this project ..
+[17:06] <korczis> IMHO it is not import how long you contribute, but how much you stay focused on target ...
+[17:15] == avdg [~avdg@2a02:1812:1123:b900:383d:be08:d0aa:da6f] has joined #botwillacceptanything
+[17:21] * TabletCube is not really an anything-dev because reasons
+[17:23] == avdg [~avdg@2a02:1812:1123:b900:383d:be08:d0aa:da6f] has quit [Ping timeout: 276 seconds]
+[17:32] <anythingbot> New PR: #260 - "Load port from config typo fixed v2" - author: @korczis - https://github.com/botwillacceptanything/botwillacceptanything/pull/260
+[17:34] <korczis> Please vote
+[17:34] <korczis> https://github.com/botwillacceptanything/botwillacceptanything/pull/260
+[17:34] <korczis> https://github.com/botwillacceptanything/botwillacceptanything/pull/259
+[17:34] <korczis> https://github.com/botwillacceptanything/botwillacceptanything/pull/258
+[17:35] <TabletCube> https://github.com/agis-/git-style-guide
+[17:35] * korczis is going to sleep
+[17:35] <TabletCube> Tempted to post this as an issue
+[17:36] <korczis> TabletCube: Lets adopt it. Can you create /doc/styleguide.md and put it in there please?
+[17:36] <TabletCube> korczis: I'll do it tomorrow
+[17:36] * korczis thinks we should have /issues route and reflect github issues there
+[17:37] <korczis> perfect, thanks
+[18:02] <dbpokorny_> http://45.33.44.57:3000/
+[18:04] <TabletCube> What?
+[18:09] <dbpokorny_> new bot
+[18:31] == Cust0dian [~Cust0dian@91.215.121.245] has quit [Quit: Quitting.]
+[18:37] == TabletCube [~TCube@95f16f81.skybroadband.com] has quit [Remote host closed the connection]
+[18:48] == zz_AlphaTech has changed nick to AlphaTech
+[18:48] <AlphaTech> SpenserJ: What does SpensersBot do?
+[18:58] <AlphaTech> SpensersBot: Hi
+[18:58] <AlphaTech> !help
+[18:58] <AlphaTech> Worthless?
+[18:59] <dos1> it probably accepts or rejects pull requests on his fork :P
+[19:01] <AlphaTech> Ah, makes sense I guess
+[19:01] <AlphaTech> I have my own bot on my network
+[19:31] <SpenserJ> AlphaTech: It was the bot that I was using for testing some changes to voting.js
+[19:32] <SpenserJ> korczis: There really isn't anything fancy for deployment. Bot runs under screen, so mappum and I can both connect to the same session.
+[19:32] <SpenserJ> We just run node main.js when it crashes
+[19:54] == mgberlin [~mgberlin@c-50-131-191-225.hsd1.ca.comcast.net] has joined #botwillacceptanything
+[19:55] == SpensersBot [~nodebot@S0106306023d5ca13.cg.shawcable.net] has quit [Remote host closed the connection]
+[20:26] <dbpokorny_> http://www.oldtimeradiofans.com/the_shadow/Shadow%20371121%2009%20The%20Ruby%20of%20Karaval.mp3
+[20:35] <AlphaTech> korczis: Is it safe to PR a change to the HTML or will another PR make a conflict?
+[20:42] == SpensersBot [~nodebot@S0106306023d5ca13.cg.shawcable.net] has joined #botwillacceptanything
+[20:42] == SpensersBot [~nodebot@S0106306023d5ca13.cg.shawcable.net] has quit [Remote host closed the connection]
+[20:44] == SpensersBot [~nodebot@S0106306023d5ca13.cg.shawcable.net] has joined #botwillacceptanything
+[20:44] == SpensersBot [~nodebot@S0106306023d5ca13.cg.shawcable.net] has quit [Remote host closed the connection]
+[20:45] == SpensersBot [~nodebot@S0106306023d5ca13.cg.shawcable.net] has joined #botwillacceptanything
+[20:46] == SpensersBot [~nodebot@S0106306023d5ca13.cg.shawcable.net] has quit [Remote host closed the connection]
+[20:46] == SpensersBot [~nodebot@S0106306023d5ca13.cg.shawcable.net] has joined #botwillacceptanything
+[20:47] == SpensersBot [~nodebot@S0106306023d5ca13.cg.shawcable.net] has quit [Remote host closed the connection]
+[20:52] == SpensersBot [~nodebot@S0106306023d5ca13.cg.shawcable.net] has joined #botwillacceptanything
+[20:52] <SpensersBot> New PR: #18 - "Test Pull" - author: @SpenserJ - https://github.com/SpenserJ/botwillacceptanything/pull/18
+[20:52] <SpensersBot> Voting for PR #18 (Test Pull) FAILED :-1:
+[20:52] == SpensersBot [~nodebot@S0106306023d5ca13.cg.shawcable.net] has quit [Remote host closed the connection]
+[20:55] == npstr [~npstr@88.130.220.142] has quit [Ping timeout: 264 seconds]
+[20:56] == mgberlin [~mgberlin@c-50-131-191-225.hsd1.ca.comcast.net] has quit [Remote host closed the connection]
+[20:59] <anythingbot> New PR: #261 - "Feature clean up voting" - author: @SpenserJ - https://github.com/botwillacceptanything/botwillacceptanything/pull/261
+[20:59] <SpenserJ> ^ Sets up some cleaner integrations with Twitter and IRC
+[21:08] == mgberlin [~mgberlin@c-50-131-191-225.hsd1.ca.comcast.net] has joined #botwillacceptanything
+[21:24] <SpenserJ> Can we get a standard set up for our code? Where commas go, how many spaces per indentation level, where {} go compared to functions and conditionals, etc.
+[21:25] <SpenserJ> Personally I'm a fan of two-space indentations, since they take up less space, but it seems like we're going with 4-space thanks to korczis' awesome PRs. I'm fine with that, but I figure we should get it in writing sooner than later
+[21:25] == pests [452f71a1@gateway/web/freenode/ip.69.47.113.161] has quit [Ping timeout: 246 seconds]
+[21:25] == pests [452f71a1@gateway/web/freenode/ip.69.47.113.161] has joined #botwillacceptanything
+[21:34] == SpensersBot [~nodebot@S0106306023d5ca13.cg.shawcable.net] has joined #botwillacceptanything
+[21:34] == SpensersBot [~nodebot@S0106306023d5ca13.cg.shawcable.net] has quit [Remote host closed the connection]
+[21:42] <anythingbot> New PR: #262 - "Added a robotic favicon and sleek background for the webserver" - author: @AlphaT3ch - https://github.com/botwillacceptanything/botwillacceptanything/pull/262
+[21:45] == mgberlin [~mgberlin@c-50-131-191-225.hsd1.ca.comcast.net] has quit [Remote host closed the connection]
+[21:49] <AlphaTech> ^ Does anyone like that PR? Fancy huh? lol
+[21:50] <SpenserJ> Do you have a preview online?
+[21:51] == pests [452f71a1@gateway/web/freenode/ip.69.47.113.161] has quit [Ping timeout: 246 seconds]
+[21:55] <deltab> couldn't that 1 Mb background be a CSS radial-gradient?
+[21:58] <AlphaTech> No, not at the moment, my host is down
+[22:00] <SpenserJ> Oh gosh, yeah, negative to a 1mb background
+[22:08] == pests [452f71a1@gateway/web/freenode/ip.69.47.113.161] has joined #botwillacceptanything
+[22:08] <pests> what part of the stack is converting urls for resources into /data/ into whatever?raw=true ?
+[22:11] <pests> ah i found it, static middleware
+[22:11] <deltab> re code standards: http://editorconfig.org/
+[22:14] <anythingbot> New PR: #263 - "Have the README and config.js match" - author: @AlphaT3ch - https://github.com/botwillacceptanything/botwillacceptanything/pull/263
+[22:15] <pests> where does ?raw=true come from though? is that express?
+[22:16] <deltab> makes me think of github
+[22:18] <pests> i dont normally do js frontend dev. just trying to see what peice of code is using that ?raw=true bit were passing to static assets
+[22:18] <deltab> e.g. https://github.com/AlphaT3ch/botwillacceptanything/blob/AlphaT3ch-readme-fix/data/background.jpg?raw=true
+[22:20] <pests> yeah that makes sense for github because its showing raw output. something in the bot stack though is using it for static assets though
+[22:20] <pests> github is ruby anyways
+[22:22] <pests> you around AlphaTech ?
+[22:23] <AlphaTech> yeah
+[22:24] <pests> can you tell me what that ?raw=true gets used for in the context of the tech stack were using?
+[22:27] <AlphaTech> You'll have to ask korczis. All I know is that any file pointed to like that does to the data directory
+[22:29] <pests> yeah thats from the static middleware but i didnt know if the ?raw part meant anything specific.
+[22:30] <AlphaTech> Oh
+[22:31] <AlphaTech> Look at https://github.com/botwillacceptanything/botwillacceptanything/blob/05b828ed8e28d2033724fa73b8823b222fba9a14/data/background.jpg vs https://github.com/botwillacceptanything/botwillacceptanything/blob/05b828ed8e28d2033724fa73b8823b222fba9a14/data/background.jpg?raw=true
+[22:31] <pests> thats just a github thing though
+[22:32] <pests> maybe korczis just started doing it for some reason?
+[22:32] <AlphaTech> I think it forwards it to that
+[22:32] <AlphaTech> idk
+[22:32] <pests> as far as i can tell the ?raw=true is unneeded
+[22:32] <pests> in both your recent pr for the background and for favicon.ico
+[22:33] <pests> i thought it was something node specific but i think deltab was right.
+[22:33] <AlphaTech> well, works either way :/
+[22:34] <pests> yeah but its just unneeded.
+[22:34] <pests> it fooled me into thinking it was special
+[22:35] <pests> if its there it has to be there for a reason, right?
+[22:35] <AlphaTech> that's what I thought
+[22:35] <AlphaTech> So I just put it there
+[22:36] <pests> right, its already spread from one person to another. this is how stuff like this spreads lol.
+[22:37] <AlphaTech> lol
+[22:38] <AlphaTech> You should make authors.sh feed into the /commits page
+[22:40] == YuviPanda|zzz has changed nick to YuviPanda
+

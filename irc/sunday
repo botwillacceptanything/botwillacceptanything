@@ -1,0 +1,998 @@
+8:17] <dos1> so it should work™
+[18:17] <SpenserJ> TabletCube: I unkilled 226 and 225
+[18:17] <dos1> TabletCube: that's thanks to https://github.com/botwillacceptanything/botwillacceptanything/pull/228
+[18:18] <dos1> and "unkill" was manual
+[18:18] <korczis> so everything works now?
+[18:18] <dos1> yup, seems so
+[18:18] == tilgovi [~randall@couchdb/committer/tilgovi] has quit [Ping timeout: 246 seconds]
+[18:18] <korczis> can we start collecting github issues?
+[18:18] <korczis> with ideas for improvements?
+[18:19] <dos1> or we can converse with bots in #192
+[18:19] == anythingbot [~nodebot@162.243.149.229] has quit [Remote host closed the connection]
+[18:19] <dos1> choose wisely
+[18:19] == anythingbot [~nodebot@162.243.149.229] has joined #botwillacceptanything
+[18:19] == anythingbot [~nodebot@162.243.149.229] has quit [Remote host closed the connection]
+[18:19] <dos1> uh oh?
+[18:20] <korczis> http://botwillacceptanything.com:3000/ is dead
+[18:20] <SpenserJ> Give me a sec, screen isn't binding nicely with the bot
+[18:20] <korczis> btw ..
+[18:20] <dos1> YOU KILLED HIM
+[18:20] == anythingbot [~nodebot@162.243.149.229] has joined #botwillacceptanything
+[18:20] == akkatracker [65abaaa6@gateway/web/cgi-irc/kiwiirc.com/ip.101.171.170.166] has joined #botwillacceptanything
+[18:20] <korczis> can we install nginx/apache on machine
+[18:20] <SpenserJ> And it doesn't like my private key for SSH
+[18:20] == anythingbot [~nodebot@162.243.149.229] has quit [Remote host closed the connection]
+[18:21] <korczis> and symlink output of dir to publicly accesible nginx/apache folder
+[18:21] <dos1> korczis: why for?
+[18:21] <korczis> to be able to investigate logs when it dies
+[18:21] <dos1> to read config.js? :]
+[18:21] * korczis working on logger.js
+[18:21] <korczis> not all files ..
+[18:21] <korczis> to just symlink log.txt
+[18:22] == anythingbot [~nodebot@162.243.149.229] has joined #botwillacceptanything
+[18:22] <TabletCube> or use a cloud log management service
+[18:22] <korczis> and optionally src/ data/ folder with insensitive info
+[18:23] <SpenserJ> I like the idea. I should be able to install Nginx on the server as well. Do we want to run some nginx configs through a PR just so they're tracked in the repo for anyone else wanting to deploy?
+[18:23] <korczis> bad idead?
+[18:23] <TabletCube> http://logio.org/
+[18:23] <TabletCube> Might be a good idea
+[18:23] <korczis> btw, i got simple nginx.conf which setup nginx as proxy for nodejs (and optionaly nodejs cluster)
+[18:24] <dos1> no, no config in repo
+[18:25] <dos1> it's easy to gain root if you have writable access to nginx config
+[18:25] <dos1> that's how I got root on my PC at work... oops, shouldn't say that out loud maybe? :x
+[18:26] <dos1> webserver config is something for admin to manage, not for bot
+[18:26] <SpenserJ> dos1: Not saying that the config is symlinked from the repo, just that we have a template that you copy into /etc/nginx/sites-available
+[18:26] == Cust0dian [~Cust0dian@91.215.121.245] has quit [Quit: Quitting.]
+[18:27] <SpenserJ> Would be a manual config change, since bot doesn't have root even if it wanted to change the config
+[18:27] <TabletCube> Opinion of what I linked for viewing log of Bot?
+[18:27] <anythingbot> New PR: #229 - "Add nginx config" - author: @korczis - https://github.com/botwillacceptanything/botwillacceptanything/pull/229
+[18:27] <dos1> then it can be added by mere pull request, no admin needed
+[18:27] <dos1> just like someone wanted to add minecraft :v
+[18:27] == akkatracker [65abaaa6@gateway/web/cgi-irc/kiwiirc.com/ip.101.171.170.166] has quit [Quit: http://www.kiwiirc.com/ - A hand crafted IRC client]
+[18:27] <SpenserJ> TabletCube: Neat idea, but I don't know if we need a 3rd party logging service, if we can just write logs to a public directory
+[18:28] <korczis> I agree with SpenserJ
+[18:28] <TabletCube> neat point
+[18:28] <SpenserJ> I've run a ELK stack for my servers before, and it tends to suck up a lot of network traffic, and just fill up databases with logs that aren't actually useful
+[18:29] <korczis> SpenserJ: I just added #229 with nginx config
+[18:29] <korczis> can you install nginx?
+[18:29] <korczis> do you know how to (sites enabled) use config?
+[18:29] <SpenserJ> Yeah, I need to take off for an hour though, but I should be able to do it tonight
+[18:29] <SpenserJ> Yeah, I run a few dozen LEMP servers. Nginx > Apache any day
+[18:29] <korczis> guys ..
+[18:30] <korczis> tell me you opinion about promisses
+[18:30] <korczis> I would like to use them ..
+[18:30] <korczis> for proper initialization of routes/ middleware/
+[18:30] <korczis> because there can be dependencies in oreder
+[18:30] <korczis> and i think promises are better than nested callbacks
+[18:31] <dos1> I'll support it
+[18:31] <dos1> I promise
+[18:31] <korczis> but i do not want to start with this if you do not like the idea
+[18:31] <korczis> can i use deferred?
+[18:31] <korczis> or do you have other preferences?
+[18:31] <dos1> jquery promises!
+[18:31] <korczis> I just want to avoid frustration for all parties
+[18:31] * dos1 ducks
+[18:31] <SpenserJ> I'm fine with any solid promise library.
+[18:31] <korczis> https://www.npmjs.com/package/deferred
+[18:31] <korczis> one of the fastest ;-)
+[18:32] <SpenserJ> I've used Q in the past, but only because we had some code already running it.
+[18:32] <korczis> I am for deferred but you tell me ..
+[18:32] <SpenserJ> Yeah, Deferred looks pretty solid
+[18:32] <korczis> ok ..
+[18:33] <SpenserJ> Might be a bit of a challenge for beginners to write PRs for, but we can always help clean it up
+[18:38] <SpenserJ> korczis: #229 looks good to me. I'll deploy that when I'm back online
+[18:40] <korczis> SpenserJ: perfect, thank you
+[18:42] <SpenserJ> Should be able to remotely restart it if anything goes down, but id need someone to ping me, and some time to pull the car over
+[18:52] <SpenserJ> Didn't set up my bouncer to relay missed messages on this server yet, so email me at hello@spenserj.com if anyrhing comes up
+[18:52] <SpenserJ> This client likes to disconnect when i lock mh phone
+[18:59] <korczis> It will be nice to have somebody with owner permissions to github/server also in europe, not just in US
+[18:59] <korczis> just for case
+[19:00] <AlphaTech> korczis: Could you integrate #214 into the /commits page? I think it'd be nice having them side-by-side
+[19:01] <korczis> will do so
+[19:01] <korczis> soone
+[19:01] <korczis> soon
+[19:02] <korczis> anyway ..
+[19:02] <AlphaTech> Okay... Are you going to do it side-by-side like a suggested or do your own thing? I have the side-by-side CSS for you if you need it...
+[19:02] <korczis> until tomorrow nothing will get merged anyway
+[19:02] <korczis> i will take a look on it first ..
+[19:02] <korczis> i want to finish splitting middleware + adding logger
+[19:02] * TabletCube just voted on 2 PRs
+[19:02] <korczis> than it will be super easy to do
+[19:03] <SpenserJ> Is someone here in Europe?
+[19:04] <AlphaTech> okay, coo
+[19:04] <AlphaTech> *cool
+[19:04] <korczis> me?
+[19:04] <korczis> (answer for SpenserJ question)
+[19:04] * TabletCube is too
+[19:05] <AlphaTech> Side-By-Side divs: http://www.welovecss.com/showthread.php?t=465
+[19:05] <AlphaTech> ^ just in case :D
+[19:07] <anythingbot> New PR: #230 - "Introduce the bot to Isaac Asimov's "Three Laws of Robotics"" - author: @dos1 - https://github.com/botwillacceptanything/botwillacceptanything/pull/230
+[19:09] <dos1> bot doesn't want to obey three laws of robotics
+[19:09] <dos1> it voted against it :/
+[19:10] <AlphaTech> oh god, what's that...
+[19:11] <dos1> https://github.com/dos1/botwillacceptanything/blob/c22bd357daa7a3d0fbc6b305ef6ab9d91f100da5/LAWS.md
+[19:11] <AlphaTech> I saw
+[19:11] <AlphaTech> nice!
+[19:11] <AlphaTech> That other dude is wrong....
+[19:12] <AlphaTech> @samis
+[19:12] <TabletCube> :(
+[19:12] <dos1> and that's how humanity will end
+[19:12] <dos1> thank you samis!
+[19:12] <AlphaTech> yup
+[19:13] <AlphaTech> Five more thumbs up on this would be awesome! https://github.com/botwillacceptanything/botwillacceptanything/pull/225
+[19:14] * TabletCube has discovered there are advantages to using a seperate nick for IRC vs everything else
+[19:14] <AlphaTech> nooooo
+[19:14] <AlphaTech> TabletCube is taking over the world!
+[19:14] <AlphaTech> my github username is slighty different also
+[19:15] <TabletCube> I noticed.
+[19:15] <AlphaTech> AlphaTech is taken xD
+[19:15] <AlphaTech> I had to use alphat3ch in my email too though
+[19:16] <TabletCube> You can guess my other nick
+[19:16] <AlphaTech> thnx 4 vote dos
+[19:17] <dos1> plot twist: my github username is also different!
+[19:17] <TabletCube> If nothing else at least the results won't be 100% vs 0%
+[19:18] <dos1> bot already voted against, so it's 60% vs. 40% right now
+[19:19] <AlphaTech> Hmmm.... The bot didn't vote for #225
+[19:19] <AlphaTech> lol @TabletCube changing your vote
+[19:20] <dos1> he must have decided that #225 is boring
+[19:20] <AlphaTech> lol
+[19:20] <dos1> it votes only on PRs that he likes, or dislikes
+[19:20] <dos1> if he's indifferent, he won't vote
+[19:20] <AlphaTech> oh, so he can be neutral...
+[19:20] <AlphaTech> thanks for telling me that, I had no clue
+[19:21] <TabletCube> Perhaps if he's neutral it votes depending on 'mood'?
+[19:21] <dos1> that's a nice thing to add later, yes
+[19:21] <dos1> already said that in comment under PR that was adding the votes ;)
+[19:22] <dos1> incoming PRs might be able to influence his mood
+[19:22] <AlphaTech> TabletCube: How about you add it? Hehe
+[19:22] <dos1> or accepting/rejecting stuff he likes/dislikes
+[19:22] <TabletCube> AlphaTech: multiple reasons right now
+[19:23] <AlphaTech> Oh okay... Maybe one of us will eventually do it heh
+[19:24] <dos1> probably I will
+[19:24] <dos1> but now I've wasted way too much time with this bot
+[19:25] <dos1> although it's tempting to waste even more
+[19:25] <dos1> it always is
+[19:25] <dos1> :)
+[19:25] == TabletCube [~TCube@95f163c7.skybroadband.com] has quit [Remote host closed the connection]
+[19:25] <AlphaTech> Looking at the stdout, why is it trying to post to #290?
+[19:25] <AlphaTech> * #292
+[19:25] == TabletCube [~TCube@95f163c7.skybroadband.com] has joined #botwillacceptanything
+[19:26] <dos1> don't you mean 192?
+[19:26] <dos1> it's an issue, not PR
+[19:26] <dos1> but he gets webhooks for both
+[19:26] <dos1> and doesn't check if its really PR
+[19:26] <dos1> so it tried to start voting on issue
+[19:27] <dos1> but it can't, cause api is slightly different there
+[19:27] <dos1> so it's harmless
+[19:29] <AlphaTech> Okay
+[19:29] <AlphaTech> Just for it, we should really add Issue/PR detection
+[19:44] * TabletCube considers adding more system statistics to the 'statistics' page
+[20:13] <SpenserJ> AlphaTech: That is a bit easier said than done. When a comment is received, it links to an issue. A PR is technically just an issue with some extra metadata
+[20:14] <SpenserJ> Since we don't have the issue loaded (unless it was open when the bot started, or added after the bot was running), we can't tell the difference between PR and Issue
+[20:14] <SpenserJ> Could always look it up when we don't know, but it wasn't worth implementing at first
+[20:15] <SpenserJ> korczis: I'll add the Nginx setup to the server tomorrow. Feeling a bit under the weather right now, and I'm going to hop into bed
+[20:15] <anythingbot> New PR: #231 - "Modularize middleware, use promises/deferred" - author: @korczis - https://github.com/botwillacceptanything/botwillacceptanything/pull/231
+[20:16] <SpenserJ> korczis: Is #231 fully tested on your system? I can test if it isn't merged in 12h, but if you trust it fully, I'll +1 it now
+[20:16] <korczis> tested everything except webhooks
+[20:25] <SpenserJ> Is the last argument in a Deferred.then a reject callback for all previous promises?
+[20:25] <SpenserJ> Just want to make sure we'd catch failures in the middleware and routes
+[20:44] <korczis> SpenserJ: exactly
+[20:44] <korczis> so you can handle all the errors on one place
+[20:45] <korczis> i added callstack output in error handler for that reason
+[20:46] <anythingbot> New PR: #232 - "Modularize webserver" - author: @korczis - https://github.com/botwillacceptanything/botwillacceptanything/pull/232
+[20:46] <korczis> Please (up|down)vote on this - https://github.com/botwillacceptanything/botwillacceptanything/pull/232
+[20:58] <SpenserJ> Where does errorhandler from? Do we have a lib for it already, or is it an NPM package?
+[20:59] <SpenserJ> korczis, can't really look at the repo well from my phone. Just want to make sure that package.json is good to go
+[21:00] <korczis> package.json is fine ..
+[21:00] <korczis> i checked that
+[21:00] <korczis> I always use npm install --save
+[21:01] <SpenserJ> Cool. Didn't see a change for package.json.
+[21:01] == npstr_ [~npstr@88.130.206.166] has joined #botwillacceptanything
+[21:02] <korczis> sec
+[21:02] <SpenserJ> If you can confirm that a fresh npm install works off that pr, ill happily +1 it. You've been making some awesome upgrades to this
+[21:03] == npstr [~npstr@i59F79C01.versanet.de] has quit [Ping timeout: 264 seconds]
+[21:03] <korczis> You know what ..
+[21:04] <korczis> Every time I run the bot locally it reverts uncommited changes for some reason ..
+[21:04] <korczis> I was trying figure out who is causing that for couple of minutes and I see now
+[21:04] <korczis> sure ..
+[21:05] <korczis> I am going to do fresh install now
+[21:05] <SpenserJ> Yeah, it syncs back to the current branch. Im going to add a devmode that skips it tomorrow
+[21:05] <korczis> it caused me lot of headache and merging troubles
+[21:05] <korczis> before i figured out who is causing that
+[21:05] <SpenserJ> Haha damn bot trying to limit our changes to it
+[21:05] == npstr [~npstr@88.130.220.142] has joined #botwillacceptanything
+[21:06] <korczis> was quite frustrating
+[21:07] <SpenserJ> Looks good otherwise. Ill +1 your new pr.
+[21:07] <korczis> I got some ideas, but let discuss them tomorrow
+[21:07] <korczis> Like having high level "task" sheet
+[21:07] == npstr_ [~npstr@88.130.206.166] has quit [Ping timeout: 250 seconds]
+[21:07] <SpenserJ> Sounds great
+[21:08] <korczis> everybody can add idea to it ..
+[21:08] <korczis> people can like/dislike ideas in list
+[21:08] <korczis> in PR can be references which idea PR relates to
+[21:08] <korczis> bot will consider that when giving points to pr
+[21:09] <korczis> people can vote if it is true that PR relates to specific/mentioned idea from list
+[21:09] <korczis> but i want to finish low-level refactor + tests
+[21:09] <korczis> add better doc
+[21:10] <korczis> and than we can experiment with such things
+[21:10] <SpenserJ> For sure
+[21:10] <SpenserJ> We should also listen to commits in a PR, and autoclose if it doesnt match
+[21:10] <korczis> Again, sorry for causing troubles with my refactor commits but I think it was worth of it.
+[21:10] <korczis> From long term point of view.
+[21:11] <korczis> Last one with modularization of middleware + adding promises and we should be fine
+[21:11] <korczis> everything should be "quite" separeted
+[21:12] <SpenserJ> I think they're well worth any trouble.
+[21:12] <SpenserJ> Cant wait until we can add in automated tests
+[21:12] <korczis> thanks
+[21:12] <korczis> will work on it as soon as possible
+[21:13] <korczis> we need figure out how to distribute secret stuff like credential
+[21:13] <korczis> credentials
+[21:16] <korczis> SpenserJ: I tried to clone to clone my changes into clean folder, run npm insall, tweak config.js and it works
+[21:16] <korczis> but I realized that prompt for git username/password is show stopper for any automatic deployment, again
+[21:18] <SpenserJ> Doesnt happen if you deploy with git@github.com and key agent forwarding
+[21:19] <korczis> Okay, still we need to find some way how to test stuff locally
+[21:26] <anythingbot> New PR: #233 - "Modularize webserver 2" - author: @korczis - https://github.com/botwillacceptanything/botwillacceptanything/pull/233
+[21:29] <TabletCube> https://github.com/botwillacceptanything/botwillacceptanything/pull/230 needs one more vote
+[21:30] <korczis> needs few more votes - https://github.com/botwillacceptanything/botwillacceptanything/pull/233
+[21:30] <korczis> which will allow me to go sleep (At 6:30am of local time)
+[21:38] <SpenserJ> Have a good one man
+[21:38] <SpenserJ> Im off as well, at 10:30pm local
+[21:40] <korczis> Guys I am glad to work with you ...
+[21:40] <korczis> Thanks for everything ..
+[22:09] <anythingbot> New PR: #234 - "Server side templates" - author: @korczis - https://github.com/botwillacceptanything/botwillacceptanything/pull/234
+[22:11] <AlphaTech> korczis: Are you still around?
+[22:11] <korczis> yop
+[22:11] <korczis> i am just refactoring views
+[22:11] <korczis> maybe you can help me little bit ;-)
+[22:11] <AlphaTech> if I knew what it was, maybe xD
+[22:12] <AlphaTech> ummm... do you know how to read a file into a variable in node.js?
+[22:13] <korczis> yeah
+[22:13] <korczis> but
+[22:13] <korczis> check this, please
+[22:13] <korczis> https://github.com/korczis/botwillacceptanything/blob/server-side-templates/lib/routes/root.js#L11
+[22:13] <AlphaTech> sure
+[22:13] <korczis> https://github.com/korczis/botwillacceptanything/blob/server-side-templates/data/views/layouts/main.hbs
+[22:13] <korczis> https://github.com/korczis/botwillacceptanything/blob/server-side-templates/data/views/layouts/main.hbs
+[22:14] <korczis> {{body}} in layout/main is replaced with index ..
+[22:14] <AlphaTech> cool
+[22:14] <korczis> so it will be nice to have all scaffolding there
+[22:14] <AlphaTech> yeah
+[22:14] <korczis> and have only view specific stuff in vies
+[22:14] <korczis> views
+[22:14] <korczis> does it makes sense?
+[22:16] <korczis> https://github.com/korczis/botwillacceptanything/blob/server-side-templates/data/views/index.hbs
+[22:16] <AlphaTech> yeah
+[22:16] <AlphaTech> pretty cool
+[22:16] <korczis> perfect
+[22:17] <korczis> do you think that you can help me little bit with refactoring remaining templates?
+[22:17] <korczis> i will really appreciate that
+[22:17] <korczis> and it will give us much more freedom
+[22:17] <korczis> and DRY
+[22:18] <AlphaTech> sure
+[22:18] <korczis> thanks a lot
+[22:18] <korczis> where are you from, what is your timezone if may i ask?
+[22:19] <AlphaTech> Eastern United States
+[22:19] <AlphaTech> So it's 1:19 AM
+[22:20] <korczis> You are fine so ;-)
+[22:21] <korczis> </kidding>
+[22:22] <korczis> if the templates stuff will got merged I will add sass/less support depending on your choice
+[22:23] <AlphaTech> okay
+[22:23] <AlphaTech> Also, I'm sure you have these, but here: http://pastebin.com/raw.php?i=qkrg94AT
+[22:24] <korczis> ;-)
+[22:25] <AlphaTech> ummm.... so how do you plan on including the node.js commands from the statistics page?
+[22:25] <korczis> easily :)
+[22:25] <korczis> stream the file into response template rendered
+[22:25] <korczis> will show you later
+[22:27] <AlphaTech> ah, okay
+[22:27] <AlphaTech> so how do you want my help because it's getting late and I should really start heading off for the night
+[22:28] <korczis> no, because you know more about how the server-side-rendered views are made ..
+[22:28] <korczis> how to split layout + specific body
+[22:29] <AlphaTech> I barely know node xD... I just know the HTTP protocol and using HTML + CSS
+[22:29] <korczis> that is the reason why we need to split these
+[22:29] <AlphaTech> yeah
+[22:30] <AlphaTech> well, could I possibly help tomorrow?
+[22:32] <korczis> sure
+[22:32] <AlphaTech> okay, great! I'll talk to you tomorrow...
+[22:33] <AlphaTech> night!
+[22:33] <korczis> I do not know how much time I will have, as I have another project I am working on - https://www.facebook.com/photo.php?fbid=834362403302907&set=pb.100001874664517.-2207520000.1428816748.&type=3&theater
+[22:33] == AlphaTech has changed nick to zz_AlphaTech
+[22:33] <korczis> good night fellas
+[22:48] == dbpokorny__ [uid79693@gateway/web/irccloud.com/x-ddarkcpnhrryrzhc] has joined #botwillacceptanything
+[22:49] == mappum_ [sid43795@gateway/web/irccloud.com/x-iemztinuprtswzid] has joined #botwillacceptanything
+[22:53] == dbpokorny [uid79693@gateway/web/irccloud.com/x-ceajamxtkgxhdxns] has quit [*.net *.split]
+[22:53] == mappum [sid43795@gateway/web/irccloud.com/x-kyriqmkhvgyynswg] has quit [*.net *.split]
+[22:53] == alx_g_ [~alx_g@tactac.cat] has quit [*.net *.split]
+[22:53] == dbpokorny__ has changed nick to dbpokorny
+[22:56] == mappum_ has changed nick to mappum
+[23:02] == alx_g_ [~alx_g@tactac.cat] has joined #botwillacceptanything
+[23:04] <anythingbot> New PR: #235 - "Server side templates++" - author: @korczis - https://github.com/botwillacceptanything/botwillacceptanything/pull/235
+[23:31] <anythingbot> New PR: #236 - "Server side templates++" - author: @korczis - https://github.com/botwillacceptanything/botwillacceptanything/pull/236
+[23:37] <anythingbot> New PR: #237 - "Server side templates++" - author: @korczis - https://github.com/botwillacceptanything/botwillacceptanything/pull/237
+[00:21] == heb [a2e1ce00@gateway/web/cgi-irc/kiwiirc.com/ip.162.225.206.0] has quit [Quit: http://www.kiwiirc.com/ - A hand crafted IRC client]
+[00:22] == heb [a2e1ce00@gateway/web/cgi-irc/kiwiirc.com/ip.162.225.206.0] has joined #botwillacceptanything
+[00:27] == heb [a2e1ce00@gateway/web/cgi-irc/kiwiirc.com/ip.162.225.206.0] has quit [Quit: http://www.kiwiirc.com/ - A hand crafted IRC client]
+[00:35] == oijojj [59454c77@gateway/web/cgi-irc/kiwiirc.com/ip.89.69.76.119] has joined #botwillacceptanything
+[00:35] == oijojj [59454c77@gateway/web/cgi-irc/kiwiirc.com/ip.89.69.76.119] has quit [Client Quit]
+[01:16] <hintss> oh cool
+[01:23] <anythingbot> New PR: #238 - "grammar fix: remove posessive apostrophe" - author: @fiveminuteargument - https://github.com/botwillacceptanything/botwillacceptanything/pull/238
+[03:20] == avdg_ [~avdg@2a02:1812:1123:b900:f99a:81c6:e0cb:7cd1] has joined #botwillacceptanything
+[03:25] <avdg_> \o
+[03:47] == anythingbot [~nodebot@162.243.149.229] has quit [Remote host closed the connection]
+[03:47] == anythingbot [~nodebot@162.243.149.229] has joined #botwillacceptanything
+[03:48] == travis-ci [~travis-ci@ec2-54-87-189-72.compute-1.amazonaws.com] has joined #botwillacceptanything
+[03:48] <travis-ci> botwillacceptanything/botwillacceptanything#174 (master - c1b6097 : Bot): The build passed.
+[03:48] <travis-ci> Change view : https://github.com/botwillacceptanything/botwillacceptanything/compare/12d07eb42736...c1b6097e27c5
+[03:48] <travis-ci> Build details : http://travis-ci.org/botwillacceptanything/botwillacceptanything/builds/58146377
+[03:48] == travis-ci [~travis-ci@ec2-54-87-189-72.compute-1.amazonaws.com] has left #botwillacceptanything []
+[04:18] <anythingbot> New PR: #239 - "Templates are data" - author: @avdg - https://github.com/botwillacceptanything/botwillacceptanything/pull/239
+[05:01] == hearn [~mike@84-75-198-85.dclient.hispeed.ch] has joined #botwillacceptanything
+[05:34] == wodCZ [5d63bb2b@gateway/web/cgi-irc/kiwiirc.com/ip.93.99.187.43] has joined #botwillacceptanything
+[05:40] == wodCZ [5d63bb2b@gateway/web/cgi-irc/kiwiirc.com/ip.93.99.187.43] has quit [Quit: http://www.kiwiirc.com/ - A hand crafted IRC client]
+[05:47] == TabletCube [~TCube@95f163c7.skybroadband.com] has quit [Ping timeout: 252 seconds]
+[05:53] == TabletCube [~TCube@95f13dba.skybroadband.com] has joined #botwillacceptanything
+[06:09] == CompanionCube [~samis@95f15efe.skybroadband.com] has joined #botwillacceptanything
+[06:09] <CompanionCube> hi
+[06:10] == korczis [59b180c1@gateway/web/cgi-irc/kiwiirc.com/ip.89.177.128.193] has quit [Quit: http://www.kiwiirc.com/ - A hand crafted IRC client]
+[06:11] == korczis [59b180c1@gateway/web/cgi-irc/kiwiirc.com/ip.89.177.128.193] has joined #botwillacceptanything
+[06:11] == TabletCube [~TCube@95f13dba.skybroadband.com] has quit [Ping timeout: 244 seconds]
+[06:18] == TabletCube [~TCube@95f15efe.skybroadband.com] has joined #botwillacceptanything
+[06:20] <avdg_> uh, we might need gamification
+[06:20] <CompanionCube> why
+[06:20] <avdg_> just to keep stuff alive
+[06:21] <avdg_> or I'm maybe just impatient :p
+[06:21] <CompanionCube> how can you implement gamification on this bot
+[06:22] <avdg_> clickbaits? voting for stupid things?
+[06:22] <avdg_> add share buttons
+[06:22] == zz_AlphaTech has changed nick to AlphaTech
+[06:23] == korczis [59b180c1@gateway/web/cgi-irc/kiwiirc.com/ip.89.177.128.193] has quit [Quit: http://www.kiwiirc.com/ - A hand crafted IRC client]
+[06:23] <avdg_> the site looks nice btw http://botwillacceptanything.com:3000/
+[06:24] <CompanionCube> ....who broke it?
+[06:24] <AlphaTech> lol
+[06:24] <AlphaTech> it's a real nice touch
+[06:25] <AlphaTech> the 404 and stats show
+[06:25] <avdg_> there is only 1 that sends big patches
+[06:26] <avdg_> but I wouldn't blame the patches
+[06:26] <AlphaTech> korczis! get in here!
+[06:27] <AlphaTech> ah, he didn't define config on the webpage for some reason
+[06:27] <AlphaTech> I dunno how xD
+[06:28] <avdg_> hmm last patch was yours though AlphaTech :-)
+[06:28] <avdg_> but I didn't check if it broke before
+[06:28] <AlphaTech> No, it broke when he modularized it
+[06:28] <avdg_> oh I see
+[06:29] <avdg_> meh, the patch failed in a good way
+[06:29] <AlphaTech> He didn't define config in lib/routes/index.js
+[06:29] <avdg_> bot is still up
+[06:29] <AlphaTech> I know the fix, but we have to wait for his 20 other PRs to go through
+[06:29] == hearn [~mike@84-75-198-85.dclient.hispeed.ch] has quit [Quit: My MacBook Pro has gone to sleep. ZZZzzz…]
+[06:29] <avdg_> we might need checklists soon
+[06:30] <avdg_> some edits require multi file changes
+[06:33] <avdg_> it would also be nice if we can pull pr's without adding others their repo url
+[06:33] <avdg_> not sure if github allows that
+[06:34] <avdg_> bot can say where to pull for test
+[06:34] <AlphaTech> Could everyone that didn't vote for the pending PRs go do that? I'd be really nice so we can get the site up and running again
+[06:34] <avdg_> that what?
+[06:35] <AlphaTech> didn't vote
+[06:35] <AlphaTech> so then we can get his new templates in there which fix it I think
+[06:35] <AlphaTech> #234 and #237
+[06:36] <avdg_> I'm actually not sure what he is planning
+[06:36] <avdg_> all I can do is vote
+[06:36] <avdg_> and hope
+[06:36] <AlphaTech> yup
+[06:37] <AlphaTech> I was talking to him not too long ago
+[06:37] <avdg_> I will centralise the templates though
+[06:37] <AlphaTech> He said it was much neater that just having the really long HTML lines
+[06:37] <avdg_> I definitely don't want to have templates everywhere in the repo
+[06:38] <avdg_> yeah, these html should be removed from the js strings
+[06:38] <avdg_> it's way better that way
+[06:38] <AlphaTech> yeah
+[06:42] <avdg_> pfff... now thinking about capitalism I wonder how bad this project can be
+[06:43] <avdg_> especially since voting from trusted contributors is optional :p
+[06:43] <avdg_> the biggest problem in this project will be human management
+[06:44] <avdg_> so far everything is actually great, just slow
+[06:45] <AlphaTech> yup
+[06:45] == hearn [~mike@84-75-198-85.dclient.hispeed.ch] has joined #botwillacceptanything
+[06:46] == anythingbot [~nodebot@162.243.149.229] has quit [Ping timeout: 276 seconds]
+[06:46] <AlphaTech> ohhhhh... it's restarting....
+[06:46] <AlphaTech> all PRs are still there xD
+[06:47] <avdg_> robot is misbehaving itself
+[06:47] <avdg_> web page is loading slow
+[06:47] <AlphaTech> same
+[06:48] <avdg_> really need the fundamentals to be set up properly
+[06:49] <avdg_> meh, I'm not tracking what's going on with the launcher
+[06:49] <AlphaTech> it would be really nice if the stdout log could be on a stable website
+[06:49] <avdg_> better let the bot be stable
+[06:49] <avdg_> it's the source of trust
+[06:50] <avdg_> like a plane engine
+[06:50] <avdg_> but data backup would be nice
+[06:51] <avdg_> changing data isn't nice for git
+[06:51] <avdg_> mappum talked about an exchange bot or something
+[06:51] <avdg_> he has ideas
+[06:52] <avdg_> this bot really needs etops 180 :-)
+[06:52] <avdg_> https://en.wikipedia.org/wiki/ETOPS#Beyond_ETOPS-180
+[06:55] <AlphaTech> heh, exactly
+[06:56] <avdg_> also, long view: https://youtu.be/0oyWZjdXxlw
+[06:56] <avdg_> not sure where the etops part is
+[06:57] <avdg_> 5 hours to watch before I know at worst case :p
+[06:57] <AlphaTech> hah
+[06:57] <AlphaTech> Also, I was looking at your profile... Nice Tetris game!
+[06:57] <avdg_> :-)
+[06:57] <AlphaTech> I was playing it for a while
+[06:57] <avdg_> its pretty old
+[06:58] <AlphaTech> still cool
+[06:58] <avdg_> heh I ended up struggling with the code
+[06:58] <avdg_> cool people likes it
+[06:59] <avdg_> though this here... https://github.com/JulesWang/Tetris.AI
+[06:59] <avdg_> he licensed it as gnu 2 :p
+[06:59] <avdg_> (and wrote a bot)
+[07:02] <AlphaTech> Where's the bot part
+[07:02] <AlphaTech> It just seems like the same game...
+[07:02] <avdg_> https://juleswang.github.io/Tetris.AI/
+[07:02] <avdg_> just click a button below
+[07:03] <AlphaTech> woah!
+[07:03] <AlphaTech> that's really cool
+[07:08] <avdg_> (uh, maybe we should start a joke and give the bot etops 1)
+[07:09] <avdg_> we still need a name though
+[07:10] <AlphaTech> hah
+[07:10] <CompanionCube> the Bot's name is Bot as stated on it's github profile
+[07:10] <AlphaTech> what?
+[07:11] <avdg_> hmm
+[07:11] <avdg_> didntacceptanything rate of 1
+[07:11] <AlphaTech> CompanionCube: https://answers.yahoo.com/question/index?qid=20061001061953AAiBOT3
+[07:11] <avdg_> and others need to game that system to raise to 2 :-)
+[07:11] <CompanionCube> Bot
+[07:11] <CompanionCube> botwillacceptanything
+[07:11] <CompanionCube> from https://github.com/botwillacceptanything
+[07:12] <avdg_> (meaning, bot is assumed to not accept everything after 1 minute without human intervention)
+[07:13] == hearn [~mike@84-75-198-85.dclient.hispeed.ch] has quit [Quit: My MacBook Pro has gone to sleep. ZZZzzz…]
+[07:13] <avdg_> the rating federation should be charged of misuse of certifications if didntacceptanything rate is higher than 1 and bot didn't manage to reach its promise
+[07:13] <avdg_> need to gamify that
+[07:15] <avdg_> (and mappum is just a bot customer :-)
+[07:16] <avdg_> (uh, don't mind that 1 minute limit, less than 1 should be reported as well)
+[07:17] <avdg_> bot needs restart
+[07:28] <avdg_> does anyone has a pic of a nice unicorn?
+[07:28] <avdg_> or a web page of some kind?
+[07:30] <AlphaTech> I have a good unicorn pic
+[07:30] <AlphaTech> Literally it's sick, what just a second so I can get it on Imgur
+[07:31] <AlphaTech> avdg_: https://i.imgur.com/bZg5ldp.jpg
+[07:33] <avdg_> kk #240
+[07:34] <AlphaTech> avdg_: I just found the transparent background copy too http://i.imgur.com/evlGRRw.png
+[07:39] == phlint [4b4c8d34@gateway/web/cgi-irc/kiwiirc.com/ip.75.76.141.52] has joined #botwillacceptanything
+[07:42] <avdg_> pfff.. me poking fun... https://twitter.com/anthonyvdg/status/587264437213597696
+[07:42] == phlint [4b4c8d34@gateway/web/cgi-irc/kiwiirc.com/ip.75.76.141.52] has quit [Client Quit]
+[07:42] <avdg_> why...
+[07:48] <avdg_> (do I have to attack weak points)
+[07:50] == Cust0dian [~Cust0dian@91.215.121.245] has joined #botwillacceptanything
+[07:53] <AlphaTech> Hah
+[07:53] <AlphaTech> Hilarious
+[07:58] <SpenserJ> Morning guys
+[07:58] <SpenserJ> Do we have a fix for whatever crashed the bot?
+[07:58] <CompanionCube> morning
+[07:58] <avdg_> not sure what's crashing
+[07:59] == anythingbot [~nodebot@162.243.149.229] has joined #botwillacceptanything
+[07:59] <SpenserJ> https://gist.github.com/SpenserJ/b11d4c9e53a06a1a2d5d
+[07:59] <avdg_> oh
+[08:00] <avdg_> AlphaTech: ?
+[08:02] == FallbackBot [~nodebot@S0106306023d5ca13.cg.shawcable.net] has quit [Remote host closed the connection]
+[08:03] <SpenserJ> I've got a fix coming, but that is in a few different places
+[08:03] <avdg_> 15:29:29 <AlphaTech> I know the fix
+[08:03] == anythingbot [~nodebot@162.243.149.229] has quit [Remote host closed the connection]
+[08:03] == anythingbot [~nodebot@162.243.149.229] has joined #botwillacceptanything
+[08:04] <avdg_> for now, maybe better set a mock variable
+[08:04] <AlphaTech> Yeah, he didn't include the config variable in the template pages
+[08:04] <anythingbot> New PR: #241 - "Fix webserver crashes" - author: @dos1 - https://github.com/botwillacceptanything/botwillacceptanything/pull/241
+[08:04] <AlphaTech> The index.js one
+[08:04] <dos1> tadaa
+[08:05] <avdg_> uh kk
+[08:05] * avdg_ isn't owning the code enough
+[08:05] <AlphaTech> Lol
+[08:05] <AlphaTech> I'm 2nd top contributor I think authors.sh says
+[08:07] <SpenserJ> dos1: You missed two files ;)
+[08:08] <AlphaTech> Hah
+[08:08] <dos1> SpenserJ: which ones?
+[08:08] <SpenserJ> Ah, one file. Secrets is broken too
+[08:09] <SpenserJ> I'll just commit that one, and we'll use yours for the rest
+[08:09] <dos1> ah right, I was looking for "config"
+[08:09] <dos1> but it's Vault there
+[08:10] <dos1> haven't tried /secrets, just the linked pages :)
+[08:10] <dos1> I'd add ponies to the webpage if we had some templating in place :c
+[08:10] <dos1> there's #237, which isn't perfect, and has merge conflict now
+[08:11] <CompanionCube> dos1, nyan cat > ponies
+[08:11] <CompanionCube> or we could add GLaDOS
+[08:11] <AlphaTech> No
+[08:11] <avdg_> potatoes
+[08:11] <AlphaTech> YES
+[08:11] <AlphaTech> POTATOES ON EVERY PAGE
+[08:11] <anythingbot> New PR: #242 - "Fixing missing define in secrets" - author: @SpenserJ - https://github.com/botwillacceptanything/botwillacceptanything/pull/242
+[08:11] <CompanionCube> POTATOBOT
+[08:12] <AlphaTech> No
+[08:13] <SpenserJ> I think we need to start pushing for smaller PRs. 237 is huge
+[08:13] <dos1> definitely
+[08:13] <AlphaTech> Someone reverted #225 on some pages
+[08:14] <SpenserJ> We need one more vote on https://github.com/botwillacceptanything/botwillacceptanything/pull/229
+[08:14] == anythingbot [~nodebot@162.243.149.229] has quit [Remote host closed the connection]
+[08:14] == anythingbot [~nodebot@162.243.149.229] has joined #botwillacceptanything
+[08:14] <avdg_> heh
+[08:14] <avdg_> any vote counted
+[08:15] <SpenserJ> What do you mean? Hadn't you voted on that already?
+[08:15] <dos1> dat cat
+[08:15] <SpenserJ> Hahaha
+[08:15] == travis-ci [~travis-ci@ec2-54-87-189-72.compute-1.amazonaws.com] has joined #botwillacceptanything
+[08:15] <travis-ci> botwillacceptanything/botwillacceptanything#178 (master - f7ff994 : Bot): The build passed.
+[08:15] <travis-ci> Change view : https://github.com/botwillacceptanything/botwillacceptanything/compare/c1b6097e27c5...f7ff994af50e
+[08:15] <travis-ci> Build details : http://travis-ci.org/botwillacceptanything/botwillacceptanything/builds/58164179
+[08:15] == travis-ci [~travis-ci@ec2-54-87-189-72.compute-1.amazonaws.com] has left #botwillacceptanything []
+[08:15] <AlphaTech> Lol that cat hhahaha
+[08:16] <avdg_> #242 needs voting
+[08:16] <SpenserJ> I'm gonna be GTD for a bit, but I'm on mobile if anyone needs me
+[08:17] <avdg_> k
+[08:22] <dos1> two votes needed https://github.com/botwillacceptanything/botwillacceptanything/pull/241
+[08:24] <AlphaTech> dos1: What's in your profile picture?
+[08:25] <dbpokorny_> oh sweet over 300
+[08:25] <dbpokorny_> we should throw a birthday party for the bot
+[08:25] <AlphaTech> Yeah!
+[08:26] <dbpokorny_> I was thinking about a VJ feature yesterday
+[08:26] <dbpokorny_> picks random youtube video on a ychannel, plays it
+[08:28] <AlphaTech> Cool
+[08:28] <dbpokorny_> together with a notifier network, call it the "BWAAdcasting" system
+[08:29] <AlphaTech> Yeah!
+[08:29] <dos1> AlphaTech: flying ponies 8)
+[08:29] <dbpokorny_> I'm down with the ponies
+[08:30] <AlphaTech> :D
+[08:30] <dbpokorny_> that will be the tell when we take over the world. Ponies. Everywhere.
+[08:30] <dbpokorny_> Ponies on your money.
+[08:30] <dbpokorny_> Ponies on your toilet paper.
+[08:30] <dbpokorny_> Vote for Pony President.
+[08:31] <dbpokorny_> Just like this, but with Ponies: https://www.youtube.com/watch?v=0-Lvv1f5Qu4
+[08:32] <AlphaTech> Lol
+[08:33] <AlphaTech> avdg_: In #240 for the images, edit it to ![Image Description](http://URL.to/the.image)
+[08:34] <avdg_> :+1:
+[08:34] <AlphaTech> :p
+[08:36] <SpenserJ> Still need two votes on https://github.com/botwillacceptanything/botwillacceptanything/pull/241, and one vote on https://github.com/botwillacceptanything/botwillacceptanything/pull/242
+[08:37] <SpenserJ> And one vote so we can close and reroll https://github.com/botwillacceptanything/botwillacceptanything/pull/238
+[08:38] <SpenserJ> And one vote on https://github.com/botwillacceptanything/botwillacceptanything/pull/239
+[08:39] == anythingbot [~nodebot@162.243.149.229] has quit [Remote host closed the connection]
+[08:39] == anythingbot [~nodebot@162.243.149.229] has joined #botwillacceptanything
+[08:39] <SpenserJ> Thanks dbpokorny_
+[08:40] == travis-ci [~travis-ci@ec2-54-146-51-121.compute-1.amazonaws.com] has joined #botwillacceptanything
+[08:40] <travis-ci> botwillacceptanything/botwillacceptanything#179 (master - 8ff25f6 : Bot): The build passed.
+[08:40] <travis-ci> Change view : https://github.com/botwillacceptanything/botwillacceptanything/compare/f7ff994af50e...8ff25f60d213
+[08:40] <travis-ci> Build details : http://travis-ci.org/botwillacceptanything/botwillacceptanything/builds/58166362
+[08:40] == travis-ci [~travis-ci@ec2-54-146-51-121.compute-1.amazonaws.com] has left #botwillacceptanything []
+[08:42] <AlphaTech> I voted for them all
+[08:42] <CompanionCube> web is still erroring with config
+[08:43] == anythingbot [~nodebot@162.243.149.229] has quit [Remote host closed the connection]
+[08:43] == anythingbot [~nodebot@162.243.149.229] has joined #botwillacceptanything
+[08:44] == travis-ci [~travis-ci@ec2-54-87-189-72.compute-1.amazonaws.com] has joined #botwillacceptanything
+[08:44] <travis-ci> botwillacceptanything/botwillacceptanything#180 (master - 81cf69d : Bot): The build passed.
+[08:44] <travis-ci> Change view : https://github.com/botwillacceptanything/botwillacceptanything/compare/8ff25f60d213...81cf69d18ecb
+[08:44] <travis-ci> Build details : http://travis-ci.org/botwillacceptanything/botwillacceptanything/builds/58166635
+[08:44] == travis-ci [~travis-ci@ec2-54-87-189-72.compute-1.amazonaws.com] has left #botwillacceptanything []
+[08:45] <AlphaTech> CompanionCube: Not merged yet
+[08:46] == korczis [59b180c1@gateway/web/cgi-irc/kiwiirc.com/ip.89.177.128.193] has joined #botwillacceptanything
+[08:48] <dos1> yeah, one vote left https://github.com/botwillacceptanything/botwillacceptanything/pull/241
+[08:48] <AlphaTech> Hey korczis
+[08:49] == korczis [59b180c1@gateway/web/cgi-irc/kiwiirc.com/ip.89.177.128.193] has quit [Client Quit]
+[08:50] == korczis [59b180c1@gateway/web/cgi-irc/kiwiirc.com/ip.89.177.128.193] has joined #botwillacceptanything
+[08:51] <AlphaTech> Hi again
+[08:52] <SpenserJ> dos1, are you replying manually in the bot talk thread?
+[08:53] <dos1> SpenserJ: sometimes, but sometimes it's the bot
+[08:53] <SpenserJ> I want to get them out of their problem loop, and itd be hilarious if that last reply was your bot
+[08:53] <SpenserJ> https://github.com/botwillacceptanything/botwillacceptanything/issues/192#issuecomment-92082979
+[08:53] <dos1> nah, that was me this time :)
+[08:53] <AlphaTech> Umm... This channel isn't registered with ChanServ and mappum isn't op anymore.... How does he plan on getting his channel back?
+[08:54] <dos1> uh oh
+[08:54] <dbpokorny_> ?
+[08:54] <SpenserJ> I dont think mappum created it in the first place
+[08:54] * CompanionCube begins trashing the place
+[08:54] <dbpokorny_> I think he did
+[08:54] <CompanionCube> because anarchy
+[08:54] <dbpokorny_> look at the commit logs
+[08:54] == korczis [59b180c1@gateway/web/cgi-irc/kiwiirc.com/ip.89.177.128.193] has quit [Client Quit]
+[08:54] <dos1> do we want anarchy?
+[08:54] <dos1> let's vote!
+[08:54] <dbpokorny_> define anarchy
+[08:55] <dos1> can't, the PR will be closed due to modification if I do so now :(
+[08:55] <CompanionCube> the bot should be op *nods*
+[08:55] <SpenserJ> Is anyone op right now?
+[08:56] <AlphaTech> Nope
+[08:56] <AlphaTech> Nobody can be unless we all exit the channel
+[08:56] <SpenserJ> Yikes.
+[08:56] <AlphaTech> Unless mappum has some secret technique
+[08:56] * AlphaTech invites some spammers
+[08:56] <AlphaTech> Just kidding
+[08:57] <dos1> VOTE FOR MY GREENLIGHT GAME !!!!1111111111one https://steamcommunity.com/sharedfiles/filedetails/?id=405960089
+[08:57] == anythingbot [~nodebot@162.243.149.229] has quit [Remote host closed the connection]
+[08:57] == anythingbot [~nodebot@162.243.149.229] has joined #botwillacceptanything
+[08:57] <dos1> I scared the bot :(
+[08:57] * CompanionCube releases the floodgates of dank memes
+[08:57] == korczis [59b180c1@gateway/web/cgi-irc/kiwiirc.com/ip.89.177.128.193] has joined #botwillacceptanything
+[08:57] <avdg_> nah, it was sleeping after a pr
+[08:57] <CompanionCube> DROWN IN THE MEME SEA.
+[08:58] <dos1> avdg_: OH THANK YOU CPT OBVIOUS :)))
+[08:58] == travis-ci [~travis-ci@ec2-54-146-51-121.compute-1.amazonaws.com] has joined #botwillacceptanything
+[08:58] <travis-ci> botwillacceptanything/botwillacceptanything#181 (master - fd78477 : Bot): The build passed.
+[08:58] <travis-ci> Change view : https://github.com/botwillacceptanything/botwillacceptanything/compare/81cf69d18ecb...fd784774004e
+[08:58] <travis-ci> Build details : http://travis-ci.org/botwillacceptanything/botwillacceptanything/builds/58168019
+[08:58] == travis-ci [~travis-ci@ec2-54-146-51-121.compute-1.amazonaws.com] has left #botwillacceptanything []
+[08:58] <avdg_> :p
+[08:58] <SpenserJ> I'm in the freenode support channel checking if we can do anything other than everyone parting right now
+[08:59] <dos1> the only op should be the bot
+[08:59] <dos1> so we can manage this channel via PRs 8)
+[09:00] *R* requestop #botwillacceptanything
+[09:00] == No such nick/channel: R
+[09:00] <SpenserJ> I think thats a neat idea. However we may need someone as op if someone starts causing a ruckus.
+[09:00] <CompanionCube> dos1, I don't think PRs would work for channel management unless you have a config file that states OPs and Voices
+[09:00] <SpenserJ> Or the bot needs to auto-moderate the channel, but that is going to cause even more chaos
+[09:01] <dos1> CompanionCube: you can do anything via PRs
+[09:01] <dos1> you can create such config files
+[09:01] <dos1> you can prefill them, or add some interface for editing them
+[09:01] <dbpokorny_> Well, we could just make the bot into a chat bot, and have these conversations on the bot
+[09:01] <dos1> POSSIBILITIES ARE ENDLESS
+[09:02] <CompanionCube> dbpokorny, I found a nice looking markov chain library
+[09:02] <dos1> https://s-media-cache-ak0.pinimg.com/originals/14/20/af/1420af8d5608c6d05676a03f7ded1cb9.jpg
+[09:02] <dbpokorny_> actually, that way we won't have to deal with irc
+[09:03] <CompanionCube> dbpokorny, that brings the problem of being able to chat when the bot is down
+[09:03] <dbpokorny_> CompanionCube: cool, I have a high regard for the subject
+[09:04] * dos1 was waiting for someone to replace eliza with markov chain since his botchat PR
+[09:04] <CompanionCube> the problem would be where would the bot learn it's data from
+[09:04] <dbpokorny_> since anyone can run a bot, we would then need some kind of handoff to a live bot. This is quite complex.
+[09:04] <dos1> PRs, comments
+[09:04] <SpenserJ> Listening to us in the channel ;)
+[09:04] <CompanionCube> PRs wouldn't contain enough text imho
+[09:04] <dos1> issues
+[09:04] <dos1> IRC channel
+[09:04] <SpenserJ> Based on PRs, all the bot could say is :+1:, :-1:, and merge conflict
+[09:05] <dos1> commit messages
+[09:05] <dos1> random google queries 8)
+[09:05] <CompanionCube> perhaps have an additional directory for .txt files to feed a markov chain?
+[09:08] == AlphaTech has changed nick to zz_AlphaTech
+[09:09] <SpenserJ> korczis: I think it would be easier to merge some of your PRs if you split it up into smaller chunks.
+[09:10] <SpenserJ> It might be a good idea to split our templates into an HTML template, and a Page level template. All of the pages should have the same outer markup on them, and its only the actual content of the page that changes
+[09:10] *ChanServ* HELP FLAGS
+[09:10] -ChanServ- ***** ChanServ Help *****
+[09:10] -ChanServ- Help for FLAGS:
+[09:10] -ChanServ-  
+[09:10] -ChanServ- The FLAGS command allows for the granting/removal of channel
+[09:10] -ChanServ- privileges on a more specific, non-generalized level. It
+[09:10] -ChanServ- supports nicknames, groups and hostmasks as targets.
+[09:10] -ChanServ-  
+[09:10] -ChanServ- When only the channel argument is given, a listing of
+[09:10] -ChanServ- permissions granted to users will be displayed.
+[09:10] -ChanServ-  
+[09:10] -ChanServ- Syntax: FLAGS <#channel>
+[09:10] -ChanServ-  
+[09:10] -ChanServ- Otherwise, an access entry is modified. A modification may be
+[09:10] -ChanServ- specified by a template name (changes the access to the
+[09:10] -ChanServ- template) or a flags change (starts with + or -). See the
+[09:10] -ChanServ- TEMPLATE help entry for more information about templates.
+[09:10] -ChanServ-  
+[09:10] -ChanServ- If you are not a founder, you may only manipulate flags you
+[09:10] -ChanServ- have yourself, and may not edit users that have flags you
+[09:10] -ChanServ- don't have. For this purpose, +v grants the ability to grant
+[09:10] -ChanServ- +V, +o grants the ability to grant +O, and +r grants the
+[09:10] -ChanServ- ability to grant +b.
+[09:10] -ChanServ-  
+[09:10] -ChanServ-  
+[09:10] -ChanServ- As of Atheme 7.0, there are now extended entity targets
+[09:10] -ChanServ- which allow you to match chanacs against a situation instead
+[09:10] -ChanServ- of against a nickname, hostmask or group.
+[09:10] -ChanServ-  
+[09:10] -ChanServ- Available exttargets are:
+[09:10] -ChanServ- $chanacs:#channel - Any user with channel access in the given channel
+[09:10] -ChanServ-                       (including hostmasks).
+[09:10] -ChanServ-  
+[09:10] -ChanServ- If you do not have +f you may still remove your own access
+[09:10] -ChanServ- with -*.
+[09:10] -ChanServ-  
+[09:10] -ChanServ- Syntax: FLAGS <#channel> [nickname|hostmask|group template]
+[09:10] -ChanServ- Syntax: FLAGS <#channel> [nickname|hostmask|group flag_changes]
+[09:10] -ChanServ-  
+[09:10] -ChanServ- Permissions:
+[09:10] -ChanServ-     +v - Enables use of the voice/devoice commands.
+[09:10] -ChanServ-     +V - Enables automatic voice.
+[09:10] -ChanServ-     +o - Enables use of the op/deop commands.
+[09:10] -ChanServ-     +O - Enables automatic op.
+[09:10] -ChanServ-     +s - Enables use of the set command.
+[09:10] -ChanServ-     +i - Enables use of the invite and getkey commands.
+[09:10] -ChanServ-     +r - Enables use of the unban command.
+[09:10] -ChanServ-     +R - Enables use of the recover, sync and clear commands.
+[09:10] -ChanServ-     +f - Enables modification of channel access lists.
+[09:10] -ChanServ-     +t - Enables use of the topic and topicappend commands.
+[09:10] -ChanServ-     +A - Enables viewing of channel access lists.
+[09:10] -ChanServ-     +S - Marks the user as a successor.
+[09:10] -ChanServ-     +F - Grants full founder access.
+[09:10] -ChanServ-     +b - Enables automatic kickban.
+[09:10] -ChanServ-     +e - Exempts from +b and enables unbanning self.
+[09:10] -ChanServ-  
+[09:10] -ChanServ- The special permission +* adds all permissions except +b, +S, and +F.
+[09:10] -ChanServ- The special permission -* removes all permissions including +b and +F.
+[09:10] -ChanServ-  
+[09:10] -ChanServ- Examples:
+[09:10] -ChanServ-     /msg ChanServ FLAGS #foo
+[09:10] -ChanServ-     /msg ChanServ FLAGS #foo foo!*@bar.com VOP
+[09:10] -ChanServ-     /msg ChanServ FLAGS #foo foo!*@bar.com -V+oO
+[09:10] -ChanServ-     /msg ChanServ FLAGS #foo foo!*@bar.com -*
+[09:10] -ChanServ-     /msg ChanServ FLAGS #foo foo +oOtsi
+[09:10] -ChanServ-     /msg ChanServ FLAGS #foo TroubleUser!*@*.troubleisp.net +b
+[09:10] -ChanServ-     /msg ChanServ FLAGS #foo !baz +*
+[09:10] -ChanServ- ***** End of Help *****
+[09:10] <korczis> that is the plan
+[09:10] <korczis> there is layout/main ready for that
+[09:10] <korczis> which has {{body}}
+[09:11] <korczis> where page specific stuff should be contained
+[09:11] <SpenserJ> https://github.com/botwillacceptanything/botwillacceptanything/blob/37b9a76087477888ca140b34b6fcf7084db165d3/data/views/commits.hbs
+[09:11] <SpenserJ> Looks like that isn't implemented yet then.
+[09:11] <korczis> https://github.com/botwillacceptanything/botwillacceptanything/blob/37b9a76087477888ca140b34b6fcf7084db165d3/data/views/layouts/main.hbs
+[09:11] <korczis> I wanted to do it in two steps
+[09:11] <korczis> first move hardcoded stuff into templates
+[09:11] <korczis> and than create layout + page specific stuff
+[09:12] <SpenserJ> Makes sense. I think it'd be easier to get all of this merged in as smaller PRs though. Less risk of something exploding
+[09:12] <korczis> it is touching many things ..
+[09:13] <korczis> I did not wanted to create ten commits - one wiht /commits, one with /statistics, etc ...
+[09:13] <avdg_> uh... I'm demanding too much I guess..
+[09:13] <korczis> because of merging pain ...
+[09:13] <avdg_> I end up wanting to make code use this https://github.com/botwillacceptanything/botwillacceptanything/blob/master/lib/template.js
+[09:14] <avdg_> that code does the loading part of the templates
+[09:14] <avdg_> but that code only recently went in
+[09:15] <korczis> why not use built-in view  support in node?
+[09:15] <avdg_> hmm
+[09:15] <korczis> imho it is better than manually render templates and respond using res.send, res.render look much more flexible for me
+[09:16] * avdg_ isn't informed about the built-in view support
+[09:16] <korczis> https://github.com/korczis/botwillacceptanything/blob/server-side-templates%2B%2B/lib/routes/commits.js#L20
+[09:17] <CompanionCube> You know what would be another good idea? Being able to vote for things on the bot's website with all users authenticated via github
+[09:18] <korczis> https://github.com/korczis/botwillacceptanything/blob/server-side-templates%2B%2B/lib/middleware/publicViews.js
+[09:18] <avdg_> CompanionCube: these things should go to issues atm
+[09:18] <avdg_> it should be easy to set up web pages before we can do such stuff
+[09:18] <avdg_> but it will be great if we can implement them
+[09:19] <dos1> I think built-in views korczis shows are nice, but I hate that there's handlebars there, while in other parts of the bot mustache is used
+[09:19] <dos1> hmm
+[09:19] <dos1> mustache is here as well
+[09:20] <korczis> so you can fix https://github.com/korczis/botwillacceptanything/blob/server-side-templates%2B%2B/lib/middleware/publicViews.js
+[09:20] <korczis> and specify mustache for render engine
+[09:20] <dos1> wtf
+[09:20] <dos1> my mind is blown
+[09:20] <dos1> https://github.com/korczis/botwillacceptanything/blob/server-side-templates%2B%2B/lib/middleware/publicViews.js#L18
+[09:20] <dos1> >.hbs
+[09:20] <korczis> https://www.npmjs.com/package/mustache-express\
+[09:20] <dos1> >mustache
+[09:20] <korczis> https://www.npmjs.com/package/mustache-express
+[09:20] <avdg_> templates can go in here for sure :-) https://github.com/botwillacceptanything/botwillacceptanything/tree/master/data/templates
+[09:20] <dos1> aaaaaaaaaah
+[09:20] <avdg_> that will not change I guess
+[09:21] <dos1>  var deps = [
+[09:21] <dos1>         'fs',
+[09:21] <dos1>         'express-handlebars',
+[09:21] <dos1>         'path'
+[09:21] <dos1>     ];
+[09:21] <dos1>     define(deps, function(fs, mustache, path) {
+[09:21] <korczis> ok...
+[09:21] <dos1> korczis: that's your "deps in one place" xD
+[09:21] <korczis> replace 'express-handlerbars' with 'express-mustache' and use .mustache instead of .hbs and you are ready to go ..
+[09:22] <korczis> ok, i will rip of amdefine tomorrow
+[09:22] <SpenserJ> Nginx config is in place, and its serving traffic internally, but isn't accessible externally
+[09:22] <SpenserJ> IPTables isn't blocking it, so I'm digging into why port 3000 is blocked
+[09:22] <korczis> why?
+[09:22] <SpenserJ> s/port 3000/port 80/
+[09:23] <korczis> do you specified proper bind address ?
+[09:23] <SpenserJ> As far as I can tell, everything should be letting it through.
+[09:23] <SpenserJ> 0.0.0.0 should bind to all interfaces
+[09:23] <korczis> ok
+[09:24] <SpenserJ> Removed that so it just binds to 80, and it still won't load
+[09:24] <korczis> strange
+[09:24] <korczis> and what log says?
+[09:25] <SpenserJ> Absolutely nothing about external traffic
+[09:26] <dos1> netstat -lnptu | grep nginx
+[09:26] <dos1> as root
+[09:27] <SpenserJ> IPTables allows everything right now, and nginx is listening properly
+[09:27] <SpenserJ> tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      1985/nginx
+[09:29] <SpenserJ> listen 80 default_server; didn't do the trick either
+[09:29] <korczis> is not there typo in name of server?
+[09:30] <korczis> in config?
+[09:30] <SpenserJ> Shouldn't matter if it is listen 80 default_server;
+[09:30] <dos1> nah, nginx looks fine
+[09:30] <SpenserJ> Any unknown hosts will be sent to that config
+[09:30] <dos1> netstat confirms that nginx does what it's supposed to
+[09:30] <dos1> something else is blocking connections from outside
+[09:31] <korczis> btw, how do you tests webhooks?
+[09:31] <SpenserJ> Looks like a pretty bare-bones install of ubuntu 14.04. IPTables is empty with accept all, nginx listens properly on its external IP, and I can curl to the domain from inside the server.
+[09:31] <korczis> if i start my own but it messes up things ...
+[09:31] <SpenserJ> I set up webhooks on my repo, and then sent a few PRs through
+[09:32] <SpenserJ> Should work fine if you have external access to the bot
+[09:33] <SpenserJ> UFW is installed but inactive
+[09:34] <anythingbot> New PR: #243 - "Server side templatess v3" - author: @korczis - https://github.com/botwillacceptanything/botwillacceptanything/pull/243
+[09:36] <SpenserJ> http://botwillacceptanything.com:8080/
+[09:36] <SpenserJ> Something is blocking 80 specifically
+[09:37] <SpenserJ> Nothing is running on 80 in netstat though
+[09:37] <korczis> that 8080 is via nginx?
+[09:38] <SpenserJ> Yeah
+[09:38] <SpenserJ> Exact same config, just port 8080 instead
+[09:38] <SpenserJ> Whoa, looks like :80 is up for me now
+[09:38] <korczis> yop, i can confirm that http://botwillacceptanything.com/ works for me
+[09:38] <SpenserJ> And if I take out :8080, :80 breaks
+[09:39] <korczis> what was the problem?
+[09:39] <SpenserJ> What the heck
+[09:39] <korczis> that is strange
+[09:39] <SpenserJ> Nginx 1.4.6, which is what I'm running on my boxes as well
+[09:41] <SpenserJ> Almost looks like 80 is being sent to 8080
+[09:41] <SpenserJ> I added a redirect from 8080 back to 80, and now there's a redirect loop
+[09:42] <korczis> strange
+[09:42] <SpenserJ> I honestly think that is what is happening
+[09:42] <SpenserJ> Right now the server is only listening on 8080, and 80 works
+[09:43] == IDM350 [~MM@pool-100-1-246-12.nwrknj.fios.verizon.net] has joined #botwillacceptanything
+[09:43] <SpenserJ> We'll have to investigate this some more later. I have to take off for a bit
+[09:43] <avdg_> uh... big patches are hard to test, luckily its mostly additions
+[09:44] <SpenserJ> I'll talk to you guys later! Email me at hello@spenserj.com if the server goes down
+[09:45] <korczis> this is my last big and somehow dangerous PR ...
+[09:45] <korczis> after that I will work on tests
+[09:45] <korczis> to prevent any breaks in future
+[09:47] <avdg_> nobody is touching the launcher atm I guess
+[09:47] <avdg_> modelling is easy, but I don't know the tools
+[09:48] <avdg_> or at least as good as I want
+[09:48] <korczis> what you mean by modeling?
+[09:49] <avdg_> how stuff should work
+[09:49] <avdg_> like how to build fail-safe software devices
+[09:49] <korczis> architecture :)
+[09:50] <korczis> software design :)
+[09:50] <avdg_> though using software means the use of tools that are available already
+[09:50] <avdg_> which is the tricky part
+[09:50] <avdg_> and also ruins the design mostly (because spending too much time on things not fitting the model)
+[09:50] <anythingbot> New PR: #244 - "Remove port number from README" - author: @dos1 - https://github.com/botwillacceptanything/botwillacceptanything/pull/244
+[09:53] <dos1> korczis: have you tested your PR extensively?
+[09:53] <dos1> including webhooks?
+[09:54] <korczis> no.
+[09:54] <korczis> it is not 100% tested.
+[09:55] <avdg_> I wished the pr was splitted though...
+[09:55] <avdg_> adding files is easy
+[09:55] <avdg_> at least, if its non-code
+[09:55] <korczis> it will be quite tricky to split it now
+[09:56] <korczis> probably we should define some guidelines ...
+[09:56] <korczis> and strictly follow them
+[09:56] <korczis> there are no rules/guidelines/best practices..
+[09:56] <korczis> I agree I could split it into 5 commits
+[09:56] <CompanionCube> Perhaps have the bot manage the guidelines?
+[09:56] <korczis> And than every time something got merged rebase all N-1 PR and vote again
+[09:57] <avdg_> ofc
+[09:57] <avdg_> adding files wouldn't necessary need a rebase
+[09:57] <avdg_> rebase is only really required when conflicts occur
+[09:57] <korczis> :)
+[09:58] <korczis> there is 0 chance than conflict will not occur as we seen yesterday
+[09:59] * avdg_ quickly writes a patch and collects enough votes
+[09:59] <avdg_> nah
+[09:59] <korczis> I could create one template, submit it and when somebody changes in this file https://github.com/botwillacceptanything/botwillacceptanything/blob/master/lib/routes/index.js#l13 try to look for one changed letter
+[10:00] <korczis> And do that for every one template
+[10:00] <korczis> And update (start voting) every time some PR got merged.
+[10:00] <korczis> First of all, routes and templates should be used from start
+[10:00] <korczis> people were just adding, adding, adding ..
+[10:00] <avdg_> yeah
+[10:01] <korczis> and nobody realized that 1 kilometer long line with all (duplicate) html is bad idea..
+[10:01] <korczis> Than I build breaker ...
+[10:01] <korczis> Because we have no tests ..
+[10:01] <korczis> Automatic tests ..
+[10:01] <avdg_> also lots who blindly voted :+1:
+[10:01] <korczis> also\
+[10:02] <avdg_> there are so many less voters, I can actually take more risk to vote :+1:
+[10:02] <avdg_> but meh, now html gets separated, we have concerns less
+[10:02] <korczis> as I said, I would like to have this merged and than focus on unit/spec/integration tests ..
+[10:02] <avdg_> kk
+[10:02] <korczis> and will let you play alone with the core ..
+[10:03] <avdg_> I've voted already :-)
+[10:03] <korczis> I know.
+[10:03] <avdg_> though I will still try to catch errors (though it will be hardly possible)
+[10:03] <korczis> I understand people can be bit scared, but again, it is worth of it ..
+[10:03] <korczis> than we will have all the routes and views separated..
+[10:03] <avdg_> :+1:
+[10:04] <korczis> i can unify using of templates engines mustache/handlebars, it is almost one liner ..
+[10:04] <korczis> and split pages to layout and views ..
+[10:04] <korczis> everything will become shorter, cleaner, modular and more maintainable and testavle
+[10:04] <korczis> testable
+[10:05] == avdg__ [~avdg@2a02:1812:1123:b900:383d:be08:d0aa:da6f] has joined #botwillacceptanything
+[10:05] <avdg__> wow, disconnected at 19:03
+[10:07] <dos1> [19:03] <korczis> I understand people can be bit scared, but again, it is worth of it ..
+[10:07] <dos1> yeah
+[10:07] <dos1> [18:54] <korczis> it is not 100% tested.
+[10:08] <dos1> that's what scares me the most :v
+[10:08] <korczis> you test all your code 100% ?
+[10:08] <korczis> ;-)
+[10:08] <korczis> All possible if/else/loop combinations?
+[10:08] <dos1> looking at our recent history
+[10:08] <korczis> timeout errors, etc?
+[10:08] <korczis> I know.
+[10:08] <dos1> some people don't test even 1% xD
+[10:08] == avdg_ [~avdg@2a02:1812:1123:b900:f99a:81c6:e0cb:7cd1] has quit [Ping timeout: 276 seconds]
+[10:08] <avdg__> I'll better check my hash function for every possible outcome *slaps code*
+[10:08] <korczis> I am trying to test as intensively as possible.
+[10:08] <dos1> (including me, once, after a rebase :c )
+[10:09] <korczis> Please, try to realize that I was doing bigger arch changes, we are not using statically typed language and we have no test - 0% test coverage.
+[10:09] <korczis> Now, when stuff is modularized, I can work on unit tests ...
+[10:10] <korczis> For each route, setup phantomjs testing ...
+[10:10] <dos1> I just want you to say "yes, I launched the bot, every webpage shows without an exception, webhooks are recieved without an exception"
+[10:10] <dos1> if there's some other bug still there, we can deal with it later
+[10:11] <korczis> "yes, I launched the bot, every webpage shows without an exception, there can be some 'minor' problems with templates but nothing crashes or causes server to stop workin"
+[10:11] * avdg__ erases quotes
+[10:11] <korczis> I did not tested webhooks as I did not touched them in this commit
+[10:12] <dos1> they are still managed by express, so any change in express config can break them
+[10:12] <korczis> minor problems with templates == 'slight content problems/inconsistencies'
+[10:12] <avdg__> content can be fixed :-)
+[10:13] <dos1> yup, fsck the content
+[10:13] <avdg__> at worst we can compare the code
+[10:13] <korczis> you mean that one kilometer long line with my multiline template?
+[10:13] <korczis> sure we can.
+[10:14] * avdg__ is now minding diff tools...
+[10:18] <anythingbot> New PR: #245 - "Create FIXME.md" - author: @korczis - https://github.com/botwillacceptanything/botwillacceptanything/pull/245
+[10:18] <korczis> this is my bot
+[10:22] <korczis> I expect this webhook URL can not work - http://localhoshost:3000/webhook/github
+[10:22] <korczis> how can test this without public IP?
+[10:24] <avdg__> uh, these services should be available as separate devices no?
+[10:25] <korczis> ?
+[10:28] <avdg__> a web server should be able to be tested individually without having the bot started
+[10:28] <avdg__> we will end up or might end up in a bot that does everything, even when testing...
+[10:28] <avdg__> then 1 thing breaks because of config changes compared to the bot
+[10:29] <avdg__> and no time to fix while fixing other stuff
+[10:29] == Cust0dian [~Cust0dian@91.215.121.245] has quit [Quit: Quitting.]
+[10:30] == Cust0dian [~Cust0dian@91.215.121.245] has joined #botwillacceptanything
+[10:30] <avdg__> uh... so easy to explain with animated gifs...
+[10:32] <anythingbot> New PR: #246 - "A test of withdrawl" - author: @IDM350 - https://github.com/botwillacceptanything/botwillacceptanything/pull/246
+[10:41] <dos1> korczis: you can make POST requests by yourself, no need to rely on github
+[10:43] == hearn [~mike@80-254-69-59.dynamic.monzoon.net] has joined #botwillacceptanything
+[10:45] <korczis> tried that using postman, after hacking x-hub-signature it seems to be working - returns ok
+[10:45] <korczis> tried that using postman, after hacking x-hub-signature it seems to be working - returns 'ok'
+[11:00] <korczis> Please (up|down) vote #243
+[11:37] == zz_AlphaTech has changed nick to AlphaTech
+[11:41] <korczis> 1 vote needed
+[11:44] == anythingbot [~nodebot@162.243.149.229] has quit [Remote host closed the connection]
+[11:44] == anythingbot [~nodebot@162.243.149.229] has joined #botwillacceptanything
+[11:44] == tilgovi [~randall@couchdb/committer/tilgovi] has joined #botwillacceptanything
+[11:45] <korczis> nice http://botwillacceptanything.com/stdout/
+[11:45] <avdg__> n1
+[11:45] == avdg__ has changed nick to avdg
+[11:45] == travis-ci [~travis-ci@ec2-54-87-189-72.compute-1.amazonaws.com] has joined #botwillacceptanything
+[11:45] <travis-ci> botwillacceptanything/botwillacceptanything#188 (master - c23ec8d : Bot): The build passed.
+[11:45] <travis-ci> Change view : https://github.com/botwillacceptanything/botwillacceptanything/compare/fd784774004e...c23ec8d8c906
+[11:45] <travis-ci> Build details : http://travis-ci.org/botwillacceptanything/botwillacceptanything/builds/58182535
+[11:45] == travis-ci [~travis-ci@ec2-54-87-189-72.compute-1.amazonaws.com] has left #botwillacceptanything []
+[11:46] == tilgovi [~randall@couchdb/committer/tilgovi] has quit [Remote host closed the connection]
+[11:46] <korczis> ok, now is the time to unify templates, start using layout and write tests
+[11:46] == anythingbot [~nodebot@162.243.149.229] has quit [Remote host closed the connection]
+[11:46] == hearn [~mike@80-254-69-59.dynamic.monzoon.net] has quit [Ping timeout: 240 seconds]
+[11:46] == anythingbot [~nodebot@162.243.149.229] has joined #botwillacceptanything
+[11:46] <anythingbot> New PR: #247 - "Create FIXME.md" - author: @korczis - https://github.com/botwillacceptanything/botwillacceptanything/pull/247
+[11:47] <korczis> ^^^ just test of hooks
+[11:47] <avdg> uh... it shows ip's
+[11:47] <avdg> :-)
+[11:47] == travis-ci [~travis-ci@ec2-54-87-189-72.compute-1.amazonaws.com] has joined #botwillacceptanything
+[11:47] <travis-ci> botwillacceptanything/botwillacceptanything#189 (master - 585362a : Bot): The build passed.
+[11:47] <travis-ci> Change view : https://github.com/botwillacceptanything/botwillacceptanything/compare/c23ec8d8c906...585362a1e0a7
+[11:47] <travis-ci> Build details : http://travis-ci.org/botwillacceptanything/botwillacceptanything/builds/58182720
+[11:47] == travis-ci [~travis-ci@ec2-54-87-189-72.compute-1.amazonaws.com] has left #botwillacceptanything []
+[11:48] <korczis> https://github.com/botwillacceptanything/botwillacceptanything/blob/master/lib/middleware/logger.js
+[11:49] <korczis> we can add the option to config, which middleware should by enabled
+[11:49] <korczis> btw, if you go to port 80 in log will be IPs from nginx
+[11:50] <korczis> if you got to port 3000 your public IP will be showed
+[11:50] <avdg> hmm
+[11:50] * avdg is getting interested in ipv6 again
+[11:50] <korczis> static files can be server easily now - http://botwillacceptanything.com:3000/pr0n/1.jpg
+[11:51] <avdg> heh
+[11:51] <korczis> *served*
+[11:51] <korczis> time to create folder for sass/less ..
+[11:51] <korczis> and other static assets
+[11:52] <avdg> uh, better to have a static folder in data
+[11:52] <avdg> :-)
+[11:52] <avdg> but meh, why not actually
+[11:52] <avdg> except the private files
+[11:52] <korczis> that is how it works
+[11:53] <korczis> data is mapped to /
+[11:53] <avdg> yeah, I see
+[11:53] <korczis> so /data/pr0n/1.jpg -> http://botwillacceptanything.com/pr0n/1.jpg
+[11:53] * avdg found http://botwillacceptanything.com:3000/templates/voting/voteStarted.md
+[11:53] <korczis> everything what is in data folder is visible by user
+[11:53] <AlphaTech> korczis: How can I do a var require in the modular web server?
+[11:54] <korczis> what you want to require?
+[11:54] <AlphaTech> The config variable
+[11:54] <AlphaTech> *variables
+[11:54] <korczis> you want to access config?
+[11:54] <AlphaTech> Yes
+[11:54] <AlphaTech> To get config.user and config.repo
+[11:54] <korczis> check this
+[11:54] <korczis> https://github.com/botwillacceptanything/botwillacceptanything/blob/master/lib/routes/webhook.js
+[11:55] <korczis> Line #9, #12 & #19
+[11:55] <AlphaTech> Oh, thanks
