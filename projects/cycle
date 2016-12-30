@@ -1,0 +1,28 @@
+A voting session is a 90 minute block. There are 3 voting sessions per day:
+2-3:30 PM UTC, 10-11:30 PM UTC, 6-7:30 AM UTC
+
+During a voting session, the bot performs no PR closing and no merges. Votes
+made during a non-voting period are counted when the next voting session ends.
+
+ - the bot performs no closing or merging of PRs during a voting session.
+
+ - the bot does not post voteStarted comments on any PR ouside a voting session.
+
+ - PRs submitted during the first 80 minutes of a voting session receive a
+   voteStarted sign immediately and are elligible for acceptance or rejection when
+   votes are counted.
+
+ - PRs submitted during the last 10 minutes of a voting session are put on hold
+   in the following sense: the bot will not put a voteStarted sign in the PR
+   thread until the beginning of the next voting session.
+
+ - The bot announces "voting has started for ...list of PRs..." in irc when
+   a voting session opens
+
+ - The bot announces "voting has ended" in irc when a voting session closes
+
+At the beginning of a voting session, voteStarted signs are put on all PRs that do
+not already have them.
+
+After a voting session closes, the bot counts votes, closes rejected PRs, merges
+accepted PRs, and ignores PRs that do not have enough votes.
