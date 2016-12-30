@@ -1,0 +1,10 @@
+Variable voting
+
+Allow subdirectories more permissive voting
+
+A PR changing only subdirs of 1/ is accepted with a single +1 and rejected with -1
+
+A PR changing only subdirs of 2/ is accepted with 2 +1's and rejected with 2 -1's
+
+A PR changing only subdirs of 3/ is accepted with 3 +1's and rejected with 3 -1's
+
