@@ -9,6 +9,10 @@
 [![Pinkie Pie Approval Status](http://dosowisko.net/pinkiepieapproved.svg)](https://www.youtube.com/watch?v=FULyN9Ai-A0)
 [![tip for next commit](https://tip4commit.com/projects/43123.svg)](https://tip4commit.com/github/botwillacceptanything/botwillacceptanything)
 
+## Live demo
+
+Check live demo @ [botwillacceptanything.com:3000](http://botwillacceptanything.com:3000)
+
 ### *The project where anything goes, as long as the code allows it.*
 
 A bot will automatically merge any PR on this repo that gets enough votes from the community. PRs can contain anything, *even changes to the bot's voting code*.
